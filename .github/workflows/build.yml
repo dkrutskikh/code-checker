@@ -1,0 +1,60 @@
+name: build
+
+on: [push, pull_request]
+
+jobs:
+  build-dart-latest:
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: google/dart:latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: dart pub get
+    - name: Run dependency validator
+      run: dart pub run dependency_validator
+    - name: Run analyzer
+      run: dart analyze --fatal-warnings --fatal-infos .
+    - name: Run formatter
+      run: dart format --set-exit-if-changed .
+
+  build-dart-2-8:
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: google/dart:2.8.4
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: pub downgrade
+    - name: Run dartanalyzer
+      run: dartanalyzer --fatal-warnings --fatal-infos --fatal-lints lib/
+
+  build-dart-dev:
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: google/dart:dev
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: dart pub get
+    - name: Run analyzer
+      run: dart analyze --fatal-warnings --fatal-infos .
+
+  package-analysis:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: axel-op/dart-package-analyzer@v3
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}

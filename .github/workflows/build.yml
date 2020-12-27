@@ -20,6 +20,8 @@ jobs:
       run: dart analyze --fatal-warnings --fatal-infos .
     - name: Run formatter
       run: dart format --set-exit-if-changed .
+    - name: Run tests
+      run: dart test
 
   build-dart-2-8:
 
@@ -33,7 +35,9 @@ jobs:
     - name: Install dependencies
       run: pub downgrade
     - name: Run dartanalyzer
-      run: dartanalyzer --fatal-warnings --fatal-infos --fatal-lints lib/
+      run: dartanalyzer --fatal-warnings --fatal-infos --fatal-lints lib/ test/
+    - name: Run tests
+      run: pub run test
 
   build-dart-dev:
 
@@ -48,6 +52,8 @@ jobs:
       run: dart pub get
     - name: Run analyzer
       run: dart analyze --fatal-warnings --fatal-infos .
+    - name: Run tests
+      run: dart test
 
   package-analysis:
 

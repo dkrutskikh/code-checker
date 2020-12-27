@@ -36,7 +36,7 @@ class Severity {
   static Severity fromJson(String severity) => severity != null
       ? _all.firstWhere(
           (val) => val.value == severity.toLowerCase(),
-          orElse: () => null,
+          orElse: () => Severity.none,
         )
       : null;
 }

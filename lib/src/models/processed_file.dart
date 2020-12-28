@@ -6,8 +6,10 @@ import 'package:meta/meta.dart';
 class ProcessedFile {
   /// Path of the file that is being processed
   final Uri url;
+
   /// Representation content of the file in plain text
   final String content;
+
   /// Representation content of the file in AST structure
   final CompilationUnit parsedContent;
 

@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 
+import 'replacement.dart';
 import 'severity.dart';
 
 /// Represents a issue detected by the analysis rule
@@ -24,11 +25,8 @@ class Issue {
   /// Verbose message containing information about how the user can fix this issue.
   final String verboseMessage;
 
-  /// Code with fixed issue to replace original code with
-  final String suggestion;
-
-  /// A human-readable description of the change to be applied.
-  final String suggestionComment;
+  /// The suggested relevant change.
+  final Replacement suggestion;
 
   const Issue({
     @required this.ruleId,
@@ -38,6 +36,5 @@ class Issue {
     @required this.message,
     this.verboseMessage,
     this.suggestion,
-    this.suggestionComment,
   });
 }

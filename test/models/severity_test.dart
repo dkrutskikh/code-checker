@@ -3,9 +3,9 @@ import 'package:code_checker/src/models/severity.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('Severity fromJson constructs object from string', () {
+  test('Severity fromString convert string to Severity object', () {
     expect(
-      ['StyLe', 'wArnInG', 'erROr', '', null].map(Severity.fromJson),
+      ['StyLe', 'wArnInG', 'erROr', '', null].map(Severity.fromString),
       equals([
         Severity.style,
         Severity.warning,

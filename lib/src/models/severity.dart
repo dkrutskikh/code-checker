@@ -33,7 +33,8 @@ class Severity {
 
   const Severity(this.value);
 
-  static Severity fromJson(String severity) => severity != null
+  /// Converts the human readable [severity] string into a [Severity] value.
+  static Severity fromString(String severity) => severity != null
       ? _all.firstWhere(
           (val) => val.value == severity.toLowerCase(),
           orElse: () => Severity.none,

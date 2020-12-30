@@ -35,8 +35,9 @@ void _printCoverageDetails(lcov.Report report) {
   final totalLines = report.records
       .fold<int>(0, (count, record) => count + record.lines.found);
 
-  print(
-      '$coveredLines of $totalLines relevant lines covered (${(coveredLines * 100 / totalLines).toStringAsPrecision(4)}%)');
+  final percents = (coveredLines * 100 / totalLines).toStringAsPrecision(4);
+
+  print('$coveredLines of $totalLines relevant lines covered ($percents%)');
 }
 
 void _printCoverageOutputDoesNotExistBanner() {

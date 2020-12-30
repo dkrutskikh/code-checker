@@ -71,8 +71,10 @@ lcov.Record _fileToUncoveredRecord(String filePath) {
           e.value != '}')
       .map((e) => lcov.LineData(e.key + 1));
 
-  return lcov.Record(filePath,
-      lines: lcov.LineCoverage(uncoveredLines.length, 0, uncoveredLines));
+  return lcov.Record(
+    filePath,
+    lines: lcov.LineCoverage(uncoveredLines.length, 0, uncoveredLines),
+  );
 }
 
 Iterable<File> _findSourceFiles(Directory directory, bool skipGenerated) {

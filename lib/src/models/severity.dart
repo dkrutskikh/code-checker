@@ -29,14 +29,14 @@ class Severity {
 
   static const _all = [error, warning, performance, style, none];
 
-  final String value;
+  final String _value;
 
-  const Severity(this.value);
+  const Severity(this._value);
 
   /// Converts the human readable [severity] string into a [Severity] value.
   static Severity fromString(String severity) => severity != null
       ? _all.firstWhere(
-          (val) => val.value == severity.toLowerCase(),
+          (val) => val._value == severity.toLowerCase(),
           orElse: () => Severity.none,
         )
       : null;

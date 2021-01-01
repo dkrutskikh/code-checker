@@ -40,4 +40,7 @@ class Severity {
           orElse: () => Severity.none,
         )
       : null;
+
+  @override
+  String toString() => _value;
 }

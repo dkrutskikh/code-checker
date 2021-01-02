@@ -23,10 +23,7 @@ void main() {
 
       final component = visitor.components.single;
       expect(component.declaration, const TypeMatcher<ClassDeclaration>());
-      expect(
-        (component.declaration as ClassDeclaration).name.name,
-        equals('Doer'),
-      );
+      expect(component.humanReadableName, equals('Doer'));
 
       expect(visitor.functions, isEmpty);
     });
@@ -41,10 +38,7 @@ void main() {
 
       final component = visitor.components.single;
       expect(component.declaration, const TypeMatcher<ClassDeclaration>());
-      expect(
-        (component.declaration as ClassDeclaration).name.name,
-        equals('Logger'),
-      );
+      expect(component.humanReadableName, equals('Logger'));
 
       final functions = visitor.functions.toList();
       expect(functions.length, equals(3));
@@ -121,10 +115,7 @@ void main() {
 
       final component = visitor.components.single;
       expect(component.declaration, const TypeMatcher<ExtensionDeclaration>());
-      expect(
-        (component.declaration as ExtensionDeclaration).name.name,
-        equals('NumberParsing'),
-      );
+      expect(component.humanReadableName, equals('NumberParsing'));
 
       final function = visitor.functions.single;
       expect(function.type, equals(FunctionType.method));
@@ -154,10 +145,7 @@ void main() {
 
       final component = visitor.components.single;
       expect(component.declaration, const TypeMatcher<MixinDeclaration>());
-      expect(
-        (component.declaration as MixinDeclaration).name.name,
-        equals('Musical'),
-      );
+      expect(component.humanReadableName, equals('Musical'));
 
       final function = visitor.functions.single;
       expect(function.type, equals(FunctionType.method));

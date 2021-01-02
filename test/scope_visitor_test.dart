@@ -1,10 +1,10 @@
 @TestOn('vm')
-import 'package:analyzer/dart/analysis/features.dart';
+import 'dart:io';
+
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:code_checker/checker.dart';
 import 'package:code_checker/src/scope_visitor.dart';
-import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
 void main() {
@@ -15,11 +15,12 @@ void main() {
       visitor = ScopeVisitor();
     });
 
-    test('abstract class', () {
-      parseFile(
-        path: p.normalize(p.absolute('./test/resources/abstract_class.dart')),
-        featureSet: FeatureSet.fromEnableFlags([]),
-      ).unit.visitChildren(visitor);
+    test('abstract class', () async {
+      (await resolveFile(
+        path: File('./test/resources/abstract_class.dart').absolute.path,
+      ))
+          .unit
+          .visitChildren(visitor);
 
       final component = visitor.components.single;
       expect(component.declaration, const TypeMatcher<ClassDeclaration>());
@@ -31,12 +32,14 @@ void main() {
       expect(visitor.functions, isEmpty);
     });
 
-    test('class with factory constructors', () {
-      parseFile(
-        path: p.normalize(p
-            .absolute('./test/resources/class_with_factory_constructors.dart')),
-        featureSet: FeatureSet.fromEnableFlags([]),
-      ).unit.visitChildren(visitor);
+    test('class with factory constructors', () async {
+      (await resolveFile(
+        path: File('./test/resources/class_with_factory_constructors.dart')
+            .absolute
+            .path,
+      ))
+          .unit
+          .visitChildren(visitor);
 
       final component = visitor.components.single;
       expect(component.declaration, const TypeMatcher<ClassDeclaration>());
@@ -111,11 +114,12 @@ void main() {
       );
     });
 
-    test('extension with method', () {
-      parseFile(
-        path: p.normalize(p.absolute('./test/resources/extension.dart')),
-        featureSet: FeatureSet.fromEnableFlags([]),
-      ).unit.visitChildren(visitor);
+    test('extension with method', () async {
+      (await resolveFile(
+        path: File('./test/resources/extension.dart').absolute.path,
+      ))
+          .unit
+          .visitChildren(visitor);
 
       final component = visitor.components.single;
       expect(component.declaration, const TypeMatcher<ExtensionDeclaration>());
@@ -143,11 +147,12 @@ void main() {
       );
     });
 
-    test('mixin', () {
-      parseFile(
-        path: p.normalize(p.absolute('./test/resources/mixin.dart')),
-        featureSet: FeatureSet.fromEnableFlags([]),
-      ).unit.visitChildren(visitor);
+    test('mixin', () async {
+      (await resolveFile(
+        path: File('./test/resources/mixin.dart').absolute.path,
+      ))
+          .unit
+          .visitChildren(visitor);
 
       final component = visitor.components.single;
       expect(component.declaration, const TypeMatcher<MixinDeclaration>());
@@ -175,11 +180,12 @@ void main() {
       );
     });
 
-    test('functions', () {
-      parseFile(
-        path: p.normalize(p.absolute('./test/resources/functions.dart')),
-        featureSet: FeatureSet.fromEnableFlags([]),
-      ).unit.visitChildren(visitor);
+    test('functions', () async {
+      (await resolveFile(
+        path: File('./test/resources/functions.dart').absolute.path,
+      ))
+          .unit
+          .visitChildren(visitor);
 
       expect(visitor.components, isEmpty);
 

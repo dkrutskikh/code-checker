@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'function_type.dart';
 import 'scoped_class_declaration.dart';
 
+/// Represents a declaration of method/function
 @immutable
 class ScopedFunctionDeclaration {
   final FunctionType type;

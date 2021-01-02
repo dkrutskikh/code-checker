@@ -1,10 +1,9 @@
 @TestOn('vm')
-import 'dart:io';
-
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:code_checker/checker.dart';
 import 'package:code_checker/src/scope_visitor.dart';
+import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
 void main() {
@@ -17,7 +16,7 @@ void main() {
 
     test('abstract class', () async {
       (await resolveFile(
-        path: File('./test/resources/abstract_class.dart').absolute.path,
+        path: p.normalize(p.absolute('./test/resources/abstract_class.dart')),
       ))
           .unit
           .visitChildren(visitor);
@@ -34,9 +33,8 @@ void main() {
 
     test('class with factory constructors', () async {
       (await resolveFile(
-        path: File('./test/resources/class_with_factory_constructors.dart')
-            .absolute
-            .path,
+        path: p.normalize(p
+            .absolute('./test/resources/class_with_factory_constructors.dart')),
       ))
           .unit
           .visitChildren(visitor);
@@ -116,7 +114,7 @@ void main() {
 
     test('extension with method', () async {
       (await resolveFile(
-        path: File('./test/resources/extension.dart').absolute.path,
+        path: p.normalize(p.absolute('./test/resources/extension.dart')),
       ))
           .unit
           .visitChildren(visitor);
@@ -149,7 +147,7 @@ void main() {
 
     test('mixin', () async {
       (await resolveFile(
-        path: File('./test/resources/mixin.dart').absolute.path,
+        path: p.normalize(p.absolute('./test/resources/mixin.dart')),
       ))
           .unit
           .visitChildren(visitor);
@@ -182,7 +180,7 @@ void main() {
 
     test('functions', () async {
       (await resolveFile(
-        path: File('./test/resources/functions.dart').absolute.path,
+        path: p.normalize(p.absolute('./test/resources/functions.dart')),
       ))
           .unit
           .visitChildren(visitor);

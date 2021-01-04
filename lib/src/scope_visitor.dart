@@ -25,9 +25,7 @@ class ScopeVisitor extends RecursiveAstVisitor<void> {
 
   @override
   void visitConstructorDeclaration(ConstructorDeclaration node) {
-    if (node.body is! EmptyFunctionBody) {
-      _registerFunctionDeclaration(FunctionType.constructor, node);
-    }
+    _registerFunctionDeclaration(FunctionType.constructor, node);
 
     super.visitConstructorDeclaration(node);
   }
@@ -48,9 +46,7 @@ class ScopeVisitor extends RecursiveAstVisitor<void> {
 
   @override
   void visitMethodDeclaration(MethodDeclaration node) {
-    if (node.body is! EmptyFunctionBody) {
-      _registerFunctionDeclaration(FunctionType.method, node);
-    }
+    _registerFunctionDeclaration(FunctionType.method, node);
 
     super.visitMethodDeclaration(node);
   }

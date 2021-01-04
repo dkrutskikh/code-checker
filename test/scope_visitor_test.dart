@@ -25,7 +25,23 @@ void main() {
       expect(component.declaration, const TypeMatcher<ClassDeclaration>());
       expect(component.humanReadableName, equals('Doer'));
 
-      expect(visitor.functions, isEmpty);
+      final function = visitor.functions.single;
+      expect(function.type, equals(FunctionType.method));
+      expect(function.declaration, const TypeMatcher<MethodDeclaration>());
+      expect(
+        (function.declaration as MethodDeclaration).name.name,
+        equals('doSomething'),
+      );
+      expect(
+        function.enclosingDeclaration.declaration,
+        const TypeMatcher<ClassDeclaration>(),
+      );
+      expect(
+        (function.enclosingDeclaration.declaration as ClassDeclaration)
+            .name
+            .name,
+        equals('Doer'),
+      );
     });
 
     test('class with factory constructors', () async {
@@ -41,24 +57,25 @@ void main() {
       expect(component.humanReadableName, equals('Logger'));
 
       final functions = visitor.functions.toList();
-      expect(functions.length, equals(3));
+      expect(functions.length, equals(4));
 
-      final constructor = functions.first;
-      expect(constructor.type, equals(FunctionType.constructor));
+      final factoryConstructor = functions.first;
+      expect(factoryConstructor.type, equals(FunctionType.constructor));
       expect(
-        constructor.declaration,
+        factoryConstructor.declaration,
         const TypeMatcher<ConstructorDeclaration>(),
       );
       expect(
-        (constructor.declaration as ConstructorDeclaration).name,
+        (factoryConstructor.declaration as ConstructorDeclaration).name,
         isNull,
       );
       expect(
-        constructor.enclosingDeclaration.declaration,
+        factoryConstructor.enclosingDeclaration.declaration,
         const TypeMatcher<ClassDeclaration>(),
       );
       expect(
-        (constructor.enclosingDeclaration.declaration as ClassDeclaration)
+        (factoryConstructor.enclosingDeclaration.declaration
+                as ClassDeclaration)
             .name
             .name,
         equals('Logger'),
@@ -80,6 +97,27 @@ void main() {
       );
       expect(
         (fromJson.enclosingDeclaration.declaration as ClassDeclaration)
+            .name
+            .name,
+        equals('Logger'),
+      );
+
+      final constructor = functions[2];
+      expect(constructor.type, equals(FunctionType.constructor));
+      expect(
+        constructor.declaration,
+        const TypeMatcher<ConstructorDeclaration>(),
+      );
+      expect(
+        (constructor.declaration as ConstructorDeclaration).name.name,
+        '_internal',
+      );
+      expect(
+        constructor.enclosingDeclaration.declaration,
+        const TypeMatcher<ClassDeclaration>(),
+      );
+      expect(
+        (constructor.enclosingDeclaration.declaration as ClassDeclaration)
             .name
             .name,
         equals('Logger'),

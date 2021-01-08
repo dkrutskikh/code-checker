@@ -5,8 +5,9 @@ import 'package:test/test.dart';
 void main() {
   test('Severity fromString convert string to Severity object', () {
     expect(
-      ['StyLe', 'wArnInG', 'erROr', '', null].map(Severity.fromString),
+      ['nOne', 'StyLe', 'wArnInG', 'erROr', '', null].map(Severity.fromString),
       equals([
+        Severity.none,
         Severity.style,
         Severity.warning,
         Severity.error,

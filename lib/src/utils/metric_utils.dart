@@ -1,3 +1,5 @@
+import '../models/metric_value_level.dart';
+
 /// Returns a threshold from [Map] based [config] for metrics with [metricId] otherwise [defaultValue]
 T readThreshold<T extends num>(
   Map<String, Object> config,
@@ -13,4 +15,20 @@ T readThreshold<T extends num>(
   }
 
   return defaultValue;
+}
+
+MetricValueLevel valueLevel(num value, num warningLevel) {
+  if (value == null || warningLevel == null) {
+    return MetricValueLevel.none;
+  }
+
+  if (value > warningLevel * 2) {
+    return MetricValueLevel.alarm;
+  } else if (value > warningLevel) {
+    return MetricValueLevel.warning;
+  } else if (value > warningLevel * 0.8) {
+    return MetricValueLevel.noted;
+  }
+
+  return MetricValueLevel.none;
 }

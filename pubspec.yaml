@@ -1,6 +1,6 @@
 name: code_checker
 description: Static source code analytics tool that helps analyse and improve quality.
-version: 0.2.4
+version: 0.2.5
 homepage: https://github.com/dart-code-checker-project/code-checker
 
 environment:
@@ -10,6 +10,7 @@ dependencies:
   analyzer: '>=0.39.3 <0.42.0'
   meta: ^1.1.6
   source_span: ^1.4.1
+  yaml: ^2.2.0
 
 dev_dependencies:
   coverage: ^0.14.0

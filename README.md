@@ -8,3 +8,18 @@
 ![Dart Platform](https://badgen.net/pub/dart-platform/code_checker)
 
 Static source code analytics tool that helps analyse and improve quality.
+
+## Usage
+
+### Command line tool
+
+#### Full usage
+
+```text
+Usage: checker [arguments] <directories>
+
+-h, --help                      Print this usage information.
+
+
+    --number-of-methods=<10>    Number of Methods threshold
+```

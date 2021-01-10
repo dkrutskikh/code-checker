@@ -11,6 +11,25 @@ Static source code analytics tool that helps analyse and improve quality.
 
 ## Usage
 
+### Analyzer plugin
+
+The plugin for the Dart `analyzer` provide information collected by metrics.
+
+1. Add dependency to `pubspec.yaml`
+
+    ```yaml
+    dev_dependencies:
+      code_checker: ^0.2.7
+    ```
+
+2. Add configuration to `analysis_options.yaml`
+
+    ```yaml
+    analyzer:
+      plugins:
+        - code_checker
+    ```
+
 ### Command line tool
 
 #### Full usage

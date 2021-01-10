@@ -8,13 +8,15 @@ import 'metric.dart';
 /// The number of methods of a class
 class NumberOfMethodsMetric extends Metric<int> {
   static const String metricId = 'number-of-methods';
-  static const _metricName = 'Number of Methods (NOM)';
+  static const _metricName = 'Number of Methods';
+  static const _metricShortName = 'NOM';
   static const _defaultThreshold = 10;
 
   NumberOfMethodsMetric({Map<String, Object> config = const {}})
       : super(
           id: metricId,
           name: _metricName,
+          shortName: _metricShortName,
           documentation: null,
           threshold: readThreshold<int>(config, metricId, _defaultThreshold),
           levelComputer: valueLevel,

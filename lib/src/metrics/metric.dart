@@ -15,6 +15,9 @@ abstract class Metric<T extends num> {
   /// The name of the metric.
   final String name;
 
+  /// The short name of the metric.
+  final String shortName;
+
   /// The url of a page containing documentation associated with this metric.
   final Uri documentation;
 
@@ -25,6 +28,7 @@ abstract class Metric<T extends num> {
   const Metric({
     @required this.id,
     @required this.name,
+    @required this.shortName,
     @required this.documentation,
     @required this.threshold,
     @required MetricValueLevel Function(num, num) levelComputer,

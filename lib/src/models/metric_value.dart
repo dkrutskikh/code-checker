@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 
+import 'context_message.dart';
 import 'metric_value_level.dart';
 
 /// Represents a value computed by the metric
@@ -13,9 +14,15 @@ class MetricValue<T> {
   /// Level of this value computed by the metric.
   final MetricValueLevel level;
 
+  /// Additional information associated with this value.
+  ///
+  /// That provide context to help the user understand how the metric compute this one.
+  final Iterable<ContextMessage> context;
+
   const MetricValue({
     @required this.metricsId,
     @required this.value,
     @required this.level,
+    this.context = const [],
   });
 }

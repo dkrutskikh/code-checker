@@ -7,7 +7,7 @@
 ![Dart SDK Version](https://badgen.net/pub/sdk-version/code_checker)
 ![Dart Platform](https://badgen.net/pub/dart-platform/code_checker)
 
-Static source code analytics tool that helps analyse and improve quality.
+Static source code analytics tool that helps analyse and improve quality, inspired by Wrike [Dart code metrics](https://github.com/wrike/dart-code-metrics).
 
 ## Usage
 

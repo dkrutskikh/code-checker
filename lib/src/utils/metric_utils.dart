@@ -17,6 +17,7 @@ T readThreshold<T extends num>(
   return defaultValue;
 }
 
+/// Returns calculated [MetricValueLevel] based on [value] and [warningLevel]
 MetricValueLevel valueLevel(num value, num warningLevel) {
   if (value == null || warningLevel == null) {
     return MetricValueLevel.none;
@@ -32,3 +33,7 @@ MetricValueLevel valueLevel(num value, num warningLevel) {
 
   return MetricValueLevel.none;
 }
+
+/// Determines if the [level] warns about need to be a report about a metric value
+bool isReportLevel(MetricValueLevel level) =>
+    level == MetricValueLevel.warning || level == MetricValueLevel.alarm;

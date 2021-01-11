@@ -2,13 +2,10 @@ import 'dart:async';
 
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/file_system/file_system.dart';
-
 // ignore: implementation_imports
 import 'package:analyzer/src/context/builder.dart';
-
 // ignore: implementation_imports
 import 'package:analyzer/src/context/context_root.dart';
-
 // ignore: implementation_imports
 import 'package:analyzer/src/dart/analysis/driver.dart';
 import 'package:analyzer_plugin/plugin/plugin.dart';
@@ -28,7 +25,7 @@ class CheckerAnalyzerPlugin extends ServerPlugin {
   String get name => 'Code Checker';
 
   @override
-  String get version => '1.0.0';
+  String get version => '0.2.8';
 
   CheckerAnalyzerPlugin(ResourceProvider provider) : super(provider);
 

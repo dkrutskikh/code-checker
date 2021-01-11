@@ -40,5 +40,16 @@ void main() {
       expect(valueLevel(1.0, 1), equals(MetricValueLevel.noted));
       expect(valueLevel(0.8, 1), equals(MetricValueLevel.none));
     });
+
+    test('isReportLevel returns true only on "warning" and "alarm"', () {
+      <MetricValueLevel, Matcher>{
+        MetricValueLevel.none: isFalse,
+        MetricValueLevel.noted: isFalse,
+        MetricValueLevel.warning: isTrue,
+        MetricValueLevel.alarm: isTrue,
+      }.forEach((key, value) {
+        expect(isReportLevel(key), value);
+      });
+    });
   });
 }

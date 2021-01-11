@@ -4,10 +4,10 @@
 [![codecov.io](https://codecov.io/gh/dart-code-checker-project/code-checker/branch/main/graphs/badge.svg?branch=main)](https://codecov.io/github/dart-code-checker-project/code-checker?branch=main)
 [![License](https://badgen.net/pub/license/code_checker)](https://github.com/dart-code-checker-project/code-checker/blob/master/LICENSE)
 [![Pub Version](https://badgen.net/pub/v/code_checker)](https://pub.dev/packages/code_checker/)
-![Dart SDK Verison](https://badgen.net/pub/sdk-version/code_checker)
+![Dart SDK Version](https://badgen.net/pub/sdk-version/code_checker)
 ![Dart Platform](https://badgen.net/pub/dart-platform/code_checker)
 
-Static source code analytics tool that helps analyse and improve quality.
+Static source code analytics tool that helps analyse and improve quality, inspired by Wrike [Dart code metrics](https://github.com/wrike/dart-code-metrics).
 
 ## Usage
 
@@ -19,7 +19,7 @@ The plugin for the Dart `analyzer` provide information collected by metrics.
 
     ```yaml
     dev_dependencies:
-      code_checker: ^0.2.7
+      code_checker: ^0.2.8
     ```
 
 2. Add configuration to `analysis_options.yaml`

@@ -25,7 +25,7 @@ class CheckerAnalyzerPlugin extends ServerPlugin {
   String get name => 'Code Checker';
 
   @override
-  String get version => '1.0.0';
+  String get version => '0.2.8';
 
   CheckerAnalyzerPlugin(ResourceProvider provider) : super(provider);
 

@@ -33,3 +33,7 @@ MetricValueLevel valueLevel(num value, num warningLevel) {
 
   return MetricValueLevel.none;
 }
+
+/// Determines if the [level] warns about need to be a report about a metric value
+bool isReportLevel(MetricValueLevel level) =>
+    level == MetricValueLevel.warning || level == MetricValueLevel.alarm;

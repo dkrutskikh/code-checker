@@ -4,6 +4,7 @@ import '../models/metric_value.dart';
 import '../models/metric_value_level.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
+import 'metric_computation_result.dart';
 
 /// Interface that code checker uses to communicate with the metrics.
 ///
@@ -39,17 +40,18 @@ abstract class Metric<T extends num> {
     ScopedClassDeclaration classDeclaration,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
   ) {
-    final value = computeImplementation(classDeclaration, functionDeclarations);
+    final result = computeImplementation(classDeclaration, functionDeclarations);
 
     return MetricValue<T>(
       metricsId: id,
-      value: value,
-      level: _levelComputer(value, threshold),
+      value: result.value,
+      level: _levelComputer(result.value, threshold),
+      context: result.context,
     );
   }
 
   @protected
-  T computeImplementation(
+  MetricComputationResult<T> computeImplementation(
     ScopedClassDeclaration classDeclaration,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
   );

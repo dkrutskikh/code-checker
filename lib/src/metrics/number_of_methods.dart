@@ -2,6 +2,7 @@ import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import '../utils/metric_utils.dart';
 import 'metric.dart';
+import 'metric_computation_result.dart';
 
 /// Number of Methods (NOM)
 ///
@@ -23,11 +24,13 @@ class NumberOfMethodsMetric extends Metric<int> {
         );
 
   @override
-  int computeImplementation(
+  MetricComputationResult<int> computeImplementation(
     ScopedClassDeclaration classDeclaration,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
   ) =>
-      _classFunctions(classDeclaration, functionDeclarations).length;
+      MetricComputationResult(
+        value: _classFunctions(classDeclaration, functionDeclarations).length,
+      );
 
   Iterable<ScopedFunctionDeclaration> _classFunctions(
     ScopedClassDeclaration classDeclaration,

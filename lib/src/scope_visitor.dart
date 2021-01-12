@@ -7,12 +7,12 @@ import 'models/scoped_function_declaration.dart';
 
 /// Visitor to collect declarations of classes and functions
 class ScopeVisitor extends RecursiveAstVisitor<void> {
-  final _components = <ScopedClassDeclaration>[];
+  final _classes = <ScopedClassDeclaration>[];
   final _functions = <ScopedFunctionDeclaration>[];
 
   ScopedClassDeclaration _enclosingDeclaration;
 
-  Iterable<ScopedClassDeclaration> get components => _components;
+  Iterable<ScopedClassDeclaration> get classes => _classes;
 
   Iterable<ScopedFunctionDeclaration> get functions => _functions;
 
@@ -63,7 +63,7 @@ class ScopeVisitor extends RecursiveAstVisitor<void> {
     void Function() visitCallback,
   ) {
     _enclosingDeclaration = ScopedClassDeclaration(node);
-    _components.add(_enclosingDeclaration);
+    _classes.add(_enclosingDeclaration);
 
     visitCallback();
 

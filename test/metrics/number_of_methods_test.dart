@@ -24,7 +24,7 @@ void main() {
           .visitChildren(visitor);
 
       final metricValue =
-          metric.compute(visitor.components.single, visitor.functions);
+          metric.compute(visitor.classes.single, visitor.functions);
 
       expect(metricValue.metricsId, equals(metric.id));
       expect(metricValue.value, equals(value));

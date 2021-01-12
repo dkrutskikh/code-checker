@@ -21,9 +21,12 @@ void main() {
           .unit
           .visitChildren(visitor);
 
-      final component = visitor.components.single;
-      expect(component.declaration, const TypeMatcher<ClassDeclaration>());
-      expect(component.humanReadableName, equals('Doer'));
+      final classDeclaration = visitor.classes.single;
+      expect(
+        classDeclaration.declaration,
+        const TypeMatcher<ClassDeclaration>(),
+      );
+      expect(classDeclaration.humanReadableName, equals('Doer'));
 
       final function = visitor.functions.single;
       expect(function.type, equals(FunctionType.method));
@@ -52,9 +55,12 @@ void main() {
           .unit
           .visitChildren(visitor);
 
-      final component = visitor.components.single;
-      expect(component.declaration, const TypeMatcher<ClassDeclaration>());
-      expect(component.humanReadableName, equals('Logger'));
+      final classDeclaration = visitor.classes.single;
+      expect(
+        classDeclaration.declaration,
+        const TypeMatcher<ClassDeclaration>(),
+      );
+      expect(classDeclaration.humanReadableName, equals('Logger'));
 
       final functions = visitor.functions.toList();
       expect(functions.length, equals(4));
@@ -151,9 +157,12 @@ void main() {
           .unit
           .visitChildren(visitor);
 
-      final component = visitor.components.single;
-      expect(component.declaration, const TypeMatcher<ExtensionDeclaration>());
-      expect(component.humanReadableName, equals('NumberParsing'));
+      final classDeclaration = visitor.classes.single;
+      expect(
+        classDeclaration.declaration,
+        const TypeMatcher<ExtensionDeclaration>(),
+      );
+      expect(classDeclaration.humanReadableName, equals('NumberParsing'));
 
       final function = visitor.functions.single;
       expect(function.type, equals(FunctionType.method));
@@ -181,9 +190,12 @@ void main() {
           .unit
           .visitChildren(visitor);
 
-      final component = visitor.components.single;
-      expect(component.declaration, const TypeMatcher<MixinDeclaration>());
-      expect(component.humanReadableName, equals('Musical'));
+      final classDeclaration = visitor.classes.single;
+      expect(
+        classDeclaration.declaration,
+        const TypeMatcher<MixinDeclaration>(),
+      );
+      expect(classDeclaration.humanReadableName, equals('Musical'));
 
       final function = visitor.functions.single;
       expect(function.type, equals(FunctionType.method));
@@ -211,7 +223,7 @@ void main() {
           .unit
           .visitChildren(visitor);
 
-      expect(visitor.components, isEmpty);
+      expect(visitor.classes, isEmpty);
 
       expect(visitor.functions.length, equals(2));
 

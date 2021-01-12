@@ -40,7 +40,8 @@ abstract class Metric<T extends num> {
     ScopedClassDeclaration classDeclaration,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
   ) {
-    final result = computeImplementation(classDeclaration, functionDeclarations);
+    final result =
+        computeImplementation(classDeclaration, functionDeclarations);
 
     return MetricValue<T>(
       metricsId: id,

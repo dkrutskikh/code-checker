@@ -6,8 +6,8 @@ import 'package:meta/meta.dart';
 class ScopedClassDeclaration {
   final CompilationUnitMember declaration;
 
-  /// Returns user defined human readable name
-  String get humanReadableName {
+  /// Returns user defined name
+  String get name {
     if (declaration is ExtensionDeclaration) {
       return (declaration as ExtensionDeclaration).name.name;
     } else if (declaration is NamedCompilationUnitMember) {

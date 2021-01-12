@@ -26,7 +26,7 @@ void main() {
         classDeclaration.declaration,
         const TypeMatcher<ClassDeclaration>(),
       );
-      expect(classDeclaration.humanReadableName, equals('Doer'));
+      expect(classDeclaration.name, equals('Doer'));
 
       final function = visitor.functions.single;
       expect(function.type, equals(FunctionType.method));
@@ -60,7 +60,7 @@ void main() {
         classDeclaration.declaration,
         const TypeMatcher<ClassDeclaration>(),
       );
-      expect(classDeclaration.humanReadableName, equals('Logger'));
+      expect(classDeclaration.name, equals('Logger'));
 
       final functions = visitor.functions.toList();
       expect(functions.length, equals(4));
@@ -162,7 +162,7 @@ void main() {
         classDeclaration.declaration,
         const TypeMatcher<ExtensionDeclaration>(),
       );
-      expect(classDeclaration.humanReadableName, equals('NumberParsing'));
+      expect(classDeclaration.name, equals('NumberParsing'));
 
       final function = visitor.functions.single;
       expect(function.type, equals(FunctionType.method));
@@ -195,7 +195,7 @@ void main() {
         classDeclaration.declaration,
         const TypeMatcher<MixinDeclaration>(),
       );
-      expect(classDeclaration.humanReadableName, equals('Musical'));
+      expect(classDeclaration.name, equals('Musical'));
 
       final function = visitor.functions.single;
       expect(function.type, equals(FunctionType.method));

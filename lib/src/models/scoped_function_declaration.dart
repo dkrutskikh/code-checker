@@ -11,6 +11,32 @@ class ScopedFunctionDeclaration {
   final Declaration declaration;
   final ScopedClassDeclaration enclosingDeclaration;
 
+  /// Returns user defined name
+  String get name {
+    if (declaration is FunctionDeclaration) {
+      return (declaration as FunctionDeclaration).name?.name;
+    } else if (declaration is ConstructorDeclaration) {
+      return (declaration as ConstructorDeclaration).name?.name ??
+          (declaration.parent as NamedCompilationUnitMember).name?.name;
+    } else if (declaration is MethodDeclaration) {
+      return (declaration as MethodDeclaration).name?.name;
+    }
+
+    return null;
+  }
+
+  /// Returns full user defined name
+  ///
+  /// using the pattern `className.methodName`
+  String get fullName {
+    final className = enclosingDeclaration?.name;
+    final functionName = name;
+
+    return functionName == null
+        ? null
+        : (className == null ? name : '$className.$functionName');
+  }
+
   const ScopedFunctionDeclaration(
     this.type,
     this.declaration,

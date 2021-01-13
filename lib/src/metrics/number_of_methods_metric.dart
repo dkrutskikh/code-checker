@@ -37,10 +37,18 @@ class NumberOfMethodsMetric extends Metric<int> {
   @override
   String commentMessage(ClassType type, int value, int threshold) {
     final methods = '$value ${value == 1 ? 'method' : 'methods'}';
-    final exceeds = value > threshold ? ', which exceeds the maximum of $threshold allowed' : '';
+    final exceeds = value > threshold
+        ? ', which exceeds the maximum of $threshold allowed'
+        : '';
 
     return 'This ${type.toString().toLowerCase()} has $methods$exceeds.';
   }
+
+  @override
+  String recommendationMessage(ClassType type, int value, int threshold) =>
+      (value > threshold)
+          ? 'Consider breaking this ${type.toString().toLowerCase()} up into smaller parts.'
+          : null;
 
   Iterable<ScopedFunctionDeclaration> _classFunctions(
     ScopedClassDeclaration classDeclaration,

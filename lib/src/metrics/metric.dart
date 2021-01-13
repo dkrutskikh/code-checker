@@ -49,6 +49,8 @@ abstract class Metric<T extends num> {
       value: result.value,
       level: _levelComputer(result.value, threshold),
       comment: commentMessage(classDeclaration.type, result.value, threshold),
+      recommendation:
+          recommendationMessage(classDeclaration.type, result.value, threshold),
       context: result.context,
     );
   }
@@ -61,4 +63,7 @@ abstract class Metric<T extends num> {
 
   @protected
   String commentMessage(ClassType type, T value, T threshold);
+
+  @protected
+  String recommendationMessage(ClassType type, T value, T threshold) => null;
 }

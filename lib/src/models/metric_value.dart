@@ -17,6 +17,9 @@ class MetricValue<T> {
   /// Message for user containing information about this value.
   final String comment;
 
+  /// Message for user containing information about how the user can improve this value.
+  final String recommendation;
+
   /// Additional information associated with this value.
   ///
   /// That provide context to help the user understand how the metric compute this one.
@@ -27,6 +30,7 @@ class MetricValue<T> {
     @required this.value,
     @required this.level,
     @required this.comment,
+    this.recommendation,
     this.context = const [],
   });
 }

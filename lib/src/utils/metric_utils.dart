@@ -17,7 +17,7 @@ T readThreshold<T extends num>(
   return defaultValue;
 }
 
-/// Returns calculated [MetricValueLevel] based on [value] and [warningLevel]
+/// Returns calculated [MetricValueLevel] based on the [value] to [warningLevel] ratio
 MetricValueLevel valueLevel(num value, num warningLevel) {
   if (value == null || warningLevel == null) {
     return MetricValueLevel.none;

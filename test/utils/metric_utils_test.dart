@@ -30,6 +30,10 @@ void main() {
     });
 
     test('valueLevel returns a level of passed value', () {
+      expect(valueLevel(null, 10), equals(MetricValueLevel.none));
+      expect(valueLevel(30, null), equals(MetricValueLevel.none));
+      expect(valueLevel(null, null), equals(MetricValueLevel.none));
+
       expect(valueLevel(30, 10), equals(MetricValueLevel.alarm));
       expect(valueLevel(20, 10), equals(MetricValueLevel.warning));
       expect(valueLevel(10, 10), equals(MetricValueLevel.noted));

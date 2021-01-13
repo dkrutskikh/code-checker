@@ -1,5 +1,5 @@
 import 'metrics/metric.dart';
-import 'metrics/number_of_methods.dart';
+import 'metrics/number_of_methods_metric.dart';
 
 final _implementedMetrics = <String, Metric Function(Map<String, Object>)>{
   NumberOfMethodsMetric.metricId: (config) =>

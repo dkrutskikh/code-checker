@@ -1,6 +1,6 @@
 @TestOn('vm')
 import 'package:analyzer/dart/analysis/utilities.dart';
-import 'package:code_checker/src/metrics/number_of_methods.dart';
+import 'package:code_checker/src/metrics/number_of_methods_metric.dart';
 import 'package:code_checker/src/models/metric_value_level.dart';
 import 'package:code_checker/src/scope_visitor.dart';
 import 'package:path/path.dart' as p;

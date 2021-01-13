@@ -4,11 +4,17 @@ import 'package:test/test.dart';
 
 void main() {
   test(
-    'MetricValueLevel fromString convert string to MetricValueLevel object',
+    'MetricValueLevel fromString converts string to MetricValueLevel object',
     () {
+      const humanReadableLevels = ['NoTEd', 'wARniNG', 'aLaRM', '', null];
+
+      assert(
+        humanReadableLevels.length == MetricValueLevel.values.length + 1,
+        "humanReadableLevels has invalid lengths, perhaps array doesn't contain all values",
+      );
+
       expect(
-        ['NoTEd', 'wARniNG', 'aLaRM', '', null]
-            .map(MetricValueLevel.fromString),
+        humanReadableLevels.map(MetricValueLevel.fromString),
         equals([
           MetricValueLevel.noted,
           MetricValueLevel.warning,

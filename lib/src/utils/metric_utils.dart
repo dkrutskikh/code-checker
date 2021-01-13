@@ -34,6 +34,23 @@ MetricValueLevel valueLevel(num value, num warningLevel) {
   return MetricValueLevel.none;
 }
 
+/// Returns calculated [MetricValueLevel] based on the [value] to [warningLevel] inverted ratio
+MetricValueLevel invertValueLevel(num value, num warningLevel) {
+  if (value == null || warningLevel == null) {
+    return MetricValueLevel.none;
+  }
+
+  if (value < warningLevel * 0.5) {
+    return MetricValueLevel.alarm;
+  } else if (value < warningLevel) {
+    return MetricValueLevel.warning;
+  } else if (value < warningLevel * 1.25) {
+    return MetricValueLevel.noted;
+  }
+
+  return MetricValueLevel.none;
+}
+
 /// Determines if the [level] warns about need to be a report about a metric value
 bool isReportLevel(MetricValueLevel level) =>
     level == MetricValueLevel.warning || level == MetricValueLevel.alarm;

@@ -1,7 +1,8 @@
 @TestOn('vm')
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:code_checker/checker.dart';
+import 'package:code_checker/src/models/class_type.dart';
+import 'package:code_checker/src/models/function_type.dart';
 import 'package:code_checker/src/scope_visitor.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -26,6 +27,7 @@ void main() {
         classDeclaration.declaration,
         const TypeMatcher<ClassDeclaration>(),
       );
+      expect(classDeclaration.type, equals(ClassType.generic));
       expect(classDeclaration.name, equals('Doer'));
 
       final function = visitor.functions.single;
@@ -47,6 +49,7 @@ void main() {
         classDeclaration.declaration,
         const TypeMatcher<ClassDeclaration>(),
       );
+      expect(classDeclaration.type, equals(ClassType.generic));
       expect(classDeclaration.name, equals('Logger'));
 
       final functions = visitor.functions.toList(growable: false);
@@ -84,6 +87,7 @@ void main() {
         classDeclaration.declaration,
         const TypeMatcher<ExtensionDeclaration>(),
       );
+      expect(classDeclaration.type, equals(ClassType.extension));
       expect(classDeclaration.name, equals('NumberParsing'));
 
       final function = visitor.functions.single;
@@ -104,6 +108,7 @@ void main() {
         classDeclaration.declaration,
         const TypeMatcher<MixinDeclaration>(),
       );
+      expect(classDeclaration.type, equals(ClassType.mixin));
       expect(classDeclaration.name, equals('Musical'));
 
       final function = visitor.functions.single;

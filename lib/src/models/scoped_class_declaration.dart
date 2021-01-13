@@ -1,9 +1,12 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:meta/meta.dart';
 
+import 'class_type.dart';
+
 /// Represents a declaration of class/mixin/extension
 @immutable
 class ScopedClassDeclaration {
+  final ClassType type;
   final CompilationUnitMember declaration;
 
   /// Returns user defined name
@@ -17,5 +20,5 @@ class ScopedClassDeclaration {
     return '';
   }
 
-  const ScopedClassDeclaration(this.declaration);
+  const ScopedClassDeclaration(this.type, this.declaration);
 }

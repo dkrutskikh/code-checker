@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 
+import 'models/class_type.dart';
 import 'models/function_type.dart';
 import 'models/scoped_class_declaration.dart';
 import 'models/scoped_function_declaration.dart';
@@ -18,7 +19,7 @@ class ScopeVisitor extends RecursiveAstVisitor<void> {
 
   @override
   void visitClassDeclaration(ClassDeclaration node) {
-    _registerClassDeclaration(node, () {
+    _registerClassDeclaration(ClassType.generic, node, () {
       super.visitClassDeclaration(node);
     });
   }
@@ -32,7 +33,7 @@ class ScopeVisitor extends RecursiveAstVisitor<void> {
 
   @override
   void visitExtensionDeclaration(ExtensionDeclaration node) {
-    _registerClassDeclaration(node, () {
+    _registerClassDeclaration(ClassType.extension, node, () {
       super.visitExtensionDeclaration(node);
     });
   }
@@ -53,16 +54,17 @@ class ScopeVisitor extends RecursiveAstVisitor<void> {
 
   @override
   void visitMixinDeclaration(MixinDeclaration node) {
-    _registerClassDeclaration(node, () {
+    _registerClassDeclaration(ClassType.mixin, node, () {
       super.visitMixinDeclaration(node);
     });
   }
 
   void _registerClassDeclaration(
+    ClassType type,
     CompilationUnitMember node,
     void Function() visitCallback,
   ) {
-    _enclosingDeclaration = ScopedClassDeclaration(node);
+    _enclosingDeclaration = ScopedClassDeclaration(type, node);
     _classes.add(_enclosingDeclaration);
 
     visitCallback();

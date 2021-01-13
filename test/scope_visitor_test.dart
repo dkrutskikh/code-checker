@@ -26,25 +26,12 @@ void main() {
         classDeclaration.declaration,
         const TypeMatcher<ClassDeclaration>(),
       );
-      expect(classDeclaration.humanReadableName, equals('Doer'));
+      expect(classDeclaration.name, equals('Doer'));
 
       final function = visitor.functions.single;
       expect(function.type, equals(FunctionType.method));
-      expect(function.declaration, const TypeMatcher<MethodDeclaration>());
-      expect(
-        (function.declaration as MethodDeclaration).name.name,
-        equals('doSomething'),
-      );
-      expect(
-        function.enclosingDeclaration.declaration,
-        const TypeMatcher<ClassDeclaration>(),
-      );
-      expect(
-        (function.enclosingDeclaration.declaration as ClassDeclaration)
-            .name
-            .name,
-        equals('Doer'),
-      );
+      expect(function.name, equals('doSomething'));
+      expect(function.fullName, equals('Doer.doSomething'));
     });
 
     test('class with factory constructors', () async {
@@ -60,94 +47,29 @@ void main() {
         classDeclaration.declaration,
         const TypeMatcher<ClassDeclaration>(),
       );
-      expect(classDeclaration.humanReadableName, equals('Logger'));
+      expect(classDeclaration.name, equals('Logger'));
 
       final functions = visitor.functions.toList();
       expect(functions.length, equals(4));
 
       final factoryConstructor = functions.first;
       expect(factoryConstructor.type, equals(FunctionType.constructor));
-      expect(
-        factoryConstructor.declaration,
-        const TypeMatcher<ConstructorDeclaration>(),
-      );
-      expect(
-        (factoryConstructor.declaration as ConstructorDeclaration).name,
-        isNull,
-      );
-      expect(
-        factoryConstructor.enclosingDeclaration.declaration,
-        const TypeMatcher<ClassDeclaration>(),
-      );
-      expect(
-        (factoryConstructor.enclosingDeclaration.declaration
-                as ClassDeclaration)
-            .name
-            .name,
-        equals('Logger'),
-      );
+      expect(factoryConstructor.name, equals('Logger'));
+      expect(factoryConstructor.fullName, equals('Logger.Logger'));
 
       final fromJson = functions[1];
       expect(fromJson.type, equals(FunctionType.constructor));
-      expect(
-        fromJson.declaration,
-        const TypeMatcher<ConstructorDeclaration>(),
-      );
-      expect(
-        (fromJson.declaration as ConstructorDeclaration).name.name,
-        'fromJson',
-      );
-      expect(
-        fromJson.enclosingDeclaration.declaration,
-        const TypeMatcher<ClassDeclaration>(),
-      );
-      expect(
-        (fromJson.enclosingDeclaration.declaration as ClassDeclaration)
-            .name
-            .name,
-        equals('Logger'),
-      );
+      expect(fromJson.name, equals('fromJson'));
+      expect(fromJson.fullName, equals('Logger.fromJson'));
 
       final constructor = functions[2];
       expect(constructor.type, equals(FunctionType.constructor));
-      expect(
-        constructor.declaration,
-        const TypeMatcher<ConstructorDeclaration>(),
-      );
-      expect(
-        (constructor.declaration as ConstructorDeclaration).name.name,
-        '_internal',
-      );
-      expect(
-        constructor.enclosingDeclaration.declaration,
-        const TypeMatcher<ClassDeclaration>(),
-      );
-      expect(
-        (constructor.enclosingDeclaration.declaration as ClassDeclaration)
-            .name
-            .name,
-        equals('Logger'),
-      );
+      expect(constructor.name, equals('_internal'));
+      expect(constructor.fullName, equals('Logger._internal'));
 
       expect(functions.last.type, equals(FunctionType.method));
-      expect(
-        functions.last.declaration,
-        const TypeMatcher<MethodDeclaration>(),
-      );
-      expect(
-        (functions.last.declaration as MethodDeclaration).name.name,
-        equals('log'),
-      );
-      expect(
-        functions.last.enclosingDeclaration.declaration,
-        const TypeMatcher<ClassDeclaration>(),
-      );
-      expect(
-        (functions.last.enclosingDeclaration.declaration as ClassDeclaration)
-            .name
-            .name,
-        equals('Logger'),
-      );
+      expect(functions.last.name, equals('log'));
+      expect(functions.last.fullName, equals('Logger.log'));
     });
 
     test('extension with method', () async {
@@ -162,25 +84,12 @@ void main() {
         classDeclaration.declaration,
         const TypeMatcher<ExtensionDeclaration>(),
       );
-      expect(classDeclaration.humanReadableName, equals('NumberParsing'));
+      expect(classDeclaration.name, equals('NumberParsing'));
 
       final function = visitor.functions.single;
       expect(function.type, equals(FunctionType.method));
-      expect(function.declaration, const TypeMatcher<MethodDeclaration>());
-      expect(
-        (function.declaration as MethodDeclaration).name.name,
-        equals('parseInt'),
-      );
-      expect(
-        function.enclosingDeclaration.declaration,
-        const TypeMatcher<ExtensionDeclaration>(),
-      );
-      expect(
-        (function.enclosingDeclaration.declaration as ExtensionDeclaration)
-            .name
-            .name,
-        equals('NumberParsing'),
-      );
+      expect(function.name, equals('parseInt'));
+      expect(function.fullName, equals('NumberParsing.parseInt'));
     });
 
     test('mixin', () async {
@@ -195,25 +104,12 @@ void main() {
         classDeclaration.declaration,
         const TypeMatcher<MixinDeclaration>(),
       );
-      expect(classDeclaration.humanReadableName, equals('Musical'));
+      expect(classDeclaration.name, equals('Musical'));
 
       final function = visitor.functions.single;
       expect(function.type, equals(FunctionType.method));
-      expect(function.declaration, const TypeMatcher<MethodDeclaration>());
-      expect(
-        (function.declaration as MethodDeclaration).name.name,
-        equals('entertainMe'),
-      );
-      expect(
-        function.enclosingDeclaration.declaration,
-        const TypeMatcher<MixinDeclaration>(),
-      );
-      expect(
-        (function.enclosingDeclaration.declaration as MixinDeclaration)
-            .name
-            .name,
-        equals('Musical'),
-      );
+      expect(function.name, equals('entertainMe'));
+      expect(function.fullName, equals('Musical.entertainMe'));
     });
 
     test('functions', () async {
@@ -227,23 +123,13 @@ void main() {
 
       expect(visitor.functions.length, equals(2));
 
-      final first = visitor.functions.first;
-      expect(first.type, equals(FunctionType.function));
-      expect(first.declaration, const TypeMatcher<FunctionDeclaration>());
-      expect(
-        (first.declaration as FunctionDeclaration).name.name,
-        equals('printInteger'),
-      );
-      expect(first.enclosingDeclaration, isNull);
+      expect(visitor.functions.first.type, equals(FunctionType.function));
+      expect(visitor.functions.first.name, equals('printInteger'));
+      expect(visitor.functions.first.fullName, equals('printInteger'));
 
-      final last = visitor.functions.last;
-      expect(last.type, equals(FunctionType.function));
-      expect(last.declaration, const TypeMatcher<FunctionDeclaration>());
-      expect(
-        (last.declaration as FunctionDeclaration).name.name,
-        equals('main'),
-      );
-      expect(last.enclosingDeclaration, isNull);
+      expect(visitor.functions.last.type, equals(FunctionType.function));
+      expect(visitor.functions.last.name, equals('main'));
+      expect(visitor.functions.last.fullName, equals('main'));
     });
   });
 }

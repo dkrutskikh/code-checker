@@ -9,8 +9,5 @@ class Replacement {
   /// Code with changes to replace original code with.
   final String replacement;
 
-  const Replacement({
-    @required this.comment,
-    @required this.replacement,
-  });
+  const Replacement({@required this.comment, @required this.replacement});
 }

@@ -20,7 +20,7 @@ class MetricValueLevel implements Comparable<MetricValueLevel> {
   /// Value greater than 200% of the threshold
   static const MetricValueLevel alarm = MetricValueLevel._('alarm');
 
-  static const _values = [
+  static const values = [
     MetricValueLevel.none,
     MetricValueLevel.noted,
     MetricValueLevel.warning,
@@ -31,7 +31,7 @@ class MetricValueLevel implements Comparable<MetricValueLevel> {
 
   /// Converts the human readable [level] string into a [MetricValueLevel] value.
   static MetricValueLevel fromString(String level) => level != null
-      ? _values.firstWhere(
+      ? values.firstWhere(
           (val) => val._name == level.toLowerCase(),
           orElse: () => MetricValueLevel.none,
         )
@@ -44,7 +44,7 @@ class MetricValueLevel implements Comparable<MetricValueLevel> {
 
   @override
   int compareTo(MetricValueLevel other) =>
-      _values.indexOf(this).compareTo(_values.indexOf(other));
+      values.indexOf(this).compareTo(values.indexOf(other));
 
   /// Relational less than operator.
   bool operator <(MetricValueLevel other) => compareTo(other) < 0;

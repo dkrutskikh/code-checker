@@ -10,6 +10,15 @@ void main() {
   test('NumberOfMethodsMetric computes', () {
     final metric = NumberOfMethodsMetric();
 
+    final commentMatchers = {
+      './test/resources/abstract_class.dart':
+          equals('This class has 1 method.'),
+      './test/resources/class_with_factory_constructors.dart':
+          equals('This class has 4 methods.'),
+      './test/resources/extension.dart': equals('This extension has 1 method.'),
+      './test/resources/mixin.dart': equals('This mixin has 1 method.'),
+    };
+
     <String, int>{
       './test/resources/abstract_class.dart': 1,
       './test/resources/class_with_factory_constructors.dart': 4,
@@ -28,6 +37,7 @@ void main() {
       expect(metricValue.metricsId, equals(metric.id));
       expect(metricValue.value, equals(value));
       expect(metricValue.level, equals(MetricValueLevel.none));
+      expect(metricValue.comment, commentMatchers[key]);
     });
   });
 }

@@ -14,6 +14,9 @@ class MetricValue<T> {
   /// Level of this value computed by the metric.
   final MetricValueLevel level;
 
+  /// Message for user containing information about this value.
+  final String comment;
+
   /// Additional information associated with this value.
   ///
   /// That provide context to help the user understand how the metric compute this one.
@@ -23,6 +26,7 @@ class MetricValue<T> {
     @required this.metricsId,
     @required this.value,
     @required this.level,
+    @required this.comment,
     this.context = const [],
   });
 }

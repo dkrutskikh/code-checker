@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 
+import '../models/class_type.dart';
 import '../models/metric_value.dart';
 import '../models/metric_value_level.dart';
 import '../models/scoped_class_declaration.dart';
@@ -47,6 +48,7 @@ abstract class Metric<T extends num> {
       metricsId: id,
       value: result.value,
       level: _levelComputer(result.value, threshold),
+      comment: commentMessage(classDeclaration.type, result.value, threshold),
       context: result.context,
     );
   }
@@ -56,4 +58,7 @@ abstract class Metric<T extends num> {
     ScopedClassDeclaration classDeclaration,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
   );
+
+  @protected
+  String commentMessage(ClassType type, T value, T threshold);
 }

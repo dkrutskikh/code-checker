@@ -1,3 +1,5 @@
+import '../models/class_type.dart';
+
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import '../utils/metric_utils.dart';
@@ -31,6 +33,14 @@ class NumberOfMethodsMetric extends Metric<int> {
       MetricComputationResult(
         value: _classFunctions(classDeclaration, functionDeclarations).length,
       );
+
+  @override
+  String commentMessage(ClassType type, int value, int threshold) {
+    final methods = '$value ${value == 1 ? 'method' : 'methods'}';
+    final exceeds = value > threshold ? ', which exceeds the maximum of $threshold allowed' : '';
+
+    return 'This ${type.toString().toLowerCase()} has $methods$exceeds.';
+  }
 
   Iterable<ScopedFunctionDeclaration> _classFunctions(
     ScopedClassDeclaration classDeclaration,

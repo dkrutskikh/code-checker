@@ -6,9 +6,12 @@ void main() {
   test('getMetricsById returns only required metrics', () {
     expect(getMetricsById({}), isEmpty);
     expect(
-      getMetricsById({'number-of-methods': '1', 'metric-id': '2'})
-          .map((metric) => metric.id),
-      equals(['number-of-methods']),
+      getMetricsById({
+        'weight-of-class': '0',
+        'number-of-methods': '1',
+        'metric-id': '2',
+      }).map((metric) => metric.id),
+      equals(['number-of-methods', 'weight-of-class']),
     );
   });
 }

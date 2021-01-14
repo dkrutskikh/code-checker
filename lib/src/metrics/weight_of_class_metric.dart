@@ -35,21 +35,10 @@ class WeightOfClassMetric extends Metric<double> {
   ) {
     final totalPublicMethods =
         classMethods(classDeclaration, functionDeclarations)
-            .where((function) => !Identifier.isPrivateName(function.name))
+            .where(_isPublicMethod)
             .toList(growable: false);
 
-    final functionalMethods = totalPublicMethods.where((function) {
-      if (function.type == FunctionType.constructor) {
-        return false;
-      }
-
-      final declaration = function.declaration;
-      if (declaration is MethodDeclaration) {
-        return !declaration.isGetter && !declaration.isSetter;
-      }
-
-      return true;
-    });
+    final functionalMethods = totalPublicMethods.where(_isFunctionalMethod);
 
     return MetricComputationResult(
       value: functionalMethods.length / totalPublicMethods.length,
@@ -63,5 +52,18 @@ class WeightOfClassMetric extends Metric<double> {
         : '';
 
     return 'This ${type.toString().toLowerCase()} has a weight of $value$exceeds.';
+  }
+
+  bool _isPublicMethod(ScopedFunctionDeclaration function) =>
+      !Identifier.isPrivateName(function.name);
+
+  bool _isFunctionalMethod(ScopedFunctionDeclaration function) {
+    const _nonFunctionalTypes = {
+      FunctionType.constructor,
+      FunctionType.setter,
+      FunctionType.getter,
+    };
+
+    return !_nonFunctionalTypes.contains(function.type);
   }
 }

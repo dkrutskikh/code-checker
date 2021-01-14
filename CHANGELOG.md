@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0 - 2021-01-14
+
+- Add Weight of Class metric
+
 ## 0.2.0 - 2021-01-04
 
 - Add Number of Methods metric

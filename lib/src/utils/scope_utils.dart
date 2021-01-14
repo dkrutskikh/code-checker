@@ -1,7 +1,7 @@
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 
-Iterable<ScopedFunctionDeclaration> classFunctions(
+Iterable<ScopedFunctionDeclaration> classMethods(
   ScopedClassDeclaration classDeclaration,
   Iterable<ScopedFunctionDeclaration> functionDeclarations,
 ) =>

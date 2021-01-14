@@ -31,7 +31,7 @@ class NumberOfMethodsMetric extends Metric<int> {
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
   ) =>
       MetricComputationResult(
-        value: classFunctions(classDeclaration, functionDeclarations).length,
+        value: classMethods(classDeclaration, functionDeclarations).length,
       );
 
   @override

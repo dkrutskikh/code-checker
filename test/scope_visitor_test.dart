@@ -136,5 +136,63 @@ void main() {
       expect(visitor.functions.last.name, equals('main'));
       expect(visitor.functions.last.fullName, equals('main'));
     });
+
+    test('two classes', () async {
+      (await resolveFile(
+        path: p.normalize(
+            p.absolute('./test/resources/weight_of_class_example.dart')),
+      ))
+          .unit
+          .visitChildren(visitor);
+
+      expect(visitor.classes.length, equals(2));
+
+      expect(
+        visitor.classes.first.declaration,
+        const TypeMatcher<ClassDeclaration>(),
+      );
+      expect(visitor.classes.first.type, equals(ClassType.generic));
+      expect(visitor.classes.first.name, equals('SimpleClass'));
+
+      expect(
+        visitor.classes.last.declaration,
+        const TypeMatcher<ClassDeclaration>(),
+      );
+      expect(visitor.classes.last.type, equals(ClassType.generic));
+      expect(visitor.classes.last.name, equals('Spacecraft'));
+
+      final functions = visitor.functions.toList(growable: false);
+      expect(functions.length, equals(6));
+
+      final constructor1 = functions.first;
+      expect(constructor1.type, equals(FunctionType.constructor));
+      expect(constructor1.name, equals('SimpleClass'));
+      expect(constructor1.fullName, equals('SimpleClass.SimpleClass'));
+
+      final lettersCount = functions[1];
+      expect(lettersCount.type, equals(FunctionType.getter));
+      expect(lettersCount.name, equals('lettersCount'));
+      expect(lettersCount.fullName, equals('SimpleClass.lettersCount'));
+
+      final constructor2 = functions[2];
+      expect(constructor2.type, equals(FunctionType.constructor));
+      expect(constructor2.name, equals('Spacecraft'));
+      expect(constructor2.fullName, equals('Spacecraft.Spacecraft'));
+
+      final unLaunched = functions[3];
+      expect(unLaunched.type, equals(FunctionType.constructor));
+      expect(unLaunched.name, equals('unlaunched'));
+      expect(unLaunched.fullName, equals('Spacecraft.unlaunched'));
+
+      final launchYear = functions[4];
+      expect(launchYear.type, equals(FunctionType.getter));
+      expect(launchYear.name, equals('launchYear'));
+      expect(launchYear.fullName, equals('Spacecraft.launchYear'));
+
+      final describe = functions[5];
+      expect(describe.type, equals(FunctionType.method));
+      expect(describe.name, equals('describe'));
+      expect(describe.fullName, equals('Spacecraft.describe'));
+    });
   });
 }

@@ -47,7 +47,14 @@ class ScopeVisitor extends RecursiveAstVisitor<void> {
 
   @override
   void visitMethodDeclaration(MethodDeclaration node) {
-    _registerFunctionDeclaration(FunctionType.method, node);
+    var type = FunctionType.method;
+    if (node.isGetter) {
+      type = FunctionType.getter;
+    } else if (node.isSetter) {
+      type = FunctionType.setter;
+    }
+
+    _registerFunctionDeclaration(type, node);
 
     super.visitMethodDeclaration(node);
   }

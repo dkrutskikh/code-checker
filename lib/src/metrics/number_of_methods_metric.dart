@@ -3,6 +3,7 @@ import '../models/class_type.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import '../utils/metric_utils.dart';
+import '../utils/scope_utils.dart';
 import 'metric.dart';
 import 'metric_computation_result.dart';
 
@@ -31,7 +32,7 @@ class NumberOfMethodsMetric extends Metric<int> {
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
   ) =>
       MetricComputationResult(
-        value: _classFunctions(classDeclaration, functionDeclarations).length,
+        value: classFunctions(classDeclaration, functionDeclarations).length,
       );
 
   @override
@@ -49,11 +50,4 @@ class NumberOfMethodsMetric extends Metric<int> {
       (value > threshold)
           ? 'Consider breaking this ${type.toString().toLowerCase()} up into smaller parts.'
           : null;
-
-  Iterable<ScopedFunctionDeclaration> _classFunctions(
-    ScopedClassDeclaration classDeclaration,
-    Iterable<ScopedFunctionDeclaration> functionDeclarations,
-  ) =>
-      functionDeclarations
-          .where((func) => func.enclosingDeclaration == classDeclaration);
 }

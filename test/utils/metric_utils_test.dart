@@ -30,6 +30,10 @@ void main() {
     });
 
     test('valueLevel returns a level of passed value', () {
+      expect(valueLevel(null, 10), equals(MetricValueLevel.none));
+      expect(valueLevel(30, null), equals(MetricValueLevel.none));
+      expect(valueLevel(null, null), equals(MetricValueLevel.none));
+
       expect(valueLevel(30, 10), equals(MetricValueLevel.alarm));
       expect(valueLevel(20, 10), equals(MetricValueLevel.warning));
       expect(valueLevel(10, 10), equals(MetricValueLevel.noted));
@@ -39,6 +43,22 @@ void main() {
       expect(valueLevel(2.0, 1), equals(MetricValueLevel.warning));
       expect(valueLevel(1.0, 1), equals(MetricValueLevel.noted));
       expect(valueLevel(0.8, 1), equals(MetricValueLevel.none));
+    });
+
+    test('invertValueLevel returns a level of passed value', () {
+      expect(invertValueLevel(null, 10), equals(MetricValueLevel.none));
+      expect(invertValueLevel(30, null), equals(MetricValueLevel.none));
+      expect(invertValueLevel(null, null), equals(MetricValueLevel.none));
+
+      expect(invertValueLevel(1, 10), equals(MetricValueLevel.alarm));
+      expect(invertValueLevel(5, 10), equals(MetricValueLevel.warning));
+      expect(invertValueLevel(10, 10), equals(MetricValueLevel.noted));
+      expect(invertValueLevel(13, 10), equals(MetricValueLevel.none));
+
+      expect(invertValueLevel(0.1, 1), equals(MetricValueLevel.alarm));
+      expect(invertValueLevel(0.5, 1), equals(MetricValueLevel.warning));
+      expect(invertValueLevel(1.0, 1), equals(MetricValueLevel.noted));
+      expect(invertValueLevel(1.25, 1), equals(MetricValueLevel.none));
     });
 
     test('isReportLevel returns true only on "warning" and "alarm"', () {

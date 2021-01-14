@@ -19,7 +19,7 @@ The plugin for the Dart `analyzer` provide information collected by metrics.
 
     ```yaml
     dev_dependencies:
-      code_checker: ^0.2.9
+      code_checker: ^0.2.11
     ```
 
 2. Add configuration to `analysis_options.yaml`
@@ -41,4 +41,5 @@ Usage: checker [arguments] <directories>
 
 
     --number-of-methods=<10>    Number of Methods threshold
+    --weight-of-class=<0.33>    Weight Of Class threshold
 ```

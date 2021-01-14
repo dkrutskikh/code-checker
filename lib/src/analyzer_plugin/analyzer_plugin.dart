@@ -103,7 +103,7 @@ class CheckerAnalyzerPlugin extends ServerPlugin {
               parameters.offset <=
                   fix.error.location.offset + fix.error.location.length &&
               fix.fixes.isNotEmpty)
-          .toList();
+          .toList(growable: false);
 
       return plugin.EditGetFixesResult(fixes);
     } on Exception catch (e, stackTrace) {
@@ -127,7 +127,7 @@ class CheckerAnalyzerPlugin extends ServerPlugin {
 
         channel.sendNotification(plugin.AnalysisErrorsParams(
           analysisResult.path,
-          fixes.map((fix) => fix.error).toList(),
+          fixes.map((fix) => fix.error).toList(growable: false),
         ).toNotification());
       } else {
         channel.sendNotification(

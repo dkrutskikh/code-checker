@@ -1,6 +1,8 @@
+import '../models/class_type.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import '../utils/metric_utils.dart';
+import '../utils/scope_utils.dart';
 import 'metric.dart';
 import 'metric_computation_result.dart';
 
@@ -29,13 +31,22 @@ class NumberOfMethodsMetric extends Metric<int> {
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
   ) =>
       MetricComputationResult(
-        value: _classFunctions(classDeclaration, functionDeclarations).length,
+        value: classFunctions(classDeclaration, functionDeclarations).length,
       );
 
-  Iterable<ScopedFunctionDeclaration> _classFunctions(
-    ScopedClassDeclaration classDeclaration,
-    Iterable<ScopedFunctionDeclaration> functionDeclarations,
-  ) =>
-      functionDeclarations
-          .where((func) => func.enclosingDeclaration == classDeclaration);
+  @override
+  String commentMessage(ClassType type, int value, int threshold) {
+    final methods = '$value ${value == 1 ? 'method' : 'methods'}';
+    final exceeds = value > threshold
+        ? ', which exceeds the maximum of $threshold allowed'
+        : '';
+
+    return 'This ${type.toString().toLowerCase()} has $methods$exceeds.';
+  }
+
+  @override
+  String recommendationMessage(ClassType type, int value, int threshold) =>
+      (value > threshold)
+          ? 'Consider breaking this ${type.toString().toLowerCase()} up into smaller parts.'
+          : null;
 }

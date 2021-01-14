@@ -49,7 +49,7 @@ void main() {
       );
       expect(classDeclaration.name, equals('Logger'));
 
-      final functions = visitor.functions.toList();
+      final functions = visitor.functions.toList(growable: false);
       expect(functions.length, equals(4));
 
       final factoryConstructor = functions.first;

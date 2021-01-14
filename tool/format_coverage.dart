@@ -60,7 +60,7 @@ void _addFilesToReportAsUncovered(Iterable<String> files, lcov.Report report) {
 lcov.Record _fileToUncoveredRecord(String filePath) {
   final uncoveredLines = LineSplitter.split(File(filePath).readAsStringSync())
       .map((l) => l.trim())
-      .toList()
+      .toList(growable: false)
       .asMap()
       .entries
       .where((e) =>

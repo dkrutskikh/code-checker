@@ -34,7 +34,7 @@ class WeightOfClassMetric extends Metric<double> {
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
   ) {
     final totalPublicMethods =
-        classFunctions(classDeclaration, functionDeclarations)
+        classMethods(classDeclaration, functionDeclarations)
             .where((function) => !Identifier.isPrivateName(function.name))
             .toList(growable: false);
 

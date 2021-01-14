@@ -1,5 +1,4 @@
 import '../models/class_type.dart';
-
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import '../utils/metric_utils.dart';

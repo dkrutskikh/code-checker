@@ -140,7 +140,8 @@ void main() {
     test('two classes', () async {
       (await resolveFile(
         path: p.normalize(
-            p.absolute('./test/resources/weight_of_class_example.dart')),
+          p.absolute('./test/resources/weight_of_class_example.dart'),
+        ),
       ))
           .unit
           .visitChildren(visitor);

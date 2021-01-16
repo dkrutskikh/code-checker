@@ -24,7 +24,8 @@ void main() {
       './test/resources/abstract_class.dart':
           equals('This class has 1 method.'),
       './test/resources/class_with_factory_constructors.dart': equals(
-          'This class has 4 methods, which exceeds the maximum of 2 allowed.'),
+        'This class has 4 methods, which exceeds the maximum of 2 allowed.',
+      ),
       './test/resources/extension.dart': equals('This extension has 1 method.'),
       './test/resources/mixin.dart': equals('This mixin has 1 method.'),
     };

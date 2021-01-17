@@ -1,3 +1,4 @@
+export 'package:code_checker/src/checks_recorder.dart';
 export 'package:code_checker/src/cli/arguments_validation_exceptions.dart';
 export 'package:code_checker/src/config/config.dart';
 export 'package:code_checker/src/models/class_report.dart';

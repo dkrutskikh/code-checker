@@ -6,7 +6,7 @@ import 'metric_value.dart';
 /// Represents the metrics report collected for a class
 @immutable
 class ClassReport {
-  /// Target class source code location
+  /// Source code location of the target class
   final SourceSpanBase location;
 
   /// Target class metrics

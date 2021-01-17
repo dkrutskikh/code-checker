@@ -7,7 +7,7 @@ import 'issue.dart';
 @immutable
 class FileReport {
   /// The path to the target file
-  final Uri path;
+  final String path;
 
   /// The path to the target file relative to the package root
   final String relativePath;

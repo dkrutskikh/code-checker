@@ -4,20 +4,15 @@ class SimpleClass {
 
   SimpleClass(String text) {
     _value1 = text;
-    if (_value1.isNotEmpty) {
-      _value2 = _value1.length;
-    } else {
-      _value2 = 0;
-    }
+    _value2 = _value1.isNotEmpty ? _value1.length : 0;
   }
 
-  int get lettersCount => _value1.split(' ').fold(0, (prevValue, element) {
-        if (element.isNotEmpty) {
-          return prevValue + element.length;
-        } else {
-          return prevValue + _value2;
-        }
-      });
+  int get lettersCount => _value1.split(' ').fold(
+        0,
+        (prevValue, element) => element.isNotEmpty
+            ? prevValue + element.length
+            : prevValue + _value2,
+      );
 }
 
 class Spacecraft {

@@ -32,7 +32,9 @@ class Suppressions {
       final ignoredNextLine = beforeMatch.trim().isEmpty;
       _ignoreMap
           .putIfAbsent(
-              ignoredNextLine ? lineNumber + 1 : lineNumber, () => <String>[])
+            ignoredNextLine ? lineNumber + 1 : lineNumber,
+            () => <String>[],
+          )
           .addAll(ids);
     }
 

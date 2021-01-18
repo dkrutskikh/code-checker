@@ -1,4 +1,4 @@
-export 'package:code_checker/src/metrics/cyclomatic_complexity/cyclomatic_config.dart';
+export 'package:code_checker/src/metrics/cyclomatic_complexity/cyclomatic_complexity_flow_visitor.dart';
 export 'package:code_checker/src/metrics/metric.dart';
 export 'package:code_checker/src/metrics/number_of_methods_metric.dart';
 export 'package:code_checker/src/metrics/weight_of_class_metric.dart';

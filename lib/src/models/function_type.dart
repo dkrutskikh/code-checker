@@ -1,4 +1,6 @@
-/// Enum class for type of a function. Used when reporting.
+/// Enum class for type of a function
+///
+/// Used when reporting
 class FunctionType {
   static const FunctionType constructor = FunctionType._('Constructor');
   static const FunctionType method = FunctionType._('Method');

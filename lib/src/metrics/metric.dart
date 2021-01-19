@@ -7,20 +7,20 @@ import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import 'metric_computation_result.dart';
 
-/// Interface that code checker uses to communicate with the metrics.
+/// Interface that code checker uses to communicate with the metrics
 ///
 /// All metric classes must extends from this interface
 abstract class Metric<T extends num> {
-  /// The id of the metric.
+  /// The id of the metric
   final String id;
 
-  /// The name of the metric.
+  /// The name of the metric
   final String name;
 
-  /// The short name of the metric.
+  /// The short name of the metric
   final String shortName;
 
-  /// The url of a page containing documentation associated with this metric.
+  /// The url of a page containing documentation associated with this metric
   final Uri documentation;
 
   final T threshold;

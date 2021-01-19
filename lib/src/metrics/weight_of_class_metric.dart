@@ -9,9 +9,9 @@ import '../utils/scope_utils.dart';
 import 'metric.dart';
 import 'metric_computation_result.dart';
 
-/// Weight Of Class (WOC)
+/// Weight Of a Class (WOC)
 ///
-/// Number of **functional** public methods divided by the total number of public methods.
+/// Number of **functional** public methods divided by the total number of public methods
 class WeightOfClassMetric extends Metric<double> {
   static const String metricId = 'weight-of-class';
   static const _metricName = 'Weight Of Class';

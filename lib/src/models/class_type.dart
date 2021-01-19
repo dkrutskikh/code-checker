@@ -1,4 +1,4 @@
-/// Enum class for type of a class. Used when reporting.
+/// Enum class for type of a class. Used when reporting
 class ClassType {
   static const ClassType generic = ClassType._('Class');
   static const ClassType mixin = ClassType._('Mixin');

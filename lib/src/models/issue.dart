@@ -7,25 +7,25 @@ import 'severity.dart';
 /// Represents a issue detected by the analysis rule
 @immutable
 class Issue {
-  /// The id of the rule associated with this issue.
+  /// The id of the rule associated with this issue
   final String ruleId;
 
-  /// The url of a page containing documentation associated with this issue.
+  /// The url of a page containing documentation associated with this issue
   final Uri documentation;
 
-  /// The source location associated with this issue.
+  /// The source location associated with this issue
   final SourceSpanBase location;
 
-  /// The severity of this issue.
+  /// The severity of this issue
   final Severity severity;
 
   /// Short message (single line)
   final String message;
 
-  /// Verbose message containing information about how the user can fix this issue.
+  /// Verbose message containing information about how the user can fix this issue
   final String verboseMessage;
 
-  /// The suggested relevant change.
+  /// The suggested relevant change
   final Replacement suggestion;
 
   const Issue({

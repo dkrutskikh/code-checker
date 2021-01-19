@@ -41,5 +41,5 @@ Usage: checker [arguments] <directories>
 
 
     --number-of-methods=<10>    Number of Methods threshold
-    --weight-of-class=<0.33>    Weight Of Class threshold
+    --weight-of-class=<0.33>    Weight Of a Class threshold
 ```

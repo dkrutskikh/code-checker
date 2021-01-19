@@ -42,6 +42,7 @@ abstract class Metric<T extends num> {
       value: result.value,
       level: _levelComputer(result.value, threshold),
       comment: commentMessage(classDeclaration.type, result.value, threshold),
+      documentation: documentation.url,
       recommendation:
           recommendationMessage(classDeclaration.type, result.value, threshold),
       context: result.context,

@@ -9,6 +9,9 @@ class MetricValue<T> {
   /// The id of the metric whose compute this value
   final String metricsId;
 
+  /// The url of a page containing documentation associated with the metric whose compute this value
+  final String documentation;
+
   final T value;
 
   /// Level of this value computed by the metric
@@ -30,6 +33,7 @@ class MetricValue<T> {
     @required this.value,
     @required this.level,
     @required this.comment,
+    this.documentation,
     this.recommendation,
     this.context = const [],
   });

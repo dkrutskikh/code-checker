@@ -6,6 +6,7 @@ import '../models/metric_value_level.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import 'metric_computation_result.dart';
+import 'metric_documentation.dart';
 
 /// Interface that code checker uses to communicate with the metrics
 ///
@@ -14,14 +15,8 @@ abstract class Metric<T extends num> {
   /// The id of the metric
   final String id;
 
-  /// The name of the metric
-  final String name;
-
-  /// The short name of the metric
-  final String shortName;
-
-  /// The url of a page containing documentation associated with this metric
-  final Uri documentation;
+  /// documentation associated with this metric
+  final MetricDocumentation documentation;
 
   final T threshold;
 
@@ -29,8 +24,6 @@ abstract class Metric<T extends num> {
 
   const Metric({
     @required this.id,
-    @required this.name,
-    @required this.shortName,
     @required this.documentation,
     @required this.threshold,
     @required MetricValueLevel Function(num, num) levelComputer,

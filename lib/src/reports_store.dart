@@ -9,5 +9,8 @@ abstract class ReportsStore {
   ///
   /// See [ChecksRecorder] interface on how to build new [FileReport]
   ReportsStore recordFile(
-      String filePath, String rootDirectory, void Function(ReportsBuilder) f);
+    String filePath,
+    String rootDirectory,
+    void Function(ReportsBuilder) f,
+  );
 }

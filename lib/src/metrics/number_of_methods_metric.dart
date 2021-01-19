@@ -1,27 +1,32 @@
 import '../models/class_type.dart';
+import '../models/entity_type.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import '../utils/metric_utils.dart';
 import '../utils/scope_utils.dart';
 import 'metric.dart';
 import 'metric_computation_result.dart';
+import 'metric_documentation.dart';
+
+const _documentation = MetricDocumentation(
+  name: 'Number of Methods',
+  shortName: 'NOM',
+  definition: 'The number of methods of a class.',
+  url: 'https://git.io/JttQe',
+  measuredEntity: EntityType.classEntity,
+);
 
 /// Number of Methods (NOM)
 ///
 /// The number of methods of a class
 class NumberOfMethodsMetric extends Metric<int> {
   static const String metricId = 'number-of-methods';
-  static const _metricName = 'Number of Methods';
-  static const _metricShortName = 'NOM';
-  static const _defaultThreshold = 10;
 
   NumberOfMethodsMetric({Map<String, Object> config = const {}})
       : super(
           id: metricId,
-          name: _metricName,
-          shortName: _metricShortName,
-          documentation: null,
-          threshold: readThreshold<int>(config, metricId, _defaultThreshold),
+          documentation: _documentation,
+          threshold: readThreshold<int>(config, metricId, 10),
           levelComputer: valueLevel,
         );
 

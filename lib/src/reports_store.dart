@@ -6,7 +6,11 @@ abstract class ReportsStore {
   Iterable<FileReport> reports();
 
   /// Add new file record for [filePath] using [ReportsBuilder] in [f]
+  ///
   /// See [ChecksRecorder] interface on how to build new [FileReport]
   ReportsStore recordFile(
-      String filePath, String rootDirectory, void Function(ReportsBuilder) f);
+    String filePath,
+    String rootDirectory,
+    void Function(ReportsBuilder) f,
+  );
 }

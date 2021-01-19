@@ -1,8 +1,8 @@
-/// Enum class for value level. Used when reporting computed metric value.
+/// Enum class for value level. Used when reporting computed metric value
 class MetricValueLevel implements Comparable<MetricValueLevel> {
   /// Value in "green" zone
   ///
-  /// Default value.
+  /// Default value
   static const MetricValueLevel none = MetricValueLevel._('none');
 
   /// Value in "blue" zone
@@ -29,7 +29,7 @@ class MetricValueLevel implements Comparable<MetricValueLevel> {
 
   final String _name;
 
-  /// Converts the human readable [level] string into a [MetricValueLevel] value.
+  /// Converts the human readable [level] string into a [MetricValueLevel] value
   static MetricValueLevel fromString(String level) => level != null
       ? values.firstWhere(
           (val) => val._name == level.toLowerCase(),
@@ -46,15 +46,15 @@ class MetricValueLevel implements Comparable<MetricValueLevel> {
   int compareTo(MetricValueLevel other) =>
       values.indexOf(this).compareTo(values.indexOf(other));
 
-  /// Relational less than operator.
+  /// Relational less than operator
   bool operator <(MetricValueLevel other) => compareTo(other) < 0;
 
-  /// Relational less than or equal operator.
+  /// Relational less than or equal operator
   bool operator <=(MetricValueLevel other) => compareTo(other) <= 0;
 
-  /// Relational greater than operator.
+  /// Relational greater than operator
   bool operator >(MetricValueLevel other) => compareTo(other) > 0;
 
-  /// Relational greater than or equal operator.
+  /// Relational greater than or equal operator
   bool operator >=(MetricValueLevel other) => compareTo(other) >= 0;
 }

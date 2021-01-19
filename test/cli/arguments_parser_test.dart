@@ -7,7 +7,7 @@ const _usage = '\n'
     '\n'
     '\n'
     '    --number-of-methods=<10>    Number of Methods threshold\n'
-    '    --weight-of-class=<0.33>    Weight Of Class threshold';
+    '    --weight-of-class=<0.33>    Weight Of a Class threshold';
 
 void main() {
   test('argumentsParser().usage returns human readable help', () {

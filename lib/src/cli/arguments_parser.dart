@@ -29,12 +29,12 @@ void _appendMetricsThresholdOptions(ArgParser parser) {
   for (final metric in allMetrics) {
     parser.addOption(
       metric.id,
-      help: '${metric.name} threshold',
+      help: '${metric.documentation.name} threshold',
       valueHelp: '${metric.threshold}',
       // ignore: avoid_types_on_closure_parameters
       callback: (String i) {
         if (i != null && int.tryParse(i) == null) {
-          print("'$i' invalid value for argument ${metric.name}");
+          print("'$i' invalid value for argument ${metric.documentation.name}");
         }
       },
     );

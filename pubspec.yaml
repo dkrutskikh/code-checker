@@ -15,7 +15,7 @@ dependencies:
   yaml: ^2.2.0
 
 dev_dependencies:
-  coverage: ^0.14.0
+  coverage: '>=0.14.2 <0.16.0'
   http_multi_server: ^2.2.0       # for valid resolve dependencies
   lcov: '>=5.7.0 <7.0.0'
   mockito: ^4.1.1

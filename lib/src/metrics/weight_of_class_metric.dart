@@ -3,6 +3,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../models/class_type.dart';
 import '../models/entity_type.dart';
 import '../models/function_type.dart';
+import '../models/processed_file.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import '../utils/metric_utils.dart';
@@ -37,6 +38,7 @@ class WeightOfClassMetric extends Metric<double> {
   MetricComputationResult<double> computeImplementation(
     ScopedClassDeclaration classDeclaration,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
+    ProcessedFile source,
   ) {
     final totalPublicMethods =
         classMethods(classDeclaration, functionDeclarations)

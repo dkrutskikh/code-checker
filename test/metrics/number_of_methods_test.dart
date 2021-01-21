@@ -2,6 +2,7 @@
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:code_checker/src/metrics/number_of_methods_metric.dart';
 import 'package:code_checker/src/models/metric_value_level.dart';
+import 'package:code_checker/src/models/processed_file.dart';
 import 'package:code_checker/src/scope_visitor.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -46,12 +47,14 @@ void main() {
     }.forEach((key, value) async {
       final visitor = ScopeVisitor();
 
-      (await resolveFile(path: p.normalize(p.absolute(key))))
-          .unit
-          .visitChildren(visitor);
+      final result = await resolveFile(path: p.normalize(p.absolute(key)));
+      result.unit.visitChildren(visitor);
 
-      final metricValue =
-          metric.compute(visitor.classes.single, visitor.functions);
+      final metricValue = metric.compute(
+        visitor.classes.single,
+        visitor.functions,
+        ProcessedFile(result.uri, result.content, result.unit),
+      );
 
       expect(metricValue.metricsId, equals(metric.id));
       expect(

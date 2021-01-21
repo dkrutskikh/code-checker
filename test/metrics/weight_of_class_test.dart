@@ -2,6 +2,7 @@
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:code_checker/src/metrics/weight_of_class_metric.dart';
 import 'package:code_checker/src/models/metric_value_level.dart';
+import 'package:code_checker/src/models/processed_file.dart';
 import 'package:code_checker/src/scope_visitor.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -14,12 +15,15 @@ void main() {
 
     final visitor = ScopeVisitor();
 
-    (await resolveFile(path: p.normalize(p.absolute(examplePath))))
-        .unit
-        .visitChildren(visitor);
+    final result =
+        await resolveFile(path: p.normalize(p.absolute(examplePath)));
+    result.unit.visitChildren(visitor);
 
-    final firstClassValue =
-        metric.compute(visitor.classes.first, visitor.functions);
+    final firstClassValue = metric.compute(
+      visitor.classes.first,
+      visitor.functions,
+      ProcessedFile(result.uri, result.content, result.unit),
+    );
 
     expect(firstClassValue.metricsId, equals(metric.id));
     expect(
@@ -36,8 +40,11 @@ void main() {
     );
     expect(firstClassValue.recommendation, isNull);
 
-    final lastClassValue =
-        metric.compute(visitor.classes.last, visitor.functions);
+    final lastClassValue = metric.compute(
+      visitor.classes.last,
+      visitor.functions,
+      ProcessedFile(result.uri, result.content, result.unit),
+    );
 
     expect(lastClassValue.metricsId, equals(metric.id));
     expect(

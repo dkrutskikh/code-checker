@@ -12,7 +12,6 @@ const _documentation = MetricDocumentation(
   name: 'Number of Methods',
   shortName: 'NOM',
   definition: 'The number of methods of a class.',
-  url: 'https://git.io/JttQe',
   measuredEntity: EntityType.classEntity,
 );
 

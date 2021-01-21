@@ -39,10 +39,11 @@ abstract class Metric<T extends num> {
 
     return MetricValue<T>(
       metricsId: id,
+      documentation:
+          'https://dart-code-checker-project.github.io/code-checker/metrics/$id.html',
       value: result.value,
       level: _levelComputer(result.value, threshold),
       comment: commentMessage(classDeclaration.type, result.value, threshold),
-      documentation: documentation.url,
       recommendation:
           recommendationMessage(classDeclaration.type, result.value, threshold),
       context: result.context,

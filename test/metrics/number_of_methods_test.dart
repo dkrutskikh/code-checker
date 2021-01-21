@@ -54,6 +54,10 @@ void main() {
           metric.compute(visitor.classes.single, visitor.functions);
 
       expect(metricValue.metricsId, equals(metric.id));
+      expect(
+        metricValue.documentation,
+        endsWith('/metrics/${metric.id}.html'),
+      );
       expect(metricValue.value, equals(value));
       expect(metricValue.level, levelMatchers[key]);
       expect(metricValue.comment, commentMatchers[key]);

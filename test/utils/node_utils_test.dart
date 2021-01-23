@@ -1,8 +1,8 @@
 @TestOn('vm')
+import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/source/line_info.dart';
-import 'package:code_checker/src/models/processed_file.dart';
 import 'package:code_checker/src/utils/node_utils.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -14,6 +14,8 @@ class CompilationUnitMock extends Mock implements CompilationUnit {}
 class CharacterLocationMock extends Mock implements CharacterLocation {}
 
 class LineInfoMock extends Mock implements LineInfo {}
+
+class ResolvedUnitResultMock extends Mock implements ResolvedUnitResult {}
 
 class TokenMock extends Mock implements Token {}
 
@@ -57,15 +59,13 @@ void main() {
     when(nodeMock.offset).thenReturn(nodeOffset);
     when(nodeMock.end).thenReturn(nodeEnd);
 
+    final sourceMock = ResolvedUnitResultMock();
+    when(sourceMock.content).thenReturn('$preNodeCode$node$postNodeCode');
+    when(sourceMock.unit).thenReturn(compilationUnitMock);
+    when(sourceMock.uri).thenReturn(sourceUrl);
+
     test('without comment or metadata', () {
-      final span = nodeLocation(
-        node: nodeMock,
-        source: ProcessedFile(
-          sourceUrl,
-          '$preNodeCode$node$postNodeCode',
-          compilationUnitMock,
-        ),
-      );
+      final span = nodeLocation(node: nodeMock, source: sourceMock);
 
       expect(span.start.sourceUrl, equals(sourceUrl));
       expect(span.start.offset, equals(codeOffset));
@@ -82,11 +82,7 @@ void main() {
     test('with comment or metadata', () {
       final span = nodeLocation(
         node: nodeMock,
-        source: ProcessedFile(
-          sourceUrl,
-          '$preNodeCode$node$postNodeCode',
-          compilationUnitMock,
-        ),
+        source: sourceMock,
         withCommentOrMetadata: true,
       );
 

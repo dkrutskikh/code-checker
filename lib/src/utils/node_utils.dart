@@ -1,14 +1,13 @@
+import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/syntactic_entity.dart';
 import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 
-import '../models/processed_file.dart';
-
 /// Returns [SourceSpanBase] with information about original code for [node] from [source]
 SourceSpanBase nodeLocation({
   @required SyntacticEntity node,
-  @required ProcessedFile source,
+  @required ResolvedUnitResult source,
   bool withCommentOrMetadata = false,
 }) {
   final offset = !withCommentOrMetadata && node is AnnotatedNode
@@ -16,19 +15,19 @@ SourceSpanBase nodeLocation({
       : node.offset;
   final end = node.end;
 
-  final offsetLocation = source.parsedContent.lineInfo.getLocation(offset);
-  final endLocation = source.parsedContent.lineInfo.getLocation(end);
+  final offsetLocation = source.unit.lineInfo.getLocation(offset);
+  final endLocation = source.unit.lineInfo.getLocation(end);
 
   return SourceSpanBase(
     SourceLocation(
       offset,
-      sourceUrl: source.url,
+      sourceUrl: source.uri,
       line: offsetLocation.lineNumber,
       column: offsetLocation.columnNumber,
     ),
     SourceLocation(
       end,
-      sourceUrl: source.url,
+      sourceUrl: source.uri,
       line: endLocation.lineNumber,
       column: endLocation.columnNumber,
     ),

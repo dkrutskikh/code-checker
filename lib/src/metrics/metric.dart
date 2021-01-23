@@ -1,9 +1,9 @@
+import 'package:analyzer/dart/analysis/results.dart';
 import 'package:meta/meta.dart';
 
 import '../models/class_type.dart';
 import '../models/metric_value.dart';
 import '../models/metric_value_level.dart';
-import '../models/processed_file.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import 'metric_computation_result.dart';
@@ -34,7 +34,7 @@ abstract class Metric<T extends num> {
   MetricValue<T> compute(
     ScopedClassDeclaration classDeclaration,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
-    ProcessedFile source,
+    ResolvedUnitResult source,
   ) {
     final result =
         computeImplementation(classDeclaration, functionDeclarations, source);
@@ -56,7 +56,7 @@ abstract class Metric<T extends num> {
   MetricComputationResult<T> computeImplementation(
     ScopedClassDeclaration classDeclaration,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
-    ProcessedFile source,
+    ResolvedUnitResult source,
   );
 
   @protected

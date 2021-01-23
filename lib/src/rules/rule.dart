@@ -1,7 +1,7 @@
+import 'package:analyzer/dart/analysis/results.dart';
 import 'package:meta/meta.dart';
 
 import '../models/issue.dart';
-import '../models/processed_file.dart';
 import '../models/severity.dart';
 
 /// Interface that code checker uses to communicate with the rules
@@ -23,6 +23,6 @@ abstract class Rule {
     @required this.severity,
   });
 
-  /// Returns [Iterable] with [Issue]'s detected while check the passed [file]
-  Iterable<Issue> check(ProcessedFile file);
+  /// Returns [Iterable] with [Issue]'s detected while check the passed [source]
+  Iterable<Issue> check(ResolvedUnitResult source);
 }

@@ -2,7 +2,6 @@
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:code_checker/src/metrics/weight_of_class_metric.dart';
 import 'package:code_checker/src/models/metric_value_level.dart';
-import 'package:code_checker/src/models/processed_file.dart';
 import 'package:code_checker/src/scope_visitor.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -22,7 +21,7 @@ void main() {
     final firstClassValue = metric.compute(
       visitor.classes.first,
       visitor.functions,
-      ProcessedFile(result.uri, result.content, result.unit),
+      result,
     );
 
     expect(firstClassValue.metricsId, equals(metric.id));
@@ -43,7 +42,7 @@ void main() {
     final lastClassValue = metric.compute(
       visitor.classes.last,
       visitor.functions,
-      ProcessedFile(result.uri, result.content, result.unit),
+      result,
     );
 
     expect(lastClassValue.metricsId, equals(metric.id));

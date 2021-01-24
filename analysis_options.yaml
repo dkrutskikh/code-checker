@@ -1,6 +1,8 @@
 include: package:pedantic/analysis_options.yaml
 
 analyzer:
+  exclude:
+    - test/resources/**
   plugins:
     - code_checker
   strong-mode:

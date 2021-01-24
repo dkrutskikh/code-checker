@@ -1,7 +1,9 @@
 name: code_checker
-description: Static source code analytics tool that helps analyse and improve quality.
 version: 0.3.8
-homepage: https://github.com/dart-code-checker-project/code-checker
+description: Static source code analytics tool that helps analyse and improve quality.
+homepage: https://dart-code-checker-project.github.io/code-checker
+repository: https://github.com/dart-code-checker-project/code-checker
+issue_tracker: https://github.com/dart-code-checker-project/code-checker/issues
 
 environment:
   sdk: ">=2.8.0 <3.0.0"

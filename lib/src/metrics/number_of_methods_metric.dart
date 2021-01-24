@@ -1,3 +1,5 @@
+import 'package:analyzer/dart/analysis/results.dart';
+
 import '../models/class_type.dart';
 import '../models/entity_type.dart';
 import '../models/scoped_class_declaration.dart';
@@ -12,7 +14,6 @@ const _documentation = MetricDocumentation(
   name: 'Number of Methods',
   shortName: 'NOM',
   definition: 'The number of methods of a class.',
-  url: 'https://git.io/JttQe',
   measuredEntity: EntityType.classEntity,
 );
 
@@ -34,6 +35,7 @@ class NumberOfMethodsMetric extends Metric<int> {
   MetricComputationResult<int> computeImplementation(
     ScopedClassDeclaration classDeclaration,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
+    ResolvedUnitResult source,
   ) =>
       MetricComputationResult(
         value: classMethods(classDeclaration, functionDeclarations).length,

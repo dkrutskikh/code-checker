@@ -46,12 +46,14 @@ void main() {
     }.forEach((key, value) async {
       final visitor = ScopeVisitor();
 
-      (await resolveFile(path: p.normalize(p.absolute(key))))
-          .unit
-          .visitChildren(visitor);
+      final result = await resolveFile(path: p.normalize(p.absolute(key)));
+      result.unit.visitChildren(visitor);
 
-      final metricValue =
-          metric.compute(visitor.classes.single, visitor.functions);
+      final metricValue = metric.compute(
+        visitor.classes.single,
+        visitor.functions,
+        result,
+      );
 
       expect(metricValue.metricsId, equals(metric.id));
       expect(metricValue.value, equals(value));

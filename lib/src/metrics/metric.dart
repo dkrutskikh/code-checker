@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/analysis/results.dart';
 import 'package:meta/meta.dart';
 
 import '../models/class_type.dart';
@@ -33,16 +34,16 @@ abstract class Metric<T extends num> {
   MetricValue<T> compute(
     ScopedClassDeclaration classDeclaration,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
+    ResolvedUnitResult source,
   ) {
     final result =
-        computeImplementation(classDeclaration, functionDeclarations);
+        computeImplementation(classDeclaration, functionDeclarations, source);
 
     return MetricValue<T>(
       metricsId: id,
       value: result.value,
       level: _levelComputer(result.value, threshold),
       comment: commentMessage(classDeclaration.type, result.value, threshold),
-      documentation: documentation.url,
       recommendation:
           recommendationMessage(classDeclaration.type, result.value, threshold),
       context: result.context,
@@ -53,6 +54,7 @@ abstract class Metric<T extends num> {
   MetricComputationResult<T> computeImplementation(
     ScopedClassDeclaration classDeclaration,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
+    ResolvedUnitResult source,
   );
 
   @protected

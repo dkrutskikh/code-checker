@@ -1,14 +1,14 @@
+import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/syntactic_entity.dart';
 import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:source_span/source_span.dart';
 
-import '../../models/processed_file.dart';
 import '../../utils/node_utils.dart';
 
 class CyclomaticComplexityFlowVisitor extends RecursiveAstVisitor<void> {
-  final ProcessedFile _source;
+  final ResolvedUnitResult _source;
 
   final _complexityElements = <SourceSpanBase>[];
 

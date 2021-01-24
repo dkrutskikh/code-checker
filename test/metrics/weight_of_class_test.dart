@@ -14,12 +14,15 @@ void main() {
 
     final visitor = ScopeVisitor();
 
-    (await resolveFile(path: p.normalize(p.absolute(examplePath))))
-        .unit
-        .visitChildren(visitor);
+    final result =
+        await resolveFile(path: p.normalize(p.absolute(examplePath)));
+    result.unit.visitChildren(visitor);
 
-    final firstClassValue =
-        metric.compute(visitor.classes.first, visitor.functions);
+    final firstClassValue = metric.compute(
+      visitor.classes.first,
+      visitor.functions,
+      result,
+    );
 
     expect(firstClassValue.metricsId, equals(metric.id));
     expect(firstClassValue.value, equals(0.0));
@@ -32,8 +35,11 @@ void main() {
     );
     expect(firstClassValue.recommendation, isNull);
 
-    final lastClassValue =
-        metric.compute(visitor.classes.last, visitor.functions);
+    final lastClassValue = metric.compute(
+      visitor.classes.last,
+      visitor.functions,
+      result,
+    );
 
     expect(lastClassValue.metricsId, equals(metric.id));
     expect(lastClassValue.value, equals(0.25));

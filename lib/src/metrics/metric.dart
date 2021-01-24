@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/analysis/results.dart';
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:meta/meta.dart';
 
 import '../models/class_type.dart';
@@ -62,4 +63,11 @@ abstract class Metric<T extends num> {
 
   @protected
   String recommendationMessage(ClassType type, T value, T threshold) => null;
+
+  @protected
+  String nodeType(
+    Declaration node,
+    Iterable<ScopedClassDeclaration> classDeclarations,
+    Iterable<ScopedFunctionDeclaration> functionDeclarations,
+  );
 }

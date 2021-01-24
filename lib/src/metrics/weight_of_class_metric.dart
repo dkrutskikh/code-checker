@@ -2,13 +2,12 @@ import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../models/class_type.dart';
-import '../models/entity_type.dart';
 import '../models/function_type.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import '../utils/metric_utils.dart';
 import '../utils/scope_utils.dart';
-import 'metric.dart';
+import 'class_metric.dart';
 import 'metric_computation_result.dart';
 import 'metric_documentation.dart';
 
@@ -18,13 +17,12 @@ const _documentation = MetricDocumentation(
   brief:
       'The number of "functional" public methods divided by the total number of public members',
   definition: [],
-  measuredEntity: EntityType.classEntity,
 );
 
 /// Weight Of a Class (WOC)
 ///
 /// Number of **functional** public methods divided by the total number of public methods
-class WeightOfClassMetric extends Metric<double> {
+class WeightOfClassMetric extends ClassMetric<double> {
   static const String metricId = 'weight-of-class';
 
   WeightOfClassMetric({Map<String, Object> config = const {}})

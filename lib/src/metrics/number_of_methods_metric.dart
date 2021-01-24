@@ -1,12 +1,11 @@
 import 'package:analyzer/dart/analysis/results.dart';
 
 import '../models/class_type.dart';
-import '../models/entity_type.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import '../utils/metric_utils.dart';
 import '../utils/scope_utils.dart';
-import 'metric.dart';
+import 'class_metric.dart';
 import 'metric_computation_result.dart';
 import 'metric_documentation.dart';
 
@@ -15,13 +14,12 @@ const _documentation = MetricDocumentation(
   shortName: 'NOM',
   brief: 'The number of methods of a class.',
   definition: [],
-  measuredEntity: EntityType.classEntity,
 );
 
 /// Number of Methods (NOM)
 ///
 /// The number of methods of a class
-class NumberOfMethodsMetric extends Metric<int> {
+class NumberOfMethodsMetric extends ClassMetric<int> {
   static const String metricId = 'number-of-methods';
 
   NumberOfMethodsMetric({Map<String, Object> config = const {}})

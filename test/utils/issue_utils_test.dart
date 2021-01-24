@@ -16,7 +16,7 @@ void main() {
     const severity = Severity.none;
 
     final codeUrl = Uri.parse('file://source.dart');
-    final codeLocation = SourceSpanBase(
+    final codeLocation = SourceSpan(
       SourceLocation(0, sourceUrl: codeUrl),
       SourceLocation(4, sourceUrl: codeUrl),
       'code',

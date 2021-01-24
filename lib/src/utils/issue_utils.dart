@@ -6,7 +6,7 @@ import '../rules/rule.dart';
 
 Issue createIssue(
   Rule rule,
-  SourceSpanBase location,
+  SourceSpan location,
   String message,
   Replacement replacement,
 ) =>

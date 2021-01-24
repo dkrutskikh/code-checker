@@ -10,11 +10,11 @@ import '../../utils/node_utils.dart';
 class CyclomaticComplexityFlowVisitor extends RecursiveAstVisitor<void> {
   final ResolvedUnitResult _source;
 
-  final _complexityElements = <SourceSpanBase>[];
+  final _complexityElements = <SourceSpan>[];
 
   CyclomaticComplexityFlowVisitor(this._source);
 
-  Iterable<SourceSpanBase> get complexityElements => _complexityElements;
+  Iterable<SourceSpan> get complexityElements => _complexityElements;
 
   @override
   void visitAssertStatement(AssertStatement node) {

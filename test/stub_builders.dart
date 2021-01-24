@@ -6,7 +6,7 @@ import 'package:code_checker/src/models/metric_value_level.dart';
 import 'package:source_span/source_span.dart';
 
 ClassReport buildClassReportStub({
-  SourceSpanBase location,
+  SourceSpan location,
   Iterable<MetricValue<num>> metrics = const [],
 }) {
   const defaultMetricValues = [
@@ -25,8 +25,7 @@ ClassReport buildClassReportStub({
   ];
 
   return ClassReport(
-    location:
-        location ?? SourceSpanBase(SourceLocation(0), SourceLocation(0), ''),
+    location: location ?? SourceSpan(SourceLocation(0), SourceLocation(0), ''),
     metrics: [...metrics, ...defaultMetricValues],
   );
 }

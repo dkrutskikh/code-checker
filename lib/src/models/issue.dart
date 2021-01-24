@@ -14,7 +14,7 @@ class Issue {
   final Uri documentation;
 
   /// The source location associated with this issue
-  final SourceSpanBase location;
+  final SourceSpan location;
 
   /// The severity of this issue
   final Severity severity;

@@ -8,7 +8,7 @@ class ContextMessage {
   final String message;
 
   /// The source location associated with or referenced by the message
-  final SourceSpanBase location;
+  final SourceSpan location;
 
   const ContextMessage({@required this.message, @required this.location});
 }

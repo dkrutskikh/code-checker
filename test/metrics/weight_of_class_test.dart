@@ -25,10 +25,6 @@ void main() {
     );
 
     expect(firstClassValue.metricsId, equals(metric.id));
-    expect(
-      firstClassValue.documentation,
-      endsWith('/metrics/${metric.id}.html'),
-    );
     expect(firstClassValue.value, equals(0.0));
     expect(firstClassValue.level, equals(MetricValueLevel.alarm));
     expect(
@@ -46,10 +42,6 @@ void main() {
     );
 
     expect(lastClassValue.metricsId, equals(metric.id));
-    expect(
-      lastClassValue.documentation,
-      endsWith('/metrics/${metric.id}.html'),
-    );
     expect(lastClassValue.value, equals(0.25));
     expect(lastClassValue.level, equals(MetricValueLevel.warning));
     expect(

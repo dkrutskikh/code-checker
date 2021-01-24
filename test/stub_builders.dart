@@ -12,14 +12,12 @@ ClassReport buildClassReportStub({
   const defaultMetricValues = [
     MetricValue<int>(
       metricsId: NumberOfMethodsMetric.metricId,
-      documentation: '',
       value: 0,
       level: MetricValueLevel.none,
       comment: '',
     ),
     MetricValue<double>(
       metricsId: WeightOfClassMetric.metricId,
-      documentation: '',
       value: 1,
       level: MetricValueLevel.none,
       comment: '',

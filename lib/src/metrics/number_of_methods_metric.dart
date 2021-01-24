@@ -13,7 +13,8 @@ import 'metric_documentation.dart';
 const _documentation = MetricDocumentation(
   name: 'Number of Methods',
   shortName: 'NOM',
-  definition: 'The number of methods of a class.',
+  brief: 'The number of methods of a class.',
+  definition: [],
   measuredEntity: EntityType.classEntity,
 );
 

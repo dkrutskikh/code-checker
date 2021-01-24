@@ -15,8 +15,9 @@ import 'metric_documentation.dart';
 const _documentation = MetricDocumentation(
   name: 'Weight Of a Class',
   shortName: 'WOC',
-  definition:
+  brief:
       'The number of "functional" public methods divided by the total number of public members',
+  definition: [],
   measuredEntity: EntityType.classEntity,
 );
 

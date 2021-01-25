@@ -3,7 +3,6 @@ import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:code_checker/src/metrics/function_metric.dart';
 import 'package:code_checker/src/metrics/metric_computation_result.dart';
-import 'package:code_checker/src/models/class_type.dart';
 import 'package:code_checker/src/models/function_type.dart';
 import 'package:code_checker/src/models/scoped_class_declaration.dart';
 import 'package:code_checker/src/models/scoped_function_declaration.dart';
@@ -24,7 +23,7 @@ class FunctionMetricTest extends FunctionMetric<int> {
       null;
 
   @override
-  String commentMessage(ClassType type, int value, int threshold) => null;
+  String commentMessage(String type, int value, int threshold) => null;
 }
 
 void main() {

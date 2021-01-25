@@ -1,7 +1,6 @@
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../models/class_type.dart';
 import '../models/function_type.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
@@ -52,12 +51,12 @@ class WeightOfClassMetric extends ClassMetric<double> {
   }
 
   @override
-  String commentMessage(ClassType type, double value, double threshold) {
+  String commentMessage(String nodeType, double value, double threshold) {
     final exceeds = value < threshold
         ? ', which is lower then the threshold of $threshold allowed'
         : '';
 
-    return 'This ${type.toString().toLowerCase()} has a weight of $value$exceeds.';
+    return 'This $nodeType has a weight of $value$exceeds.';
   }
 
   bool _isPublicMethod(ScopedFunctionDeclaration function) =>

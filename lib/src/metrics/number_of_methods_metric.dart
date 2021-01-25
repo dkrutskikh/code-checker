@@ -1,6 +1,5 @@
 import 'package:analyzer/dart/analysis/results.dart';
 
-import '../models/class_type.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import '../utils/metric_utils.dart';
@@ -41,18 +40,18 @@ class NumberOfMethodsMetric extends ClassMetric<int> {
       );
 
   @override
-  String commentMessage(ClassType type, int value, int threshold) {
+  String commentMessage(String nodeType, int value, int threshold) {
     final methods = '$value ${value == 1 ? 'method' : 'methods'}';
     final exceeds = value > threshold
         ? ', which exceeds the maximum of $threshold allowed'
         : '';
 
-    return 'This ${type.toString().toLowerCase()} has $methods$exceeds.';
+    return 'This $nodeType has $methods$exceeds.';
   }
 
   @override
-  String recommendationMessage(ClassType type, int value, int threshold) =>
+  String recommendationMessage(String nodeType, int value, int threshold) =>
       (value > threshold)
-          ? 'Consider breaking this ${type.toString().toLowerCase()} up into smaller parts.'
+          ? 'Consider breaking this $nodeType up into smaller parts.'
           : null;
 }

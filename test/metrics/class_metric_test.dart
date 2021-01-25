@@ -23,7 +23,7 @@ class ClassMetricTest extends ClassMetric<int> {
       null;
 
   @override
-  String commentMessage(ClassType type, int value, int threshold) => null;
+  String commentMessage(String type, int value, int threshold) => null;
 }
 
 void main() {

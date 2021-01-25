@@ -67,12 +67,12 @@ void main() {
     test('without comment or metadata', () {
       final span = nodeLocation(node: nodeMock, source: sourceMock);
 
-      expect(span.start.sourceUrl.toString(), equals(sourceUrl));
+      expect(span.sourceUrl.toString(), equals(sourceUrl));
+
       expect(span.start.offset, equals(codeOffset));
       expect(span.start.line, equals(line));
       expect(span.start.column, equals(codeOffset - line));
 
-      expect(span.end.sourceUrl.toString(), equals(sourceUrl));
       expect(span.end.offset, equals(nodeEnd));
       expect(span.end.line, equals(line));
       expect(span.end.column, equals(nodeEnd - line));

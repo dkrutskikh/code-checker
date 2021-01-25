@@ -6,6 +6,8 @@ import 'package:code_checker/src/scope_visitor.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
+const examplePath = 'test/resources/newline_before_return_example.dart';
+
 void main() {
   test('NumberOfMethodsMetric computes', () {
     final metric = NumberOfMethodsMetric(
@@ -61,6 +63,10 @@ void main() {
       expect(metricValue.level, levelMatchers[key]);
       expect(metricValue.comment, commentMatchers[key]);
       expect(metricValue.recommendation, recommendationMatchers[key]);
+      expect(metricValue.context.length, equals(value));
+      for (final message in metricValue.context) {
+        expect(message.message, endsWith('increase metric value'));
+      }
     });
   });
 }

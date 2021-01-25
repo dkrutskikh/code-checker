@@ -1,9 +1,11 @@
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 
+import '../models/context_message.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import '../utils/metric_utils.dart';
+import '../utils/node_utils.dart';
 import '../utils/scope_utils.dart';
 import 'class_metric.dart';
 import 'metric_computation_result.dart';
@@ -36,10 +38,14 @@ class NumberOfMethodsMetric extends ClassMetric<int> {
     Iterable<ScopedClassDeclaration> classDeclarations,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
     ResolvedUnitResult source,
-  ) =>
-      MetricComputationResult(
-        value: classMethods(node, functionDeclarations).length,
-      );
+  ) {
+    final methods = classMethods(node, functionDeclarations);
+
+    return MetricComputationResult(
+      value: methods.length,
+      context: _context(methods, source),
+    );
+  }
 
   @override
   String commentMessage(String nodeType, int value, int threshold) {
@@ -56,4 +62,15 @@ class NumberOfMethodsMetric extends ClassMetric<int> {
       (value > threshold)
           ? 'Consider breaking this $nodeType up into smaller parts.'
           : null;
+
+  Iterable<ContextMessage> _context(
+    Iterable<ScopedFunctionDeclaration> methods,
+    ResolvedUnitResult source,
+  ) =>
+      methods
+          .map((func) => ContextMessage(
+                message: '${func.type} ${func.name} increase metric value',
+                location: nodeLocation(node: func.declaration, source: source),
+              ))
+          .toList(growable: false);
 }

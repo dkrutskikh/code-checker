@@ -1,8 +1,8 @@
 /// Enum class for type of a class. Used when reporting
 class ClassType {
-  static const ClassType generic = ClassType._('Class');
-  static const ClassType mixin = ClassType._('Mixin');
-  static const ClassType extension = ClassType._('Extension');
+  static const ClassType generic = ClassType._('class');
+  static const ClassType mixin = ClassType._('mixin');
+  static const ClassType extension = ClassType._('extension');
 
   final String _value;
 

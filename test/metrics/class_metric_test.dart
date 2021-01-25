@@ -39,14 +39,14 @@ void main() {
       ScopedClassDeclaration(ClassType.extension, thirdNode),
     ];
 
-    expect(ClassMetricTest().nodeType(firstNode, classes, []), equals('Class'));
+    expect(ClassMetricTest().nodeType(firstNode, classes, []), equals('class'));
     expect(
       ClassMetricTest().nodeType(secondNode, classes, []),
-      equals('Mixin'),
+      equals('mixin'),
     );
     expect(
       ClassMetricTest().nodeType(thirdNode, classes, []),
-      equals('Extension'),
+      equals('extension'),
     );
     expect(ClassMetricTest().nodeType(fourthNode, classes, []), isNull);
   });

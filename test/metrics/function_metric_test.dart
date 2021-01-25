@@ -16,7 +16,8 @@ class DeclarationMock extends Mock implements Declaration {}
 class FunctionMetricTest extends FunctionMetric<int> {
   @override
   MetricComputationResult<int> computeImplementation(
-    ScopedClassDeclaration classDeclaration,
+    Declaration node,
+    Iterable<ScopedClassDeclaration> classDeclarations,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
     ResolvedUnitResult source,
   ) =>

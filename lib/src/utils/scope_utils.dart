@@ -1,10 +1,11 @@
-import '../models/scoped_class_declaration.dart';
+import 'package:analyzer/dart/ast/ast.dart';
+
 import '../models/scoped_function_declaration.dart';
 
 Iterable<ScopedFunctionDeclaration> classMethods(
-  ScopedClassDeclaration classDeclaration,
+  Declaration classNode,
   Iterable<ScopedFunctionDeclaration> functionDeclarations,
 ) =>
     functionDeclarations
-        .where((func) => func.enclosingDeclaration == classDeclaration)
+        .where((func) => func.enclosingDeclaration?.declaration == classNode)
         .toList(growable: false);

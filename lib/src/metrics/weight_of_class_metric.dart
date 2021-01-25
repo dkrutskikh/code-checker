@@ -34,14 +34,14 @@ class WeightOfClassMetric extends ClassMetric<double> {
 
   @override
   MetricComputationResult<double> computeImplementation(
-    ScopedClassDeclaration classDeclaration,
+    Declaration node,
+    Iterable<ScopedClassDeclaration> classDeclarations,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
     ResolvedUnitResult source,
   ) {
-    final totalPublicMethods =
-        classMethods(classDeclaration, functionDeclarations)
-            .where(_isPublicMethod)
-            .toList(growable: false);
+    final totalPublicMethods = classMethods(node, functionDeclarations)
+        .where(_isPublicMethod)
+        .toList(growable: false);
 
     final functionalMethods = totalPublicMethods.where(_isFunctionalMethod);
 

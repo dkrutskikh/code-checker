@@ -50,7 +50,8 @@ void main() {
       result.unit.visitChildren(visitor);
 
       final metricValue = metric.compute(
-        visitor.classes.single,
+        visitor.classes.single.declaration,
+        visitor.classes,
         visitor.functions,
         result,
       );

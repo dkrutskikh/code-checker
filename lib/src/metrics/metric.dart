@@ -32,28 +32,34 @@ abstract class Metric<T extends num> {
 
   /// Returns computed [MetricValue]
   MetricValue<T> compute(
-    ScopedClassDeclaration classDeclaration,
+    Declaration node,
+    Iterable<ScopedClassDeclaration> classDeclarations,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
     ResolvedUnitResult source,
   ) {
-    final result =
-        computeImplementation(classDeclaration, functionDeclarations, source);
+    final result = computeImplementation(
+      node,
+      classDeclarations,
+      functionDeclarations,
+      source,
+    );
+
+    final type = nodeType(node, classDeclarations, functionDeclarations) ?? '';
 
     return MetricValue<T>(
       metricsId: id,
       value: result.value,
       level: _levelComputer(result.value, threshold),
-      comment: commentMessage(
-          classDeclaration.type.toString(), result.value, threshold),
-      recommendation: recommendationMessage(
-          classDeclaration.type.toString(), result.value, threshold),
+      comment: commentMessage(type, result.value, threshold),
+      recommendation: recommendationMessage(type, result.value, threshold),
       context: result.context,
     );
   }
 
   @protected
   MetricComputationResult<T> computeImplementation(
-    ScopedClassDeclaration classDeclaration,
+    Declaration node,
+    Iterable<ScopedClassDeclaration> classDeclarations,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
     ResolvedUnitResult source,
   );

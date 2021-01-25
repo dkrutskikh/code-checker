@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/analysis/results.dart';
+import 'package:analyzer/dart/ast/ast.dart';
 
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
@@ -31,12 +32,13 @@ class NumberOfMethodsMetric extends ClassMetric<int> {
 
   @override
   MetricComputationResult<int> computeImplementation(
-    ScopedClassDeclaration classDeclaration,
+    Declaration node,
+    Iterable<ScopedClassDeclaration> classDeclarations,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
     ResolvedUnitResult source,
   ) =>
       MetricComputationResult(
-        value: classMethods(classDeclaration, functionDeclarations).length,
+        value: classMethods(node, functionDeclarations).length,
       );
 
   @override

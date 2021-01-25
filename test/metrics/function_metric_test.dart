@@ -46,23 +46,23 @@ void main() {
 
     expect(
       FunctionMetricTest().nodeType(firstNode, [], functions),
-      equals('Constructor'),
+      equals('constructor'),
     );
     expect(
       FunctionMetricTest().nodeType(secondNode, [], functions),
-      equals('Method'),
+      equals('method'),
     );
     expect(
       FunctionMetricTest().nodeType(thirdNode, [], functions),
-      equals('Function'),
+      equals('function'),
     );
     expect(
       FunctionMetricTest().nodeType(fourthNode, [], functions),
-      equals('Getter'),
+      equals('getter'),
     );
     expect(
       FunctionMetricTest().nodeType(fifthNode, [], functions),
-      equals('Setter'),
+      equals('setter'),
     );
     expect(FunctionMetricTest().nodeType(sixthNode, [], functions), isNull);
   });

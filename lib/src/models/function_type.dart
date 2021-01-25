@@ -2,11 +2,11 @@
 ///
 /// Used when reporting
 class FunctionType {
-  static const FunctionType constructor = FunctionType._('Constructor');
-  static const FunctionType method = FunctionType._('Method');
-  static const FunctionType function = FunctionType._('Function');
-  static const FunctionType getter = FunctionType._('Getter');
-  static const FunctionType setter = FunctionType._('Setter');
+  static const FunctionType constructor = FunctionType._('constructor');
+  static const FunctionType method = FunctionType._('method');
+  static const FunctionType function = FunctionType._('function');
+  static const FunctionType getter = FunctionType._('getter');
+  static const FunctionType setter = FunctionType._('setter');
 
   final String _value;
 

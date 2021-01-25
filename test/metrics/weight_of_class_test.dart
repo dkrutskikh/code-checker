@@ -19,7 +19,8 @@ void main() {
     result.unit.visitChildren(visitor);
 
     final firstClassValue = metric.compute(
-      visitor.classes.first,
+      visitor.classes.first.declaration,
+      visitor.classes,
       visitor.functions,
       result,
     );
@@ -36,7 +37,8 @@ void main() {
     expect(firstClassValue.recommendation, isNull);
 
     final lastClassValue = metric.compute(
-      visitor.classes.last,
+      visitor.classes.last.declaration,
+      visitor.classes,
       visitor.functions,
       result,
     );

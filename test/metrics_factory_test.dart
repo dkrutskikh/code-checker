@@ -10,8 +10,9 @@ void main() {
         'weight-of-class': '0',
         'number-of-methods': '1',
         'metric-id': '2',
+        'maximum-nesting-level': '3',
       }).map((metric) => metric.id),
-      equals(['number-of-methods', 'weight-of-class']),
+      equals(['maximum-nesting-level', 'number-of-methods', 'weight-of-class']),
     );
   });
 }

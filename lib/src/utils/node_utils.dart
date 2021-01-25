@@ -4,8 +4,8 @@ import 'package:analyzer/dart/ast/syntactic_entity.dart';
 import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 
-/// Returns [SourceSpanBase] with information about original code for [node] from [source]
-SourceSpanBase nodeLocation({
+/// Returns [SourceSpan] with information about original code for [node] from [source]
+SourceSpan nodeLocation({
   @required SyntacticEntity node,
   @required ResolvedUnitResult source,
   bool withCommentOrMetadata = false,
@@ -18,7 +18,7 @@ SourceSpanBase nodeLocation({
   final offsetLocation = source.unit.lineInfo.getLocation(offset);
   final endLocation = source.unit.lineInfo.getLocation(end);
 
-  return SourceSpanBase(
+  return SourceSpan(
     SourceLocation(
       offset,
       sourceUrl: source.path,

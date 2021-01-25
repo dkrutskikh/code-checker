@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0 - 2021-01-25
+
+- Add Maximum Nesting Level metric
+
 ## 0.3.0 - 2021-01-14
 
 - Add Weight of Class metric

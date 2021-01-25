@@ -52,8 +52,8 @@ void main() {
     ];
 
     expect(classMethods(null, functions).length, equals(1));
-    expect(classMethods(firstClass, functions).length, equals(2));
-    expect(classMethods(secondClass, functions).length, equals(2));
-    expect(classMethods(thirdClass, functions), isEmpty);
+    expect(classMethods(firstClass.declaration, functions).length, equals(2));
+    expect(classMethods(secondClass.declaration, functions).length, equals(2));
+    expect(classMethods(thirdClass.declaration, functions), isEmpty);
   });
 }

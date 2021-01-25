@@ -1,7 +1,5 @@
 import 'package:meta/meta.dart';
 
-import '../models/entity_type.dart';
-
 /// Represents all metric documentation
 @immutable
 class MetricDocumentation {
@@ -11,16 +9,16 @@ class MetricDocumentation {
   /// The short name of a metric
   final String shortName;
 
-  /// The short message with formal statement of what exactly a metric calculate
-  final String definition;
+  /// The short message with formal statement about metric
+  final String brief;
 
-  /// Which type of entities will be measured by a metric
-  final EntityType measuredEntity;
+  /// The message with detailed statement of what exactly a metric calculate
+  final Iterable<String> definition;
 
   const MetricDocumentation({
     @required this.name,
     @required this.shortName,
+    @required this.brief,
     @required this.definition,
-    @required this.measuredEntity,
   });
 }

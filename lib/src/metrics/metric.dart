@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/analysis/results.dart';
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:meta/meta.dart';
 
-import '../models/class_type.dart';
 import '../models/metric_value.dart';
 import '../models/metric_value_level.dart';
 import '../models/scoped_class_declaration.dart';
@@ -32,34 +32,48 @@ abstract class Metric<T extends num> {
 
   /// Returns computed [MetricValue]
   MetricValue<T> compute(
-    ScopedClassDeclaration classDeclaration,
+    Declaration node,
+    Iterable<ScopedClassDeclaration> classDeclarations,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
     ResolvedUnitResult source,
   ) {
-    final result =
-        computeImplementation(classDeclaration, functionDeclarations, source);
+    final result = computeImplementation(
+      node,
+      classDeclarations,
+      functionDeclarations,
+      source,
+    );
+
+    final type = nodeType(node, classDeclarations, functionDeclarations) ?? '';
 
     return MetricValue<T>(
       metricsId: id,
       value: result.value,
       level: _levelComputer(result.value, threshold),
-      comment: commentMessage(classDeclaration.type, result.value, threshold),
-      recommendation:
-          recommendationMessage(classDeclaration.type, result.value, threshold),
+      comment: commentMessage(type, result.value, threshold),
+      recommendation: recommendationMessage(type, result.value, threshold),
       context: result.context,
     );
   }
 
   @protected
   MetricComputationResult<T> computeImplementation(
-    ScopedClassDeclaration classDeclaration,
+    Declaration node,
+    Iterable<ScopedClassDeclaration> classDeclarations,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
     ResolvedUnitResult source,
   );
 
   @protected
-  String commentMessage(ClassType type, T value, T threshold);
+  String commentMessage(String nodeType, T value, T threshold);
 
   @protected
-  String recommendationMessage(ClassType type, T value, T threshold) => null;
+  String recommendationMessage(String nodeType, T value, T threshold) => null;
+
+  @protected
+  String nodeType(
+    Declaration node,
+    Iterable<ScopedClassDeclaration> classDeclarations,
+    Iterable<ScopedFunctionDeclaration> functionDeclarations,
+  );
 }

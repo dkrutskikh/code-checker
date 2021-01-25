@@ -1,4 +1,5 @@
 export 'package:code_checker/src/metrics/cyclomatic_complexity/cyclomatic_complexity_flow_visitor.dart';
+export 'package:code_checker/src/metrics/maximum_nesting_level/maximum_nesting_level_metric.dart';
 export 'package:code_checker/src/metrics/metric.dart';
 export 'package:code_checker/src/metrics/number_of_methods_metric.dart';
 export 'package:code_checker/src/metrics/weight_of_class_metric.dart';

@@ -7,7 +7,7 @@ import 'metric_value.dart';
 @immutable
 class ClassReport {
   /// Source code location of the target class
-  final SourceSpanBase location;
+  final SourceSpan location;
 
   /// Target class metrics
   final Iterable<MetricValue<num>> metrics;

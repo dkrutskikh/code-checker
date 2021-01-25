@@ -1,26 +1,27 @@
 import 'package:analyzer/dart/analysis/results.dart';
+import 'package:analyzer/dart/ast/ast.dart';
 
-import '../models/class_type.dart';
-import '../models/entity_type.dart';
+import '../models/context_message.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import '../utils/metric_utils.dart';
+import '../utils/node_utils.dart';
 import '../utils/scope_utils.dart';
-import 'metric.dart';
+import 'class_metric.dart';
 import 'metric_computation_result.dart';
 import 'metric_documentation.dart';
 
 const _documentation = MetricDocumentation(
   name: 'Number of Methods',
   shortName: 'NOM',
-  definition: 'The number of methods of a class.',
-  measuredEntity: EntityType.classEntity,
+  brief: 'The number of methods of a class.',
+  definition: [],
 );
 
 /// Number of Methods (NOM)
 ///
 /// The number of methods of a class
-class NumberOfMethodsMetric extends Metric<int> {
+class NumberOfMethodsMetric extends ClassMetric<int> {
   static const String metricId = 'number-of-methods';
 
   NumberOfMethodsMetric({Map<String, Object> config = const {}})
@@ -33,27 +34,43 @@ class NumberOfMethodsMetric extends Metric<int> {
 
   @override
   MetricComputationResult<int> computeImplementation(
-    ScopedClassDeclaration classDeclaration,
+    Declaration node,
+    Iterable<ScopedClassDeclaration> classDeclarations,
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
     ResolvedUnitResult source,
-  ) =>
-      MetricComputationResult(
-        value: classMethods(classDeclaration, functionDeclarations).length,
-      );
+  ) {
+    final methods = classMethods(node, functionDeclarations);
+
+    return MetricComputationResult(
+      value: methods.length,
+      context: _context(methods, source),
+    );
+  }
 
   @override
-  String commentMessage(ClassType type, int value, int threshold) {
+  String commentMessage(String nodeType, int value, int threshold) {
     final methods = '$value ${value == 1 ? 'method' : 'methods'}';
     final exceeds = value > threshold
         ? ', which exceeds the maximum of $threshold allowed'
         : '';
 
-    return 'This ${type.toString().toLowerCase()} has $methods$exceeds.';
+    return 'This $nodeType has $methods$exceeds.';
   }
 
   @override
-  String recommendationMessage(ClassType type, int value, int threshold) =>
+  String recommendationMessage(String nodeType, int value, int threshold) =>
       (value > threshold)
-          ? 'Consider breaking this ${type.toString().toLowerCase()} up into smaller parts.'
+          ? 'Consider breaking this $nodeType up into smaller parts.'
           : null;
+
+  Iterable<ContextMessage> _context(
+    Iterable<ScopedFunctionDeclaration> methods,
+    ResolvedUnitResult source,
+  ) =>
+      methods
+          .map((func) => ContextMessage(
+                message: '${func.type} ${func.name} increase metric value',
+                location: nodeLocation(node: func.declaration, source: source),
+              ))
+          .toList(growable: false);
 }

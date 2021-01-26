@@ -12,7 +12,7 @@ class ClassReport {
   /// Target class metrics
   final Iterable<MetricValue<num>> metrics;
 
-  /// Returns a certain target class metric
+  /// Returns a certain target metric
   MetricValue<num> metric(String id) => metrics
       .firstWhere((metric) => metric.metricsId == id, orElse: () => null);
 

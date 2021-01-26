@@ -1,8 +1,6 @@
 import 'package:meta/meta.dart';
 
 /// Class representing config
-///
-/// commonly found in `analysis_options.yaml`
 @immutable
 class Config {
   final Iterable<String> excludePatterns;

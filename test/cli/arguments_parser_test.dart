@@ -8,10 +8,20 @@ const _usage = '\n'
     '\n'
     '    --maximum-nesting-level=<5>    Maximum Nesting Level threshold\n'
     '    --number-of-methods=<10>       Number of Methods threshold\n'
-    '    --weight-of-class=<0.33>       Weight Of a Class threshold';
+    '    --weight-of-class=<0.33>       Weight Of a Class threshold\n'
+    '\n'
+    '\n'
+    '    --root-folder=<./>             Root folder\n'
+    '                                   (defaults to current directory)';
 
 void main() {
   test('argumentsParser().usage returns human readable help', () {
-    expect(argumentsParser().usage, equals(_usage));
+    expect(
+      argumentsParser().usage.replaceAll(
+            RegExp('defaults to "(.*?)"'),
+            'defaults to current directory',
+          ),
+      equals(_usage),
+    );
   });
 }

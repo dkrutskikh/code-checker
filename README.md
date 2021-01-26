@@ -43,4 +43,8 @@ Usage: checker [arguments] <directories>
     --maximum-nesting-level=<5>    Maximum Nesting Level threshold
     --number-of-methods=<10>       Number of Methods threshold
     --weight-of-class=<0.33>       Weight Of a Class threshold
+
+
+    --root-folder=<./>             Root folder
+                                   (defaults to current directory)
 ```

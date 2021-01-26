@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 
 import 'class_report.dart';
+import 'function_report.dart';
 import 'issue.dart';
 
 /// Represents the metrics report collected for a file
@@ -15,6 +16,9 @@ class FileReport {
   /// The all classes reports in the target file
   final Map<String, ClassReport> classes;
 
+  /// The all functions / methods reports in the target file
+  final Map<String, FunctionReport> functions;
+
   /// The issues detected in the target file
   final Iterable<Issue> issues;
 
@@ -25,6 +29,7 @@ class FileReport {
     @required this.path,
     @required this.relativePath,
     @required this.classes,
+    @required this.functions,
     @required this.issues,
     @required this.antiPatternCases,
   });

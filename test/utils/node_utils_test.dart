@@ -19,8 +19,6 @@ class ResolvedUnitResultMock extends Mock implements ResolvedUnitResult {}
 
 class TokenMock extends Mock implements Token {}
 
-const examplePath = 'test/resources/weight_of_class_example.dart';
-
 void main() {
   group('nodeLocation returns information about node original code', () {
     const nodeComment = '/*comment*/';

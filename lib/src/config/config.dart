@@ -4,12 +4,12 @@ import 'package:meta/meta.dart';
 @immutable
 class Config {
   final Iterable<String> excludePatterns;
-  final Iterable<String> metricsExcludePatterns;
+  final Iterable<String> excludeForMetricsPatterns;
   final Map<String, Object> metrics;
 
   const Config({
     @required this.excludePatterns,
-    @required this.metricsExcludePatterns,
+    @required this.excludeForMetricsPatterns,
     @required this.metrics,
   });
 }

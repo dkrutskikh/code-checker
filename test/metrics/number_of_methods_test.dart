@@ -63,7 +63,7 @@ void main() {
       expect(metricValue.level, levelMatchers[key]);
       expect(metricValue.comment, commentMatchers[key]);
       expect(metricValue.recommendation, recommendationMatchers[key]);
-      expect(metricValue.context.length, equals(value));
+      expect(metricValue.context, hasLength(value));
       for (final message in metricValue.context) {
         expect(message.message, endsWith('increase metric value'));
       }

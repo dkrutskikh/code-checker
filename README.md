@@ -19,7 +19,7 @@ The plugin for the Dart `analyzer` provide information collected by metrics.
 
     ```yaml
     dev_dependencies:
-      code_checker: ^0.4.0
+      code_checker: ^0.4.1
     ```
 
 2. Add configuration to `analysis_options.yaml`
@@ -43,4 +43,8 @@ Usage: checker [arguments] <directories>
     --maximum-nesting-level=<5>    Maximum Nesting Level threshold
     --number-of-methods=<10>       Number of Methods threshold
     --weight-of-class=<0.33>       Weight Of a Class threshold
+
+
+    --root-folder=<./>             Root folder
+                                   (defaults to current directory)
 ```

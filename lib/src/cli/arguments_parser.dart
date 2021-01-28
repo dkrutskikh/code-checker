@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:args/args.dart';
 
 import '../metrics_factory.dart';
@@ -5,6 +7,7 @@ import '../metrics_factory.dart';
 const usageHeader = 'Usage: checker [arguments] <directories>';
 
 const helpFlagName = 'help';
+const rootFolderName = 'root-folder';
 
 ArgParser argumentsParser() {
   final parser = ArgParser()..addSeparator('');
@@ -12,6 +15,8 @@ ArgParser argumentsParser() {
   _appendHelpOption(parser);
   parser.addSeparator('');
   _appendMetricsThresholdOptions(parser);
+  parser.addSeparator('');
+  _appendRootOption(parser);
 
   return parser;
 }
@@ -39,4 +44,13 @@ void _appendMetricsThresholdOptions(ArgParser parser) {
       },
     );
   }
+}
+
+void _appendRootOption(ArgParser parser) {
+  parser.addOption(
+    rootFolderName,
+    help: 'Root folder',
+    valueHelp: './',
+    defaultsTo: Directory.current.path,
+  );
 }

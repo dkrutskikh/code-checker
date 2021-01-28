@@ -53,7 +53,7 @@ void main() {
       expect(classDeclaration.name, equals('Logger'));
 
       final functions = visitor.functions.toList(growable: false);
-      expect(functions.length, equals(4));
+      expect(functions, hasLength(4));
 
       final factoryConstructor = functions.first;
       expect(factoryConstructor.type, equals(FunctionType.constructor));
@@ -126,7 +126,7 @@ void main() {
 
       expect(visitor.classes, isEmpty);
 
-      expect(visitor.functions.length, equals(2));
+      expect(visitor.functions, hasLength(2));
 
       expect(visitor.functions.first.type, equals(FunctionType.function));
       expect(visitor.functions.first.name, equals('printInteger'));
@@ -146,7 +146,7 @@ void main() {
           .unit
           .visitChildren(visitor);
 
-      expect(visitor.classes.length, equals(2));
+      expect(visitor.classes, hasLength(2));
 
       expect(
         visitor.classes.first.declaration,
@@ -163,7 +163,7 @@ void main() {
       expect(visitor.classes.last.name, equals('Spacecraft'));
 
       final functions = visitor.functions.toList(growable: false);
-      expect(functions.length, equals(6));
+      expect(functions, hasLength(6));
 
       final constructor1 = functions.first;
       expect(constructor1.type, equals(FunctionType.constructor));

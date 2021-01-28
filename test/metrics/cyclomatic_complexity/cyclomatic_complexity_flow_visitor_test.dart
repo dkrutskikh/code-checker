@@ -20,7 +20,7 @@ void main() {
 
       scopeVisitor.functions.single.declaration.visitChildren(visitor);
 
-      expect(visitor.complexityElements.length, equals(14));
+      expect(visitor.complexityElements, hasLength(14));
     },
   );
 }

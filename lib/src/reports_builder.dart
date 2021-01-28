@@ -7,12 +7,12 @@ import 'models/scoped_function_declaration.dart';
 abstract class ReportsBuilder {
   void recordClass(ScopedClassDeclaration declaration, ClassReport report);
 
-  void recordAntiPatternCases(Iterable<Issue> issues);
-
   void recordFunction(
     ScopedFunctionDeclaration declaration,
     FunctionReport report,
   );
+
+  void recordAntiPatternCases(Iterable<Issue> issues);
 
   void recordIssues(Iterable<Issue> issues);
 }

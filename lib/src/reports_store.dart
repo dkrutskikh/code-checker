@@ -1,5 +1,6 @@
 import 'models/file_report.dart';
 import 'reports_builder.dart';
+import 'reports_recorder.dart';
 
 abstract class ReportsStore {
   /// File reports saved so far
@@ -13,4 +14,6 @@ abstract class ReportsStore {
     String rootDirectory,
     void Function(ReportsBuilder) f,
   );
+
+  factory ReportsStore.store() => ReportsRecorder();
 }

@@ -7,6 +7,7 @@ import '../metrics_factory.dart';
 const usageHeader = 'Usage: checker [arguments] <directories>';
 
 const helpFlagName = 'help';
+const excludedName = 'exclude';
 const rootFolderName = 'root-folder';
 
 ArgParser argumentsParser() {
@@ -17,6 +18,7 @@ ArgParser argumentsParser() {
   _appendMetricsThresholdOptions(parser);
   parser.addSeparator('');
   _appendRootOption(parser);
+  _appendExcludeOption(parser);
 
   return parser;
 }
@@ -52,5 +54,14 @@ void _appendRootOption(ArgParser parser) {
     help: 'Root folder',
     valueHelp: './',
     defaultsTo: Directory.current.path,
+  );
+}
+
+void _appendExcludeOption(ArgParser parser) {
+  parser.addOption(
+    excludedName,
+    help: 'File paths in Glob syntax to be exclude',
+    valueHelp: '{/**.g.dart,/**.template.dart}',
+    defaultsTo: '{/**.g.dart,/**.template.dart}',
   );
 }

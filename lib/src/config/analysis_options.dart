@@ -27,7 +27,7 @@ class AnalysisOptions {
       }
     }
 
-    return data is Iterable<String> ? data : [];
+    return isIterableOfStrings(data) ? (data as Iterable).cast<String>() : [];
   }
 
   Map<String, Object> readMap(Iterable<String> pathSegments) {

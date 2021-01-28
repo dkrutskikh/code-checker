@@ -7,7 +7,7 @@ abstract class ReportsStore {
 
   /// Add new file record for [filePath] using [ReportsBuilder] in [f]
   ///
-  /// See [ChecksRecorder] interface on how to build new [FileReport]
+  /// See [ReportsBuilder] interface on how to build new [FileReport]
   ReportsStore recordFile(
     String filePath,
     String rootDirectory,

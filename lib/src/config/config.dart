@@ -2,8 +2,6 @@ import 'package:meta/meta.dart';
 
 import 'analysis_options.dart';
 
-const _rootKey = 'code_checker';
-
 /// Class representing config
 @immutable
 class Config {
@@ -17,10 +15,14 @@ class Config {
     @required this.metrics,
   });
 
-  factory Config.fromAnalysisOptions(AnalysisOptions options) => Config(
-        excludePatterns: options.readIterableOfString(['analyzer', 'exclude']),
-        excludeForMetricsPatterns:
-            options.readIterableOfString([_rootKey, 'metrics-exclude']),
-        metrics: options.readMap([_rootKey, 'metrics']),
-      );
+  factory Config.fromAnalysisOptions(AnalysisOptions options) {
+    const _rootKey = 'code_checker';
+
+    return Config(
+      excludePatterns: options.readIterableOfString(['analyzer', 'exclude']),
+      excludeForMetricsPatterns:
+          options.readIterableOfString([_rootKey, 'metrics-exclude']),
+      metrics: options.readMap([_rootKey, 'metrics']),
+    );
+  }
 }

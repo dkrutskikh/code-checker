@@ -18,6 +18,8 @@ import 'scope_visitor.dart';
 import 'utils/node_utils.dart';
 
 /// Performs code quality analysis on specific files
+///
+/// See [Runner] to get analysis info
 class Checker {
   final Iterable<Glob> _globalExclude;
 

@@ -13,7 +13,7 @@ T readThreshold<T extends num>(
   String metricId,
   T defaultValue,
 ) {
-  final configValue = config[metricId] as String;
+  final configValue = config[metricId]?.toString();
 
   if (configValue != null && T == int) {
     return int.tryParse(configValue) as T ?? defaultValue;

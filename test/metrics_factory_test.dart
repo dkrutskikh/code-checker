@@ -1,18 +1,24 @@
 @TestOn('vm')
+import 'package:code_checker/src/metrics/maximum_nesting_level/maximum_nesting_level_metric.dart';
 import 'package:code_checker/src/metrics_factory.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('getMetricsById returns only required metrics', () {
-    expect(getMetricsById({}), isEmpty);
+  test('allMetrics returns all metrics initialized by passed config', () {
+    expect(allMetrics({}), isNotEmpty);
     expect(
-      getMetricsById({
-        'weight-of-class': '0',
-        'number-of-methods': '1',
-        'metric-id': '2',
-        'maximum-nesting-level': '3',
-      }).map((metric) => metric.id),
-      equals(['maximum-nesting-level', 'number-of-methods', 'weight-of-class']),
+      allMetrics({})
+          .where((metric) => metric.id == MaximumNestingLevelMetric.metricId)
+          .single
+          .threshold,
+      equals(5),
+    );
+    expect(
+      allMetrics({MaximumNestingLevelMetric.metricId: '10'})
+          .where((metric) => metric.id == MaximumNestingLevelMetric.metricId)
+          .single
+          .threshold,
+      equals(10),
     );
   });
 }

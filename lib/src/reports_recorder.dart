@@ -10,6 +10,8 @@ import 'reports_builder.dart';
 import 'reports_store.dart';
 
 /// Holds analysis reports in format-agnostic way
+///
+/// See [Runner] to get analysis info
 class ReportsRecorder implements ReportsBuilder, ReportsStore {
   String _fileGroupPath;
   String _relativeGroupPath;

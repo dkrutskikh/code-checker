@@ -2,6 +2,7 @@ import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../models/context_message.dart';
+import '../models/entity_type.dart';
 import '../models/function_type.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
@@ -18,6 +19,7 @@ const _documentation = MetricDocumentation(
   brief:
       'The number of "functional" public methods divided by the total number of public members',
   definition: [],
+  measuredEntity: EntityType.classEntity,
 );
 
 /// Weight Of a Class (WOC)

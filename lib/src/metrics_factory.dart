@@ -11,10 +11,5 @@ final _implementedMetrics = <String, Metric Function(Map<String, Object>)>{
   WeightOfClassMetric.metricId: (config) => WeightOfClassMetric(config: config),
 };
 
-Iterable<Metric> get allMetrics =>
-    _implementedMetrics.keys.map((id) => _implementedMetrics[id]({}));
-
-Iterable<Metric> getMetricsById(Map<String, Object> metricsConfig) =>
-    _implementedMetrics.keys
-        .where((id) => metricsConfig.keys.contains(id))
-        .map((id) => _implementedMetrics[id](metricsConfig));
+Iterable<Metric> allMetrics(Map<String, Object> config) =>
+    _implementedMetrics.keys.map((id) => _implementedMetrics[id](config));

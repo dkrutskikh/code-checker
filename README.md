@@ -28,6 +28,14 @@ The plugin for the Dart `analyzer` provide information collected by metrics.
     analyzer:
       plugins:
         - code_checker
+   
+   code_checker:
+      metrics:
+         maximum-nesting-level: 5
+         number-of-methods: 10
+         weight-of-class: 0.33
+      metrics-exclude:
+        - test/**
     ```
 
 ### Command line tool

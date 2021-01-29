@@ -2,6 +2,7 @@ import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../../models/context_message.dart';
+import '../../models/entity_type.dart';
 import '../../models/scoped_class_declaration.dart';
 import '../../models/scoped_function_declaration.dart';
 import '../../utils/metric_utils.dart';
@@ -20,6 +21,7 @@ const _documentation = MetricDocumentation(
     '**Maximum Nesting Level** this is the maximum level of nesting blocks / control structures that are present in a method / function. Code with deep nesting level are often complex and tough to maintain.',
     'Generally the blocks with `if`, `else`, `else if`, `do`, `while`, `for`, `switch`, `catch`, etc statements are the part of nested loops.',
   ],
+  measuredEntity: EntityType.methodEntity,
 );
 
 /// Maximum Nesting Level (MAXNESTING)

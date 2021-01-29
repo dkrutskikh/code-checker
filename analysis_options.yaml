@@ -9,6 +9,14 @@ analyzer:
     implicit-casts: false
     implicit-dynamic: false
 
+code_checker:
+  metrics:
+    maximum-nesting-level: 5
+    number-of-methods: 10
+    weight-of-class: 0.33
+  metrics-exclude:
+    - test/**
+
 linter:
   rules:
     - always_put_control_body_on_new_line

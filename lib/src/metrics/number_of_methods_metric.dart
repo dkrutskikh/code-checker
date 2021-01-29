@@ -2,6 +2,7 @@ import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../models/context_message.dart';
+import '../models/entity_type.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import '../utils/metric_utils.dart';
@@ -16,6 +17,7 @@ const _documentation = MetricDocumentation(
   shortName: 'NOM',
   brief: 'The number of methods of a class.',
   definition: [],
+  measuredEntity: EntityType.classEntity,
 );
 
 /// Number of Methods (NOM)

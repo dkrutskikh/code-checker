@@ -1,10 +1,12 @@
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 
+import '../models/context_message.dart';
 import '../models/function_type.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import '../utils/metric_utils.dart';
+import '../utils/node_utils.dart';
 import '../utils/scope_utils.dart';
 import 'class_metric.dart';
 import 'metric_computation_result.dart';
@@ -43,10 +45,12 @@ class WeightOfClassMetric extends ClassMetric<double> {
         .where(_isPublicMethod)
         .toList(growable: false);
 
-    final functionalMethods = totalPublicMethods.where(_isFunctionalMethod);
+    final functionalMethods =
+        totalPublicMethods.where(_isFunctionalMethod).toList(growable: false);
 
     return MetricComputationResult(
       value: functionalMethods.length / totalPublicMethods.length,
+      context: _context(functionalMethods, totalPublicMethods, source),
     );
   }
 
@@ -71,4 +75,18 @@ class WeightOfClassMetric extends ClassMetric<double> {
 
     return !_nonFunctionalTypes.contains(function.type);
   }
+
+  Iterable<ContextMessage> _context(
+    Iterable<ScopedFunctionDeclaration> functionalMethods,
+    Iterable<ScopedFunctionDeclaration> totalMethods,
+    ResolvedUnitResult source,
+  ) =>
+      totalMethods
+          .map((func) => ContextMessage(
+                message: functionalMethods.contains(func)
+                    ? 'functional ${func.type} ${func.name} increase metric value'
+                    : 'public ${func.type} ${func.name} decrease metric value',
+                location: nodeLocation(node: func.declaration, source: source),
+              ))
+          .toList(growable: false);
 }

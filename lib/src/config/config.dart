@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 
+import '../utils/analysis_options_utils.dart';
 import 'analysis_options.dart';
 
 /// Class representing config
@@ -25,4 +26,13 @@ class Config {
       metrics: options.readMap([_rootKey, 'metrics']),
     );
   }
+
+  Config merge(Config overrides) => Config(
+        excludePatterns: {...excludePatterns, ...overrides.excludePatterns},
+        excludeForMetricsPatterns: {
+          ...excludeForMetricsPatterns,
+          ...overrides.excludeForMetricsPatterns,
+        },
+        metrics: mergeMaps(defaults: metrics, overrides: overrides.metrics),
+      );
 }

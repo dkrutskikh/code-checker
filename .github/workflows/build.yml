@@ -50,7 +50,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install dependencies
-      run: pub get
+      run: pub downgrade
     - name: Run dartanalyzer
       run: dartanalyzer --fatal-warnings --fatal-infos --fatal-lints lib/ test/
     - name: Run tests

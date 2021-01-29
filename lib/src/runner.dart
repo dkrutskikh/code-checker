@@ -5,6 +5,8 @@ import 'models/file_report.dart';
 import 'reports_store.dart';
 
 /// Coordinates [Checker] and [ReportsStore] to collect code quality info
+///
+/// Use [Reporter] to produce reports from collected info
 @immutable
 class Runner {
   final Checker _analyzer;

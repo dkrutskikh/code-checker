@@ -72,7 +72,7 @@ void main() {
           final record =
               ScopedClassDeclaration(ClassType.generic, classDeclarationMock);
 
-          final classReport = buildClassReportStub();
+          final classReport = buildReportStub();
 
           expect(
             ReportsRecorder()
@@ -118,7 +118,7 @@ void main() {
         });
 
         test('Stores record for file', () {
-          final functionReport = buildFunctionReportStub();
+          final functionReport = buildReportStub();
 
           expect(
             ReportsRecorder()
@@ -220,7 +220,7 @@ void main() {
       });
 
       test('store record for file', () {
-        final classReport = buildClassReportStub();
+        final classReport = buildReportStub();
 
         final recorder =
             ReportsRecorder().recordFile(filePath, rootDirectory, (recorder) {
@@ -274,7 +274,7 @@ void main() {
       });
 
       test('store record for file', () {
-        final functionReport = buildFunctionReportStub();
+        final functionReport = buildReportStub();
 
         final recorder =
             ReportsRecorder().recordFile(filePath, rootDirectory, (recorder) {

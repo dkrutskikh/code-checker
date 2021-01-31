@@ -8,7 +8,7 @@ import 'package:source_span/source_span.dart';
 
 Report buildReportStub({
   SourceSpan location,
-  Iterable<MetricValue<num>> metrics = const [],
+  Iterable<MetricValue<num>> metrics,
 }) {
   const defaultMetricValues = [
     MetricValue<int>(
@@ -27,6 +27,9 @@ Report buildReportStub({
 
   return Report(
     location: location ?? SourceSpan(SourceLocation(0), SourceLocation(0), ''),
-    metrics: [...metrics, ...defaultMetricValues],
+    metrics: [
+      if (metrics != null) ...metrics,
+      if (metrics == null) ...defaultMetricValues,
+    ],
   );
 }

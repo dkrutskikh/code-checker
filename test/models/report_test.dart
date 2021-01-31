@@ -6,7 +6,7 @@ import '../stub_builders.dart';
 
 void main() {
   test('ClassReport metric returns required metric or null', () {
-    final report = buildClassReportStub();
+    final report = buildReportStub();
 
     expect(report.metric(NumberOfMethodsMetric.metricId), isNotNull);
     expect(

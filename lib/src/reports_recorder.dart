@@ -1,9 +1,8 @@
 import 'package:path/path.dart' as p;
 
-import 'models/class_report.dart';
 import 'models/file_report.dart';
-import 'models/function_report.dart';
 import 'models/issue.dart';
+import 'models/report.dart';
 import 'models/scoped_class_declaration.dart';
 import 'models/scoped_function_declaration.dart';
 import 'reports_builder.dart';
@@ -15,8 +14,8 @@ import 'reports_store.dart';
 class ReportsRecorder implements ReportsBuilder, ReportsStore {
   String _fileGroupPath;
   String _relativeGroupPath;
-  Map<ScopedClassDeclaration, ClassReport> _classRecords;
-  Map<ScopedFunctionDeclaration, FunctionReport> _functionRecords;
+  Map<ScopedClassDeclaration, Report> _classRecords;
+  Map<ScopedFunctionDeclaration, Report> _functionRecords;
   List<Issue> _issues;
   List<Issue> _antiPatternCases;
 
@@ -47,7 +46,7 @@ class ReportsRecorder implements ReportsBuilder, ReportsStore {
   }
 
   @override
-  void recordClass(ScopedClassDeclaration declaration, ClassReport report) {
+  void recordClass(ScopedClassDeclaration declaration, Report report) {
     _checkState();
 
     if (declaration == null) {
@@ -58,10 +57,7 @@ class ReportsRecorder implements ReportsBuilder, ReportsStore {
   }
 
   @override
-  void recordFunction(
-    ScopedFunctionDeclaration declaration,
-    FunctionReport report,
-  ) {
+  void recordFunction(ScopedFunctionDeclaration declaration, Report report) {
     _checkState();
 
     if (declaration == null) {
@@ -107,10 +103,10 @@ class ReportsRecorder implements ReportsBuilder, ReportsStore {
     _reports.add(FileReport(
       path: _fileGroupPath,
       relativePath: _relativeGroupPath,
-      classes: Map.unmodifiable(_classRecords.map<String, ClassReport>(
+      classes: Map.unmodifiable(_classRecords.map<String, Report>(
         (key, value) => MapEntry(key.name, value),
       )),
-      functions: Map.unmodifiable(_functionRecords.map<String, FunctionReport>(
+      functions: Map.unmodifiable(_functionRecords.map<String, Report>(
         (key, value) => MapEntry(key.name, value),
       )),
       issues: _issues,

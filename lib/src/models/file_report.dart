@@ -1,8 +1,7 @@
 import 'package:meta/meta.dart';
 
-import 'class_report.dart';
-import 'function_report.dart';
 import 'issue.dart';
+import 'report.dart';
 
 /// Represents the metrics report collected for a file
 @immutable
@@ -14,10 +13,10 @@ class FileReport {
   final String relativePath;
 
   /// The all classes reports in the target file
-  final Map<String, ClassReport> classes;
+  final Map<String, Report> classes;
 
   /// The all functions / methods reports in the target file
-  final Map<String, FunctionReport> functions;
+  final Map<String, Report> functions;
 
   /// The issues detected in the target file
   final Iterable<Issue> issues;

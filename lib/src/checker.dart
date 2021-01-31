@@ -9,9 +9,8 @@ import 'package:path/path.dart' as p;
 import 'config/config.dart';
 import 'metrics/metric.dart';
 import 'metrics_factory.dart';
-import 'models/class_report.dart';
 import 'models/entity_type.dart';
-import 'models/function_report.dart';
+import 'models/report.dart';
 import 'reports_builder.dart';
 import 'reports_store.dart';
 import 'scope_visitor.dart';
@@ -87,7 +86,7 @@ class Checker {
     for (final classDeclaration in visitor.classes) {
       builder.recordClass(
         classDeclaration,
-        ClassReport(
+        Report(
           location: nodeLocation(
             node: classDeclaration.declaration,
             source: result,
@@ -114,7 +113,7 @@ class Checker {
     for (final functionDeclaration in visitor.functions) {
       builder.recordFunction(
         functionDeclaration,
-        FunctionReport(
+        Report(
           location: nodeLocation(
             node: functionDeclaration.declaration,
             source: result,

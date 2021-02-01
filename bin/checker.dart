@@ -1,15 +1,12 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
-import 'package:code_checker/src/checker.dart';
+import 'package:code_checker/checker.dart';
+import 'package:code_checker/metrics.dart';
+import 'package:code_checker/reporters.dart';
 import 'package:code_checker/src/cli/arguments_parser.dart';
 import 'package:code_checker/src/cli/arguments_validation.dart';
 import 'package:code_checker/src/cli/arguments_validation_exceptions.dart';
-import 'package:code_checker/src/config/analysis_options.dart';
-import 'package:code_checker/src/config/config.dart';
-import 'package:code_checker/src/metrics_factory.dart';
-import 'package:code_checker/src/reports_store.dart';
-import 'package:code_checker/src/runner.dart';
 import 'package:path/path.dart' as p;
 
 final _parser = argumentsParser();
@@ -48,6 +45,8 @@ Future<void> _runAnalysis(ArgResults arguments) async {
   );
   final runner = Runner(checker, store, arguments.rest, rootFolder);
   await runner.run();
+
+  JsonReporter(stdout).report(runner.results());
 }
 
 Config _configFromArgs(ArgResults arguments) => Config(

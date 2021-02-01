@@ -3,9 +3,8 @@ import 'package:code_checker/src/models/metric_value_level.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test(
-    'MetricValueLevel fromString converts string to MetricValueLevel object',
-    () {
+  group('MetricValueLevel', () {
+    test('fromString converts string to MetricValueLevel object', () {
       const humanReadableLevels = ['NoTEd', 'wARniNG', 'aLaRM', '', null];
 
       assert(
@@ -23,6 +22,23 @@ void main() {
           null,
         ]),
       );
-    },
-  );
+    });
+    test('operators', () {
+      expect(MetricValueLevel.none < MetricValueLevel.noted, isTrue);
+      expect(MetricValueLevel.noted < MetricValueLevel.noted, isFalse);
+      expect(MetricValueLevel.warning < MetricValueLevel.noted, isFalse);
+
+      expect(MetricValueLevel.none <= MetricValueLevel.noted, isTrue);
+      expect(MetricValueLevel.noted <= MetricValueLevel.noted, isTrue);
+      expect(MetricValueLevel.warning <= MetricValueLevel.noted, isFalse);
+
+      expect(MetricValueLevel.none > MetricValueLevel.noted, isFalse);
+      expect(MetricValueLevel.noted > MetricValueLevel.noted, isFalse);
+      expect(MetricValueLevel.warning > MetricValueLevel.noted, isTrue);
+
+      expect(MetricValueLevel.none >= MetricValueLevel.noted, isFalse);
+      expect(MetricValueLevel.noted >= MetricValueLevel.noted, isTrue);
+      expect(MetricValueLevel.warning >= MetricValueLevel.noted, isTrue);
+    });
+  });
 }

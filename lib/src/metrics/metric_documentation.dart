@@ -15,7 +15,9 @@ class MetricDocumentation {
   final String brief;
 
   /// The message with detailed statement of what exactly a metric calculate
-  final Iterable<String> definition;
+  ///
+  /// (Markdown format supported)
+  final String details;
 
   /// Which type of entities will be measured by a metric
   final EntityType measuredEntity;
@@ -24,7 +26,7 @@ class MetricDocumentation {
     @required this.name,
     @required this.shortName,
     @required this.brief,
-    @required this.definition,
+    @required this.details,
     @required this.measuredEntity,
   });
 }

@@ -1,4 +1,3 @@
-import 'package:code_checker/metrics.dart';
 import 'package:code_checker/src/metrics/number_of_methods_metric.dart';
 import 'package:code_checker/src/metrics/weight_of_class_metric.dart';
 import 'package:code_checker/src/models/metric_value.dart';

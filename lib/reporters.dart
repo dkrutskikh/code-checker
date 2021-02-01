@@ -1,1 +1,1 @@
-export 'package:code_checker/src/reporters/reporter.dart';
+export 'package:code_checker/src/reporters/json_reporter.dart';

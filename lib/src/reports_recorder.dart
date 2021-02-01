@@ -107,7 +107,7 @@ class ReportsRecorder implements ReportsBuilder, ReportsStore {
         (key, value) => MapEntry(key.name, value),
       )),
       functions: Map.unmodifiable(_functionRecords.map<String, Report>(
-        (key, value) => MapEntry(key.name, value),
+        (key, value) => MapEntry(key.fullName, value),
       )),
       issues: _issues,
       antiPatternCases: _antiPatternCases,

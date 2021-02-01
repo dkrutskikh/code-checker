@@ -18,7 +18,7 @@ const _documentation = MetricDocumentation(
   shortName: 'WOC',
   brief:
       'The number of "functional" public methods divided by the total number of public members',
-  definition: [],
+  details: '',
   measuredEntity: EntityType.classEntity,
 );
 

@@ -16,7 +16,7 @@ const _documentation = MetricDocumentation(
   name: 'Number of Methods',
   shortName: 'NOM',
   brief: 'The number of methods of a class.',
-  definition: [],
+  details: '',
   measuredEntity: EntityType.classEntity,
 );
 

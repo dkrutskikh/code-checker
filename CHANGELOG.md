@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0 - 2021-02-01
+
+- Add Json reporter
+
 ## 0.4.0 - 2021-01-25
 
 - Add Maximum Nesting Level metric

@@ -18,9 +18,9 @@ const _documentation = MetricDocumentation(
   shortName: 'MAXNESTING',
   brief: 'The maximum nesting level of control structures within an operation',
   details: '''
-**Maximum Nesting Level** this is the maximum level of nesting blocks / control structures that are present in a method / function. Code with deep nesting level are often complex and tough to maintain.,
+**Maximum Nesting Level** this is the maximum level of nesting blocks / control structures that are present in a method (function). Code with deep nesting level are often complex and tough to maintain.
 
-Generally the blocks with `if`, `else`, `else if`, `do`, `while`, `for`, `switch`, `catch`, etc statements are the part of nested loops.,
+Generally the blocks with `if`, `else`, `else if`, `do`, `while`, `for`, `switch`, `catch`, etc statements are the part of nested loops.
 ''',
   measuredEntity: EntityType.methodEntity,
 );

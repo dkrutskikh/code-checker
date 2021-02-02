@@ -11,15 +11,12 @@ abstract class Rule {
   /// The id of the rule.
   final String id;
 
-  /// The url of a page containing documentation associated with this rule
-  final Uri documentation;
 
   /// The severity of issues emitted by this rule
   final Severity severity;
 
   const Rule({
     @required this.id,
-    @required this.documentation,
     @required this.severity,
   });
 

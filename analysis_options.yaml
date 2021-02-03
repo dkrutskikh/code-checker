@@ -16,6 +16,8 @@ code_checker:
     weight-of-class: 0.33
   metrics-exclude:
     - test/**
+  rules:
+    - newline-before-return
 
 linter:
   rules:

@@ -10,10 +10,14 @@ import 'config/config.dart';
 import 'metrics/metric.dart';
 import 'metrics_factory.dart';
 import 'models/entity_type.dart';
+import 'models/issue.dart';
 import 'models/report.dart';
 import 'reports_builder.dart';
 import 'reports_store.dart';
+import 'rules/rule.dart';
+import 'rules_factory.dart';
 import 'scope_visitor.dart';
+import 'suppressions.dart';
 import 'utils/node_utils.dart';
 
 /// Performs code quality analysis on specific files
@@ -22,6 +26,7 @@ import 'utils/node_utils.dart';
 class Checker {
   final Iterable<Glob> _globalExclude;
 
+  final Iterable<Rule> _codeRules;
   final Iterable<Metric> _classesMetrics;
   final Iterable<Metric> _methodsMetrics;
   final Iterable<Glob> _metricsExclude;
@@ -29,6 +34,7 @@ class Checker {
 
   Checker(this._store, Config config)
       : _globalExclude = _prepareExcludes(config?.excludePatterns),
+        _codeRules = config?.rules != null ? rulesByConfig(config.rules) : [],
         _classesMetrics =
             _initializeMetrics(config.metrics, EntityType.classEntity)
                 .toList(growable: false),
@@ -66,6 +72,8 @@ class Checker {
       final visitor = ScopeVisitor();
       result.unit.visitChildren(visitor);
 
+      final lineInfo = result.unit.lineInfo;
+
       _store.recordFile(filePath, rootFolder, (builder) {
         if (!_isExcluded(
           p.relative(filePath, from: rootFolder),
@@ -74,6 +82,9 @@ class Checker {
           _computeClassMetrics(visitor, builder, result);
           _computeMethodMetrics(visitor, builder, result);
         }
+
+        final ignores = Suppressions(result.content, lineInfo);
+        builder.recordIssues(_checkOnCodeIssues(ignores, result));
       });
     }
   }
@@ -131,6 +142,15 @@ class Checker {
       );
     }
   }
+
+  Iterable<Issue> _checkOnCodeIssues(
+    Suppressions ignores,
+    ResolvedUnitResult source,
+  ) =>
+      _codeRules.where((rule) => !ignores.isSuppressed(rule.id)).expand(
+            (rule) => rule.check(source).where((issue) => !ignores
+                .isSuppressedAt(issue.ruleId, issue.location.start.line)),
+          );
 }
 
 Iterable<Glob> _prepareExcludes(Iterable<String> patterns) =>

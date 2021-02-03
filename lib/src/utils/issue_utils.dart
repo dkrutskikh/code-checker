@@ -3,6 +3,7 @@ import 'package:source_span/source_span.dart';
 import '../models/issue.dart';
 import '../models/replacement.dart';
 import '../rules/rule.dart';
+import 'metric_utils.dart';
 
 Issue createIssue(
   Rule rule,
@@ -12,7 +13,7 @@ Issue createIssue(
 ) =>
     Issue(
       ruleId: rule.id,
-      documentation: rule.documentation,
+      documentation: documentation(rule.id),
       location: location,
       severity: rule.severity,
       message: message,

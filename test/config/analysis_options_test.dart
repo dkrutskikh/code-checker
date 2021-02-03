@@ -123,7 +123,7 @@ void main() {
       const options = AnalysisOptions(_options);
 
       expect(options.readMap([]), equals(_options));
-      expect(options.readMap(['key']), isEmpty);
+      expect(options.readMap(['include']), isEmpty);
       expect(
         options.readMap(['code_checker', 'metrics-exclude']),
         isEmpty,
@@ -134,6 +134,52 @@ void main() {
           containsPair('rule-id1', false),
           containsPair('rule-id2', true),
           containsPair('rule-id3', true),
+        ),
+      );
+    });
+
+    test('readMapOfMap returns map with data or not', () async {
+      const options = AnalysisOptions({
+        'code_checker': {
+          'metrics': {'metric-id1': 10},
+          'metrics-exclude': ['documentation/**'],
+          'rules1': ['rule-id1', 'rule-id2', 'rule-id3'],
+          'rules2': {'rule-id1': false, 'rule-id2': true, 'rule-id3': true},
+          'rules3': [
+            'rule-id1',
+            {
+              'rule-id2': {'severity': 'info'},
+            },
+            'rule-id3',
+          ],
+        },
+      });
+
+      expect(options.readMapOfMap(['key']), isEmpty);
+
+      expect(
+        options.readMapOfMap(['code_checker', 'rules1']),
+        allOf(
+          containsPair('rule-id1', <String, Object>{}),
+          containsPair('rule-id2', <String, Object>{}),
+          containsPair('rule-id3', <String, Object>{}),
+        ),
+      );
+
+      expect(
+        options.readMapOfMap(['code_checker', 'rules2']),
+        allOf(
+          containsPair('rule-id2', <String, Object>{}),
+          containsPair('rule-id3', <String, Object>{}),
+        ),
+      );
+
+      expect(
+        options.readMapOfMap(['code_checker', 'rules3']),
+        allOf(
+          containsPair('rule-id1', <String, Object>{}),
+          containsPair('rule-id2', {'severity': 'info'}),
+          containsPair('rule-id3', <String, Object>{}),
         ),
       );
     });

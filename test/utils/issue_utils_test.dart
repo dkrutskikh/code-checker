@@ -12,7 +12,9 @@ class RuleMock extends Mock implements Rule {}
 void main() {
   test('createIssue returns information issue based on passed information', () {
     const id = 'rule-id';
-    final documentationUrl = Uri.parse('https://documentation.html');
+    final documentationUrl = Uri.parse(
+      'https://dart-code-checker-project.github.io/code-checker/metrics/rule-id.html',
+    );
     const severity = Severity.none;
 
     final codeUrl = Uri.parse('file://source.dart');
@@ -29,7 +31,6 @@ void main() {
 
     final rule = RuleMock();
     when(rule.id).thenReturn(id);
-    when(rule.documentation).thenReturn(documentationUrl);
     when(rule.severity).thenReturn(severity);
 
     final issue = createIssue(rule, codeLocation, message, replacement);

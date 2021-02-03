@@ -56,6 +56,7 @@ Config _configFromArgs(ArgResults arguments) => Config(
         for (final metric in allMetrics({}))
           if (arguments.wasParsed(metric.id)) metric.id: arguments[metric.id],
       },
+      rules: const {},
     );
 
 void _showUsageAndExit(int exitCode) {

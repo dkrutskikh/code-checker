@@ -43,6 +43,48 @@ class AnalysisOptions {
 
     return data is Map<String, Object> ? data : {};
   }
+
+  Map<String, Map<String, Object>> readMapOfMap(Iterable<String> pathSegments) {
+    Object data = options;
+
+    for (final key in pathSegments) {
+      if (data is Map<String, Object> && data.containsKey(key)) {
+        data = (data as Map<String, Object>)[key];
+      } else {
+        return {};
+      }
+    }
+
+    if (data is Iterable<Object>) {
+      return Map.unmodifiable(Map<String, Map<String, Object>>.fromEntries([
+        ...data.whereType<String>().map((node) => MapEntry(node, {})),
+        ...data
+            .whereType<Map<String, Object>>()
+            .where((node) =>
+                node.keys.length == 1 &&
+                node.values.first is Map<String, Object>)
+            .map((node) => MapEntry(
+                  node.keys.first,
+                  node.values.first as Map<String, Object>,
+                )),
+      ]));
+    } else if (data is Map<String, Object>) {
+      final rulesNode = data;
+
+      return Map.unmodifiable(Map<String, Map<String, Object>>.fromEntries([
+        ...rulesNode.entries
+            .where((entry) => entry.value is bool && entry.value as bool)
+            .map((entry) => MapEntry(entry.key, {})),
+        ...rulesNode.keys.where((key) {
+          final node = rulesNode[key];
+
+          return node is Map<String, Object>;
+        }).map((key) => MapEntry(key, rulesNode[key] as Map<String, Object>)),
+      ]));
+    }
+
+    return {};
+  }
 }
 
 Future<AnalysisOptions> analysisOptionsFromFile(File options) async =>

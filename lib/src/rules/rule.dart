@@ -11,7 +11,6 @@ abstract class Rule {
   /// The id of the rule.
   final String id;
 
-
   /// The severity of issues emitted by this rule
   final Severity severity;
 

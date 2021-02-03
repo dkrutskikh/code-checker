@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.0 - 2021-02-03
+
+- Add NewlineBeforeReturnRule rule
+
 ## 0.5.0 - 2021-02-01
 
 - Add Json reporter

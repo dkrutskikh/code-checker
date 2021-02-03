@@ -9,11 +9,13 @@ class Config {
   final Iterable<String> excludePatterns;
   final Iterable<String> excludeForMetricsPatterns;
   final Map<String, Object> metrics;
+  final Map<String, Map<String, Object>> rules;
 
   const Config({
     @required this.excludePatterns,
     @required this.excludeForMetricsPatterns,
     @required this.metrics,
+    @required this.rules,
   });
 
   factory Config.fromAnalysisOptions(AnalysisOptions options) {
@@ -24,6 +26,7 @@ class Config {
       excludeForMetricsPatterns:
           options.readIterableOfString([_rootKey, 'metrics-exclude']),
       metrics: options.readMap([_rootKey, 'metrics']),
+      rules: options.readMapOfMap([_rootKey, 'rules']),
     );
   }
 
@@ -34,5 +37,7 @@ class Config {
           ...overrides.excludeForMetricsPatterns,
         },
         metrics: mergeMaps(defaults: metrics, overrides: overrides.metrics),
+        rules: mergeMaps(defaults: rules, overrides: overrides.rules)
+            .cast<String, Map<String, Object>>(),
       );
 }

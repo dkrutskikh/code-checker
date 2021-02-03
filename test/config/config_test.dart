@@ -35,12 +35,17 @@ const _defaults = Config(
     'metric-id2': '10',
     'metric-id3': '5',
   },
+  rules: {
+    'rule-id1': {},
+    'rule-id2': {'severity': 'info'},
+  },
 );
 
 const _empty = Config(
   excludePatterns: [],
   excludeForMetricsPatterns: [],
   metrics: {},
+  rules: {},
 );
 
 const _merged = Config(
@@ -52,6 +57,10 @@ const _merged = Config(
     'metric-id3': '5',
     'metric-id4': '0',
   },
+  rules: {
+    'rule-id1': {},
+    'rule-id2': {'severity': 'warning'},
+  },
 );
 
 const _overrides = Config(
@@ -60,6 +69,9 @@ const _overrides = Config(
   metrics: {
     'metric-id1': '5',
     'metric-id4': '0',
+  },
+  rules: {
+    'rule-id2': {'severity': 'warning'},
   },
 );
 
@@ -72,6 +84,7 @@ void main() {
         expect(config.excludePatterns, isEmpty);
         expect(config.excludeForMetricsPatterns, isEmpty);
         expect(config.metrics, isEmpty);
+        expect(config.rules, isEmpty);
       });
 
       test('data', () {
@@ -91,6 +104,13 @@ void main() {
             'metric-id4': '0',
           }),
         );
+        expect(
+          config.rules,
+          equals({
+            'rule-id2': <String, Object>{},
+            'rule-id3': <String, Object>{},
+          }),
+        );
       });
     });
 
@@ -104,6 +124,7 @@ void main() {
           equals(_defaults.excludeForMetricsPatterns),
         );
         expect(result.metrics, equals(_defaults.metrics));
+        expect(result.rules, equals(_defaults.rules));
       });
       test('empty and overrides configs', () {
         final result = _empty.merge(_overrides);
@@ -114,6 +135,7 @@ void main() {
           equals(_overrides.excludeForMetricsPatterns),
         );
         expect(result.metrics, equals(_overrides.metrics));
+        expect(result.rules, equals(_overrides.rules));
       });
       test('defaults and overrides configs', () {
         final result = _defaults.merge(_overrides);
@@ -124,6 +146,7 @@ void main() {
           equals(_merged.excludeForMetricsPatterns),
         );
         expect(result.metrics, equals(_merged.metrics));
+        expect(result.rules, equals(_merged.rules));
       });
     });
   });

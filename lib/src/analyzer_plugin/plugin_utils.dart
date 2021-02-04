@@ -6,6 +6,7 @@ import 'package:analyzer/src/analysis_options/analysis_options_provider.dart';
 // ignore: implementation_imports
 import 'package:analyzer/src/dart/analysis/driver.dart' as analyzer_internal;
 import 'package:analyzer_plugin/protocol/protocol_common.dart' as p;
+import 'package:analyzer_plugin/protocol/protocol_generated.dart' as p;
 import 'package:glob/glob.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
@@ -14,11 +15,54 @@ import '../config/analysis_options.dart';
 import '../config/config.dart';
 import '../metrics_factory.dart';
 import '../models/entity_type.dart';
+import '../models/issue.dart';
 import '../models/metric_value_level.dart';
 import '../models/severity.dart';
 import '../rules_factory.dart';
 import '../utils/yaml_utils.dart';
 import 'plugin_config.dart';
+
+p.AnalysisErrorFixes fixesFromIssue(
+  Issue issue,
+  ResolvedUnitResult analysisResult,
+) =>
+    p.AnalysisErrorFixes(
+      p.AnalysisError(
+        severityFromIssueSeverity(issue.severity),
+        p.AnalysisErrorType.LINT,
+        p.Location(
+          issue.location.sourceUrl.path,
+          issue.location.start.offset,
+          issue.location.length,
+          issue.location.start.line,
+          issue.location.start.column,
+        ),
+        issue.message,
+        issue.ruleId,
+        correction: issue.verboseMessage,
+        url: issue.documentation?.toString(),
+        hasFix: issue.suggestion != null,
+      ),
+      fixes: [
+        if (issue.suggestion != null)
+          p.PrioritizedSourceChange(
+            1,
+            p.SourceChange(issue.suggestion.comment, edits: [
+              p.SourceFileEdit(
+                analysisResult.libraryElement.source.fullName,
+                analysisResult.libraryElement.source.modificationStamp,
+                edits: [
+                  p.SourceEdit(
+                    issue.location.start.offset,
+                    issue.location.length,
+                    issue.suggestion.replacement,
+                  ),
+                ],
+              ),
+            ]),
+          ),
+      ],
+    );
 
 bool isExcluded({
   @required AnalysisResult source,

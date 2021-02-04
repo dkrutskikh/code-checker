@@ -6,10 +6,12 @@ import 'package:analyzer/src/dart/analysis/driver.dart' as analyzer_internal;
 import 'package:analyzer_plugin/protocol/protocol_common.dart';
 import 'package:code_checker/src/analyzer_plugin/plugin_utils.dart';
 import 'package:code_checker/src/config/config.dart';
+import 'package:code_checker/src/models/issue.dart';
 import 'package:code_checker/src/models/metric_value_level.dart';
 import 'package:code_checker/src/models/severity.dart';
 import 'package:glob/glob.dart';
 import 'package:mockito/mockito.dart';
+import 'package:source_span/source_span.dart';
 import 'package:test/test.dart';
 
 class AnalysisDriverMock extends Mock
@@ -26,6 +28,55 @@ class FileMock extends Mock implements File {}
 
 void main() {
   group('analyzer plugin utils', () {
+    test('fixesFromIssue converts issue to AnalysisErrorFixes', () {
+      const sourcePath = 'source_file.dart';
+      const sampleCode = 'sample code';
+      const offset = 5;
+      const length = sampleCode.length;
+      const end = offset + length;
+      const line = 2;
+      const column = 1;
+      const ruleId = 'rule-id';
+      const patternDocumentationUrl = 'https://www.example.com';
+      const issueMessage = 'diagnostic message';
+      const issueRecommendationMessage = 'diagnostic recommendation message';
+
+      final startLocation = SourceLocation(
+        offset,
+        sourceUrl: Uri.parse(sourcePath),
+        line: line,
+        column: column,
+      );
+
+      final endLocation = SourceLocation(end, sourceUrl: Uri.parse(sourcePath));
+
+      final issue = Issue(
+        ruleId: ruleId,
+        documentation: Uri.parse(patternDocumentationUrl),
+        location: SourceSpan(startLocation, endLocation, sampleCode),
+        severity: Severity.warning,
+        message: issueMessage,
+        verboseMessage: issueRecommendationMessage,
+      );
+
+      final fixes = fixesFromIssue(issue, null);
+
+      expect(fixes.error.severity, equals(AnalysisErrorSeverity.WARNING));
+      expect(fixes.error.type, equals(AnalysisErrorType.LINT));
+      expect(fixes.error.location.file, equals(sourcePath));
+      expect(fixes.error.location.offset, equals(offset));
+      expect(fixes.error.location.length, equals(length));
+      expect(fixes.error.location.startLine, equals(line));
+      expect(fixes.error.location.startColumn, equals(column));
+      expect(fixes.error.message, equals(issueMessage));
+      expect(fixes.error.code, equals(ruleId));
+      expect(fixes.error.correction, equals(issueRecommendationMessage));
+      expect(fixes.error.url, equals(patternDocumentationUrl));
+      expect(fixes.error.contextMessages, isNull);
+      expect(fixes.error.hasFix, isFalse);
+      expect(fixes.fixes, isEmpty);
+    });
+
     test('isExcluded checks exclude or not analysis result', () {
       final analysisResultMock = AnalysisResultMock();
       when(analysisResultMock.path).thenReturn('lib/src/example.dart');

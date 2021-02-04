@@ -22,7 +22,7 @@ const _documentation = MetricDocumentation(
 
 Generally the blocks with `if`, `else`, `else if`, `do`, `while`, `for`, `switch`, `catch`, etc statements are the part of nested loops.
 ''',
-  measuredEntity: EntityType.methodEntity,
+  measuredType: EntityType.methodEntity,
 );
 
 /// Maximum Nesting Level (MAXNESTING)

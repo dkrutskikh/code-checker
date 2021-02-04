@@ -25,7 +25,7 @@ This metric tries to quantify whether the measured class (mixin, or extension) i
 
 Our definition of **functional** method excludes getters and setters.
 ''',
-  measuredEntity: EntityType.classEntity,
+  measuredType: EntityType.classEntity,
 );
 
 /// Weight Of a Class (WOC)

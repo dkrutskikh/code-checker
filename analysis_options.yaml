@@ -17,6 +17,7 @@ code_checker:
   metrics-exclude:
     - test/**
   rules:
+    - double-literal-format
     - newline-before-return
 
 linter:

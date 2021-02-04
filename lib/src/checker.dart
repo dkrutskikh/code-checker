@@ -25,7 +25,6 @@ import 'utils/node_utils.dart';
 /// See [Runner] to get analysis info
 class Checker {
   final Iterable<Glob> _globalExclude;
-
   final Iterable<Rule> _codeRules;
   final Iterable<Metric> _classesMetrics;
   final Iterable<Metric> _methodsMetrics;

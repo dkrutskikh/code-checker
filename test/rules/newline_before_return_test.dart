@@ -12,7 +12,7 @@ void main() {
     final issues = NewlineBeforeReturnRule()
         .check(await resolveFile(path: p.normalize(p.absolute(examplePath))));
 
-    expect(issues.length, equals(3));
+    expect(issues, hasLength(3));
 
     expect(
       issues.map((issue) => issue.ruleId).toSet().single,
@@ -64,6 +64,8 @@ void main() {
       issues.map((issue) => issue.message).toSet().single,
       equals('Missing blank line before return'),
     );
+
+    expect(issues.map((issue) => issue.verboseMessage).toSet().single, isNull);
 
     expect(issues.map((issue) => issue.suggestion).toSet().single, isNull);
   });

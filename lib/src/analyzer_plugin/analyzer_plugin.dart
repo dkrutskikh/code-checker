@@ -2,16 +2,26 @@ import 'dart:async';
 
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/file_system/file_system.dart';
+
 // ignore: implementation_imports
 import 'package:analyzer/src/context/builder.dart';
+
 // ignore: implementation_imports
 import 'package:analyzer/src/context/context_root.dart';
+
 // ignore: implementation_imports
 import 'package:analyzer/src/dart/analysis/driver.dart';
 import 'package:analyzer_plugin/plugin/plugin.dart';
 import 'package:analyzer_plugin/protocol/protocol_generated.dart' as plugin;
 
+import '../analyzer_plugin/plugin_utils.dart';
+import '../config/config.dart';
+import '../suppressions.dart';
+import 'plugin_config.dart';
+
 class CheckerAnalyzerPlugin extends ServerPlugin {
+  final _configs = <AnalysisDriverGeneric, PluginConfig>{};
+
   var _filesFromSetPriorityFilesRequest = <String>[];
 
   @override
@@ -49,6 +59,15 @@ class CheckerAnalyzerPlugin extends ServerPlugin {
       ..fileContentOverlay = fileContentOverlay;
 
     final dartDriver = contextBuilder.buildDriver(root);
+
+    final options = readAnalysisOptions(dartDriver);
+    if (options != null) {
+      _configs[dartDriver] = pluginConfig(
+        Config.fromAnalysisOptions(options),
+        commonSkippedFolders,
+        contextRoot.root,
+      );
+    }
 
     runZonedGuarded(
       () {
@@ -144,9 +163,24 @@ class CheckerAnalyzerPlugin extends ServerPlugin {
 
   Iterable<plugin.AnalysisErrorFixes> _check(
     AnalysisDriver driver,
-    ResolvedUnitResult analysisResult,
-  ) =>
-      <plugin.AnalysisErrorFixes>[];
+    ResolvedUnitResult source,
+  ) {
+    final issues = <plugin.AnalysisErrorFixes>[];
+    final config = _configs[driver];
+
+    if (isSupported(source) &&
+        config != null &&
+        !isExcluded(source: source, excludes: config.globalExclude)) {
+      final ignores = Suppressions(source.content, source.lineInfo);
+
+      final sourceUri =
+          resourceProvider.getFile(source.path)?.toUri() ?? source.uri;
+
+      issues.addAll(checkOnCodeIssues(source, ignores, sourceUri, config));
+    }
+
+    return issues;
+  }
 
   /// AnalysisDriver doesn't fully resolve files that are added via `addFile`; they need to be either explicitly requested
   /// via `getResult`/etc, or added to `priorityFiles`.

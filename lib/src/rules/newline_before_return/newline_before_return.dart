@@ -16,7 +16,7 @@ import 'return_statement_visitor.dart';
 class NewlineBeforeReturnRule extends Rule {
   static const String ruleId = 'newline-before-return';
 
-  static const _failure = 'Expected newline before return statement';
+  static const _failure = 'Missing blank line before return';
 
   NewlineBeforeReturnRule({Map<String, Object> config = const {}})
       : super(
@@ -50,14 +50,13 @@ class NewlineBeforeReturnRule extends Rule {
           return !(tokenLine > previousTokenLine + 1);
         })
         .map((statement) => createIssue(
-              this,
-              nodeLocation(
+              rule: this,
+              location: nodeLocation(
                 node: statement,
                 source: source,
                 withCommentOrMetadata: true,
               ),
-              _failure,
-              null,
+              message: _failure,
             ))
         .toList(growable: false);
   }

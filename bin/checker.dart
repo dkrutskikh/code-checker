@@ -53,7 +53,7 @@ Config _configFromArgs(ArgResults arguments) => Config(
       excludePatterns: [arguments[excludedName] as String],
       excludeForMetricsPatterns: const [],
       metrics: {
-        for (final metric in allMetrics({}))
+        for (final metric in metrics(config: {}))
           if (arguments.wasParsed(metric.id)) metric.id: arguments[metric.id],
       },
       rules: const {},

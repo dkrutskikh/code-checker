@@ -20,13 +20,13 @@ class MetricDocumentation {
   final String details;
 
   /// Which type of entities will be measured by a metric
-  final EntityType measuredEntity;
+  final EntityType measuredType;
 
   const MetricDocumentation({
     @required this.name,
     @required this.shortName,
     @required this.brief,
     @required this.details,
-    @required this.measuredEntity,
+    @required this.measuredType,
   });
 }

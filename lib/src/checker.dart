@@ -25,7 +25,6 @@ import 'utils/node_utils.dart';
 /// See [Runner] to get analysis info
 class Checker {
   final Iterable<Glob> _globalExclude;
-
   final Iterable<Rule> _codeRules;
   final Iterable<Metric> _classesMetrics;
   final Iterable<Metric> _methodsMetrics;
@@ -35,12 +34,14 @@ class Checker {
   Checker(this._store, Config config)
       : _globalExclude = _prepareExcludes(config?.excludePatterns),
         _codeRules = config?.rules != null ? rulesByConfig(config.rules) : [],
-        _classesMetrics =
-            _initializeMetrics(config.metrics, EntityType.classEntity)
-                .toList(growable: false),
-        _methodsMetrics =
-            _initializeMetrics(config.metrics, EntityType.methodEntity)
-                .toList(growable: false),
+        _classesMetrics = metrics(
+          config: config.metrics,
+          measuredType: EntityType.classEntity,
+        ),
+        _methodsMetrics = metrics(
+          config: config.metrics,
+          measuredType: EntityType.methodEntity,
+        ),
         _metricsExclude = _prepareExcludes(config?.excludeForMetricsPatterns);
 
   /// Return a future that will complete after static analysis done for files from [folders].
@@ -155,13 +156,6 @@ class Checker {
 
 Iterable<Glob> _prepareExcludes(Iterable<String> patterns) =>
     patterns?.map((exclude) => Glob(exclude))?.toList() ?? [];
-
-Iterable<Metric> _initializeMetrics(
-  Map<String, Object> metricsConfig,
-  EntityType type,
-) =>
-    allMetrics(metricsConfig)
-        .where((metric) => metric.documentation.measuredEntity == type);
 
 bool _isExcluded(String filePath, Iterable<Glob> excludes) =>
     excludes.any((exclude) => exclude.matches(filePath));

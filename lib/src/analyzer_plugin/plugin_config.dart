@@ -4,6 +4,8 @@ import 'package:meta/meta.dart';
 import '../metrics/metric.dart';
 import '../rules/rule.dart';
 
+const commonSkippedFolders = ['.dart_tool/**', 'packages/**'];
+
 @immutable
 class PluginConfig {
   final Iterable<Glob> globalExclude;

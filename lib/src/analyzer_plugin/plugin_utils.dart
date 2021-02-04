@@ -19,13 +19,27 @@ import '../models/issue.dart';
 import '../models/metric_value_level.dart';
 import '../models/severity.dart';
 import '../rules_factory.dart';
+import '../suppressions.dart';
 import '../utils/yaml_utils.dart';
 import 'plugin_config.dart';
 
-p.AnalysisErrorFixes fixesFromIssue(
-  Issue issue,
-  ResolvedUnitResult analysisResult,
+Iterable<p.AnalysisErrorFixes> checkOnCodeIssues(
+  ResolvedUnitResult source,
+  Suppressions ignores,
+  Uri sourceUri,
+  PluginConfig config,
 ) =>
+    config.codeRules.where((rule) => !ignores.isSuppressed(rule.id)).expand(
+          (rule) => rule
+              .check(source)
+              .where((issue) => !ignores.isSuppressedAt(
+                    issue.ruleId,
+                    issue.location.start.line,
+                  ))
+              .map((issue) => fixesFromIssue(issue, source)),
+        );
+
+p.AnalysisErrorFixes fixesFromIssue(Issue issue, ResolvedUnitResult source) =>
     p.AnalysisErrorFixes(
       p.AnalysisError(
         severityFromIssueSeverity(issue.severity),
@@ -49,8 +63,8 @@ p.AnalysisErrorFixes fixesFromIssue(
             1,
             p.SourceChange(issue.suggestion.comment, edits: [
               p.SourceFileEdit(
-                analysisResult.libraryElement.source.fullName,
-                analysisResult.libraryElement.source.modificationStamp,
+                source.libraryElement.source.fullName,
+                source.libraryElement.source.modificationStamp,
                 edits: [
                   p.SourceEdit(
                     issue.location.start.offset,

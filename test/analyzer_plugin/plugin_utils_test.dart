@@ -4,6 +4,7 @@ import 'package:analyzer/src/context/context_root.dart' as analyzer_internal;
 import 'package:analyzer/src/dart/analysis/driver.dart' as analyzer_internal;
 import 'package:analyzer_plugin/protocol/protocol_common.dart';
 import 'package:code_checker/src/analyzer_plugin/plugin_utils.dart';
+import 'package:code_checker/src/config/config.dart';
 import 'package:code_checker/src/models/metric_value_level.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -20,6 +21,48 @@ class FileMock extends Mock implements File {}
 
 void main() {
   group('analyzer plugin utils', () {
+    test('pluginConfig constructs PluginConfig from different sources', () {
+      final config = pluginConfig(
+        const Config(
+          excludePatterns: ['test/resources/**'],
+          excludeForMetricsPatterns: ['test/**'],
+          metrics: {
+            'maximum-nesting-level': '5',
+            'number-of-methods': '10',
+            'weight-of-class': '0.33',
+          },
+          rules: {'newline-before-return': {}},
+        ),
+        ['.dart_tool/**', 'packages/**'],
+        '/home/user/project',
+      );
+
+      expect(
+        config.globalExclude.map((exclude) => exclude.pattern),
+        equals([
+          '/home/user/project/.dart_tool/**',
+          '/home/user/project/packages/**',
+          '/home/user/project/test/resources/**',
+        ]),
+      );
+      expect(
+        config.codeRules.map((rule) => rule.id),
+        equals(['newline-before-return']),
+      );
+      expect(
+        config.classesMetrics.map((metric) => metric.id),
+        equals(['number-of-methods', 'weight-of-class']),
+      );
+      expect(
+        config.methodsMetrics.map((metric) => metric.id),
+        equals(['maximum-nesting-level']),
+      );
+      expect(
+        config.metricsExclude.map((exclude) => exclude.pattern),
+        equals(['/home/user/project/test/**']),
+      );
+    });
+
     test(
       'readAnalysisOptions constructs AnalysisOptions from driver context',
       () {

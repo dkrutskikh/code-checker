@@ -1,3 +1,5 @@
+import 'package:analyzer/dart/analysis/results.dart';
+
 // ignore: implementation_imports
 import 'package:analyzer/src/analysis_options/analysis_options_provider.dart';
 
@@ -15,6 +17,11 @@ import '../models/metric_value_level.dart';
 import '../rules_factory.dart';
 import '../utils/yaml_utils.dart';
 import 'plugin_config.dart';
+
+bool isSupported(AnalysisResult source) =>
+    source.path != null &&
+    source.path.endsWith('.dart') &&
+    !source.path.endsWith('.g.dart');
 
 PluginConfig pluginConfig(
   Config config,

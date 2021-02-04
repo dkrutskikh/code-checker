@@ -1,4 +1,5 @@
 @TestOn('vm')
+import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/file_system/file_system.dart';
 import 'package:analyzer/src/context/context_root.dart' as analyzer_internal;
 import 'package:analyzer/src/dart/analysis/driver.dart' as analyzer_internal;
@@ -12,6 +13,8 @@ import 'package:test/test.dart';
 class AnalysisDriverMock extends Mock
     implements analyzer_internal.AnalysisDriver {}
 
+class AnalysisResultMock extends Mock implements AnalysisResult {}
+
 // ignore: avoid_implementing_value_types
 class ContextRootMock extends Mock implements analyzer_internal.ContextRoot {}
 
@@ -21,6 +24,28 @@ class FileMock extends Mock implements File {}
 
 void main() {
   group('analyzer plugin utils', () {
+    group('isSupported returns', () {
+      AnalysisResultMock analysisResultMock;
+
+      setUp(() {
+        analysisResultMock = AnalysisResultMock();
+      });
+
+      test('false on analysis result without path', () {
+        expect(isSupported(analysisResultMock), isFalse);
+      });
+      test('true on dart files', () {
+        when(analysisResultMock.path).thenReturn('lib/src/example.dart');
+
+        expect(isSupported(analysisResultMock), isTrue);
+      });
+      test('false on generated dart files', () {
+        when(analysisResultMock.path).thenReturn('lib/src/example.g.dart');
+
+        expect(isSupported(analysisResultMock), isFalse);
+      });
+    });
+
     test('pluginConfig constructs PluginConfig from different sources', () {
       final config = pluginConfig(
         const Config(

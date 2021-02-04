@@ -62,7 +62,7 @@ void main() {
 
     expect(
       issues.map((issue) => issue.message).toSet().single,
-      equals('Expected newline before return statement'),
+      equals('Missing blank line before return'),
     );
 
     expect(issues.map((issue) => issue.suggestion).toSet().single, isNull);

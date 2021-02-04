@@ -26,6 +26,8 @@ void main() {
 
     const message = 'error message';
 
+    const verboseMessage = 'information how to fix a error';
+
     const replacement =
         Replacement(comment: 'comment', replacement: 'new code');
 
@@ -33,13 +35,20 @@ void main() {
     when(rule.id).thenReturn(id);
     when(rule.severity).thenReturn(severity);
 
-    final issue = createIssue(rule, codeLocation, message, replacement);
+    final issue = createIssue(
+      rule: rule,
+      location: codeLocation,
+      message: message,
+      verboseMessage: verboseMessage,
+      replacement: replacement,
+    );
 
     expect(issue.ruleId, equals(id));
     expect(issue.documentation, equals(documentationUrl));
     expect(issue.location, equals(codeLocation));
     expect(issue.severity, equals(severity));
     expect(issue.message, equals(message));
+    expect(issue.verboseMessage, equals(verboseMessage));
     expect(issue.suggestion, equals(replacement));
   });
 }

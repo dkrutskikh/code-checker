@@ -1,8 +1,12 @@
 # Changelog
 
+## 0.7.0 - 2021-02-04
+
+- Add `double-literal-format` rule
+
 ## 0.6.0 - 2021-02-03
 
-- Add NewlineBeforeReturnRule rule
+- Add `newline-before-return` rule
 
 ## 0.5.0 - 2021-02-01
 

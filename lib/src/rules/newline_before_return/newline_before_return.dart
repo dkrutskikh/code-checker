@@ -26,11 +26,11 @@ class NewlineBeforeReturnRule extends Rule {
 
   @override
   Iterable<Issue> check(ResolvedUnitResult source) {
-    final _visitor = ReturnStatementVisitor();
+    final visitor = ReturnStatementVisitor();
 
-    source.unit.visitChildren(_visitor);
+    source.unit.visitChildren(visitor);
 
-    return _visitor.statements
+    return visitor.statements
         // return statement is in a block
         .where((statement) => statement.parent is Block)
         // return statement isn't first token in a block

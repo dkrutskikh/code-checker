@@ -19,7 +19,7 @@ The plugin for the Dart `analyzer` provide information collected by metrics.
 
     ```yaml
     dev_dependencies:
-      code_checker: ^0.6.1
+      code_checker: ^0.7.0
     ```
 
 2. Add configuration to `analysis_options.yaml`
@@ -37,6 +37,7 @@ The plugin for the Dart `analyzer` provide information collected by metrics.
       metrics-exclude:
         - test/**
       rules:
+        - double-literal-format
         - newline-before-return
     ```
 

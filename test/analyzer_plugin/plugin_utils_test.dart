@@ -7,6 +7,7 @@ import 'package:analyzer_plugin/protocol/protocol_common.dart';
 import 'package:code_checker/src/analyzer_plugin/plugin_utils.dart';
 import 'package:code_checker/src/config/config.dart';
 import 'package:code_checker/src/models/metric_value_level.dart';
+import 'package:glob/glob.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
@@ -24,6 +25,26 @@ class FileMock extends Mock implements File {}
 
 void main() {
   group('analyzer plugin utils', () {
+    test('isExcluded checks exclude or not analysis result', () {
+      final analysisResultMock = AnalysisResultMock();
+      when(analysisResultMock.path).thenReturn('lib/src/example.dart');
+
+      expect(
+        isExcluded(
+          source: analysisResultMock,
+          excludes: [Glob('test/**.dart'), Glob('lib/src/**.dart')],
+        ),
+        isTrue,
+      );
+      expect(
+        isExcluded(
+          source: analysisResultMock,
+          excludes: [Glob('test/**.dart'), Glob('bin/**.dart')],
+        ),
+        isFalse,
+      );
+    });
+
     group('isSupported returns', () {
       AnalysisResultMock analysisResultMock;
 

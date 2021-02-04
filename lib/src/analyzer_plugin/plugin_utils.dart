@@ -7,6 +7,7 @@ import 'package:analyzer/src/analysis_options/analysis_options_provider.dart';
 import 'package:analyzer/src/dart/analysis/driver.dart' as analyzer_internal;
 import 'package:analyzer_plugin/protocol/protocol_common.dart' as p;
 import 'package:glob/glob.dart';
+import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 
 import '../config/analysis_options.dart';
@@ -17,6 +18,12 @@ import '../models/metric_value_level.dart';
 import '../rules_factory.dart';
 import '../utils/yaml_utils.dart';
 import 'plugin_config.dart';
+
+bool isExcluded({
+  @required AnalysisResult source,
+  @required Iterable<Glob> excludes,
+}) =>
+    excludes.any((exclude) => exclude.matches(source.path));
 
 bool isSupported(AnalysisResult source) =>
     source.path != null &&

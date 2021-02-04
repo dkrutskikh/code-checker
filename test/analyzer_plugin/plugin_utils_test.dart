@@ -1,13 +1,16 @@
 @TestOn('vm')
 import 'package:analyzer/dart/analysis/results.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/file_system/file_system.dart';
 import 'package:analyzer/src/context/context_root.dart' as analyzer_internal;
 import 'package:analyzer/src/dart/analysis/driver.dart' as analyzer_internal;
+import 'package:analyzer/src/generated/source.dart' as analyzer_internal;
 import 'package:analyzer_plugin/protocol/protocol_common.dart';
 import 'package:code_checker/src/analyzer_plugin/plugin_utils.dart';
 import 'package:code_checker/src/config/config.dart';
 import 'package:code_checker/src/models/issue.dart';
 import 'package:code_checker/src/models/metric_value_level.dart';
+import 'package:code_checker/src/models/replacement.dart';
 import 'package:code_checker/src/models/severity.dart';
 import 'package:glob/glob.dart';
 import 'package:mockito/mockito.dart';
@@ -22,9 +25,15 @@ class AnalysisResultMock extends Mock implements AnalysisResult {}
 // ignore: avoid_implementing_value_types
 class ContextRootMock extends Mock implements analyzer_internal.ContextRoot {}
 
+class FileMock extends Mock implements File {}
+
+class LibraryElementMock extends Mock implements LibraryElement {}
+
+class ResolvedUnitResultMock extends Mock implements ResolvedUnitResult {}
+
 class ResourceProviderMock extends Mock implements ResourceProvider {}
 
-class FileMock extends Mock implements File {}
+class SourceMock extends Mock implements analyzer_internal.Source {}
 
 void main() {
   group('analyzer plugin utils', () {
@@ -40,6 +49,8 @@ void main() {
       const patternDocumentationUrl = 'https://www.example.com';
       const issueMessage = 'diagnostic message';
       const issueRecommendationMessage = 'diagnostic recommendation message';
+      const suggestionComment = 'fix issue';
+      const suggestionReplacement = 'example code';
 
       final startLocation = SourceLocation(
         offset,
@@ -57,9 +68,23 @@ void main() {
         severity: Severity.warning,
         message: issueMessage,
         verboseMessage: issueRecommendationMessage,
+        suggestion: const Replacement(
+          comment: suggestionComment,
+          replacement: suggestionReplacement,
+        ),
       );
 
-      final fixes = fixesFromIssue(issue, null);
+      final libraryElementSource = SourceMock();
+      when(libraryElementSource.fullName).thenReturn(sourcePath);
+      when(libraryElementSource.modificationStamp).thenReturn(1);
+
+      final libraryElement = LibraryElementMock();
+      when(libraryElement.source).thenReturn(libraryElementSource);
+
+      final source = ResolvedUnitResultMock();
+      when(source.libraryElement).thenReturn(libraryElement);
+
+      final fixes = fixesFromIssue(issue, source);
 
       expect(fixes.error.severity, equals(AnalysisErrorSeverity.WARNING));
       expect(fixes.error.type, equals(AnalysisErrorType.LINT));
@@ -73,8 +98,25 @@ void main() {
       expect(fixes.error.correction, equals(issueRecommendationMessage));
       expect(fixes.error.url, equals(patternDocumentationUrl));
       expect(fixes.error.contextMessages, isNull);
-      expect(fixes.error.hasFix, isFalse);
-      expect(fixes.fixes, isEmpty);
+      expect(fixes.error.hasFix, isTrue);
+      expect(fixes.fixes, hasLength(1));
+      expect(fixes.fixes.single.priority, equals(1));
+      expect(fixes.fixes.single.change.message, equals(suggestionComment));
+      expect(fixes.fixes.single.change.edits, hasLength(1));
+      expect(fixes.fixes.single.change.edits.single.file, equals(sourcePath));
+      expect(fixes.fixes.single.change.edits.single.edits, hasLength(1));
+      expect(
+        fixes.fixes.single.change.edits.single.edits.single.offset,
+        equals(offset),
+      );
+      expect(
+        fixes.fixes.single.change.edits.single.edits.single.length,
+        equals(length),
+      );
+      expect(
+        fixes.fixes.single.change.edits.single.edits.single.replacement,
+        equals(suggestionReplacement),
+      );
     });
 
     test('isExcluded checks exclude or not analysis result', () {

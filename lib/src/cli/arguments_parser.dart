@@ -33,7 +33,7 @@ void _appendHelpOption(ArgParser parser) {
 }
 
 void _appendMetricsThresholdOptions(ArgParser parser) {
-  for (final metric in allMetrics({})) {
+  for (final metric in metrics(config: {})) {
     parser.addOption(
       metric.id,
       help: '${metric.documentation.name} threshold',

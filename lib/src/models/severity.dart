@@ -29,7 +29,7 @@ class Severity {
   /// Default value
   static const none = Severity('none');
 
-  static const _all = [error, warning, performance, style, none];
+  static const values = [error, warning, performance, style, none];
 
   final String _value;
 
@@ -37,8 +37,8 @@ class Severity {
 
   /// Converts the human readable [severity] string into a [Severity] value
   static Severity fromString(String severity) => severity != null
-      ? _all.firstWhere(
-          (val) => val._value == severity.toLowerCase(),
+      ? values.firstWhere(
+          (value) => value._value == severity.toLowerCase(),
           orElse: () => Severity.none,
         )
       : null;

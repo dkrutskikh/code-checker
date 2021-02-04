@@ -15,6 +15,7 @@ import '../config/config.dart';
 import '../metrics_factory.dart';
 import '../models/entity_type.dart';
 import '../models/metric_value_level.dart';
+import '../models/severity.dart';
 import '../rules_factory.dart';
 import '../utils/yaml_utils.dart';
 import 'plugin_config.dart';
@@ -64,6 +65,18 @@ AnalysisOptions readAnalysisOptions(analyzer_internal.AnalysisDriver driver) {
   }
 
   return null;
+}
+
+p.AnalysisErrorSeverity severityFromIssueSeverity(Severity level) {
+  const _severityMapping = {
+    Severity.error: p.AnalysisErrorSeverity.ERROR,
+    Severity.warning: p.AnalysisErrorSeverity.WARNING,
+    Severity.performance: p.AnalysisErrorSeverity.INFO,
+    Severity.style: p.AnalysisErrorSeverity.INFO,
+    Severity.none: p.AnalysisErrorSeverity.INFO,
+  };
+
+  return _severityMapping[level] ?? p.AnalysisErrorSeverity.INFO;
 }
 
 p.AnalysisErrorSeverity severityFromMetricValueLevel(MetricValueLevel level) =>

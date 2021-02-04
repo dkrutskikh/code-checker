@@ -7,6 +7,7 @@ import 'package:analyzer_plugin/protocol/protocol_common.dart';
 import 'package:code_checker/src/analyzer_plugin/plugin_utils.dart';
 import 'package:code_checker/src/config/config.dart';
 import 'package:code_checker/src/models/metric_value_level.dart';
+import 'package:code_checker/src/models/severity.dart';
 import 'package:glob/glob.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -139,6 +140,22 @@ void main() {
 
         when(file.exists).thenReturn(true);
         expect(readAnalysisOptions(driver), isNotNull);
+      },
+    );
+
+    test(
+      'severityFromIssueSeverity converts Severity to AnalysisErrorSeverity',
+      () {
+        expect(
+          Severity.values.map(severityFromIssueSeverity),
+          equals([
+            AnalysisErrorSeverity.ERROR,
+            AnalysisErrorSeverity.WARNING,
+            AnalysisErrorSeverity.INFO,
+            AnalysisErrorSeverity.INFO,
+            AnalysisErrorSeverity.INFO,
+          ]),
+        );
       },
     );
 

@@ -81,3 +81,31 @@ jobs:
       - uses: axel-op/dart-package-analyzer@v3
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+
+  documentation:
+
+    name: Generate documentation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Generate 🔧
+        uses: dart-code-checker-project/docs-generator@action
+
+      - name: After Generate
+        run:  |
+          echo "After Generate"
+          echo "-----------------"
+          ls
+          echo "-----------------"
+          echo "After Generate"
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: gh-pages # The folder the action should deploy.
+          CLEAN: true # Automatically remove deleted files from the deploy branch

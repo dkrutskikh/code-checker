@@ -7,6 +7,8 @@ import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
 const examplePath = 'test/resources/maximum_nesting_level_example.dart';
+const docExamplePath =
+    'test/resources/maximum_nesting_level_documentation_example.dart';
 
 Future<void> main() async {
   final metric = MaximumNestingLevelMetric(
@@ -15,8 +17,8 @@ Future<void> main() async {
 
   final scopeVisitor = ScopeVisitor();
 
-  final result = await resolveFile(path: p.normalize(p.absolute(examplePath)));
-  result.unit.visitChildren(scopeVisitor);
+  final example = await resolveFile(path: p.normalize(p.absolute(examplePath)));
+  example.unit.visitChildren(scopeVisitor);
 
   group('MaximumNestingLevelMetric computes maximum nesting level of the', () {
     test('simple function', () {
@@ -24,7 +26,7 @@ Future<void> main() async {
         scopeVisitor.functions.first.declaration,
         scopeVisitor.classes,
         scopeVisitor.functions,
-        result,
+        example,
       );
 
       expect(metricValue.metricsId, equals(metric.id));
@@ -52,7 +54,7 @@ Future<void> main() async {
         scopeVisitor.functions.toList()[1].declaration,
         scopeVisitor.classes,
         scopeVisitor.functions,
-        result,
+        example,
       );
 
       expect(metricValue.metricsId, equals(metric.id));
@@ -77,7 +79,7 @@ Future<void> main() async {
         scopeVisitor.functions.last.declaration,
         scopeVisitor.classes,
         scopeVisitor.functions,
-        result,
+        example,
       );
 
       expect(metricValue.metricsId, equals(metric.id));
@@ -92,6 +94,38 @@ Future<void> main() async {
         metricValue.context.map((e) => e.message),
         equals([
           'Block function body increases depth',
+          'If statement increases depth',
+        ]),
+      );
+    });
+
+    test('metric documentaion', () async {
+      final docExample =
+          await resolveFile(path: p.normalize(p.absolute(docExamplePath)));
+      docExample.unit.visitChildren(scopeVisitor);
+
+      final metricValue = metric.compute(
+        scopeVisitor.functions.first.declaration,
+        scopeVisitor.classes,
+        scopeVisitor.functions,
+        docExample,
+      );
+
+      expect(metricValue.metricsId, equals(metric.id));
+      expect(metricValue.value, equals(3));
+      expect(metricValue.level, equals(MetricValueLevel.warning));
+      expect(
+        metricValue.comment,
+        equals(
+          'This function has a nesting level of 3, which exceeds the maximum of 2 allowed.',
+        ),
+      );
+      expect(metricValue.recommendation, isNull);
+      expect(
+        metricValue.context.map((e) => e.message),
+        equals([
+          'Block function body increases depth',
+          'If statement increases depth',
           'If statement increases depth',
         ]),
       );

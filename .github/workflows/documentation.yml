@@ -1,0 +1,38 @@
+name: Generate documentation
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  documentation:
+
+    name: Generate documentation
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: google/dart:latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Generate 🔧
+        run:  |
+          mkdir gh_pages
+          dart run tool/doc_generator.dart --out gh_pages
+
+      - name: Install rsync 📚
+        run: |
+          apt-get update && apt-get install -y rsync
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.0.0
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: gh_pages # The folder the action should deploy.
+          target-folder: content

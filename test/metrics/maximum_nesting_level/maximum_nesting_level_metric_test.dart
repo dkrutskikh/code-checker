@@ -7,8 +7,6 @@ import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
 const examplePath = 'test/resources/maximum_nesting_level_example.dart';
-const docExamplePath =
-    'test/resources/maximum_nesting_level_documentation_example.dart';
 
 Future<void> main() async {
   final metric = MaximumNestingLevelMetric(
@@ -76,7 +74,7 @@ Future<void> main() async {
 
     test('in class method', () {
       final metricValue = metric.compute(
-        scopeVisitor.functions.last.declaration,
+        scopeVisitor.functions.toList()[2].declaration,
         scopeVisitor.classes,
         scopeVisitor.functions,
         example,
@@ -99,16 +97,12 @@ Future<void> main() async {
       );
     });
 
-    test('metric documentaion', () async {
-      final docExample =
-          await resolveFile(path: p.normalize(p.absolute(docExamplePath)));
-      docExample.unit.visitChildren(scopeVisitor);
-
+    test('simple function for documentation', () {
       final metricValue = metric.compute(
-        scopeVisitor.functions.first.declaration,
+        scopeVisitor.functions.last.declaration,
         scopeVisitor.classes,
         scopeVisitor.functions,
-        docExample,
+        example,
       );
 
       expect(metricValue.metricsId, equals(metric.id));
@@ -125,7 +119,7 @@ Future<void> main() async {
         metricValue.context.map((e) => e.message),
         equals([
           'Block function body increases depth',
-          'If statement increases depth',
+          'Do statement increases depth',
           'If statement increases depth',
         ]),
       );

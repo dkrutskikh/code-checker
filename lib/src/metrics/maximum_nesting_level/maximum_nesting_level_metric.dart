@@ -25,7 +25,7 @@ Generally the blocks with `if`, `else`, `else if`, `do`, `while`, `for`, `switch
 Example:
 
 ```dart
-test/resources/maximum_nesting_level_documentation_example.dart
+<source path="test/resources/maximum_nesting_level_example.dart" start-line="40"></source>
 ```
 ''',
   measuredType: EntityType.methodEntity,

@@ -14,7 +14,8 @@ import 'double_literal_visitor.dart';
 
 const _documentation = RuleDocumentation(
   name: 'Double Literal Format',
-  brief: "Checks that double literals should begin with '0.' instead of just '.', and should not end with a trailing '0'",
+  brief:
+      "Checks that double literals should begin with '0.' instead of just '.', and should not end with a trailing '0'",
 );
 
 class DoubleLiteralFormatRule extends Rule {

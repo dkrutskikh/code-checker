@@ -1,6 +1,6 @@
 ## Code Checker
 
-Static source code analytics tool that helps analyse and improve code quality. It collects [code metrics](https://dart-code-checker-project.github.io/code-checker/content/metrics/).
+Static source code analytics tool that helps analyse and improve code quality. It provides [additional rules](https://dart-code-checker-project.github.io/code-checker/content/rules/) for dart analyzer and collects [code metrics](https://dart-code-checker-project.github.io/code-checker/content/metrics/).
 
 ## Features and bugs
 

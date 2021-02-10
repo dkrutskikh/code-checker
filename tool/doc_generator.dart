@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -183,10 +184,11 @@ class MetricHtmlGenerator {
 
   String _generate() {
     final section = Element.tag('section');
-    if (_metric.documentation.details.isNotEmpty) {
-      section.append(markdownToHtml(_metric.documentation.details));
+    final mdFile = File('documentation/metrics/${_metric.id}.md');
+    if (mdFile.existsSync()) {
+      section.append(_appendMarkDown(mdFile.readAsStringSync()));
     } else {
-      section.append(Element.tag('p')..text = _metric.documentation.brief);
+      section.append(_appendBrief(_metric.documentation.brief));
     }
 
     final body = Element.tag('body')
@@ -220,12 +222,41 @@ class MetricHtmlGenerator {
       ))
       ..append(body);
 
-    embedDartCode(html);
-
     return (Document()..append(DocumentType('html', null, null))..append(html))
         .outerHtml
         .replaceAll('&lt;', '<')
         .replaceAll('&gt;', '>');
+  }
+
+  Node _appendMarkDown(String text) {
+    final lines = text.replaceAll('\r\n', '\n').split('\n');
+
+    final document = md.Document(encodeHtml: true);
+
+    final nodes = document.parseLines(lines).sublist(1);
+
+    nodes.addAll(document
+        .parseInline('**${_metric.documentation.name}** for example is **5**'));
+
+    final htmlNode = DocumentFragment.html(md.HtmlRenderer().render(nodes));
+    _embedDartCode(htmlNode);
+
+    return htmlNode;
+  }
+
+  Node _appendBrief(String text) => Element.tag('p')..text = text;
+
+  void _embedDartCode(Node node) {
+    final visitor = CodeVisitor()..visit(node);
+
+    final iterator = _metric.documentation.examples.iterator..moveNext();
+    for (final codeBlock in visitor.codeBlocks) {
+      codeBlock.text = LineSplitter.split(
+        File(iterator.current.examplePath).readAsStringSync(),
+      ).toList().sublist(iterator.current.startLine).join('\n');
+
+      iterator.moveNext();
+    }
   }
 }
 
@@ -295,8 +326,8 @@ Node headElement({
       ..append(Element.tag('link')
         ..attributes['rel'] = 'stylesheet'
         ..attributes['href'] =
-            '/code-checker/assets/css/style.css?v=${getRandomString(48)}');
-//            'https://dart-code-checker-project.github.io/code-checker/assets/css/style.css?v=${getRandomString(48)}');
+//            '/code-checker/assets/css/style.css?v=${getRandomString(48)}');
+            'https://dart-code-checker-project.github.io/code-checker/assets/css/style.css?v=${getRandomString(48)}');
 
 @immutable
 class HeaderButton {
@@ -354,24 +385,6 @@ Node footer() => Element.tag('footer')
     ..text =
         'Hosted on GitHub Pages — Theme by <a href="https://github.com/orderedlist">orderedlist</a>');
 
-Node markdownToHtml(String markdown) =>
-    DocumentFragment.html(md.markdownToHtml(markdown));
-
-void embedDartCode(Node node) {
-  final visitor = CodeVisitor()..visit(node);
-
-  for (final codeBlock in visitor.codeBlocks) {
-    final codeContent = parseFragment(codeBlock.text).children.first;
-
-    final path = codeContent.attributes['path'];
-    if (path != null) {
-      codeBlock.text = File(path).readAsStringSync();
-    }
-  }
-}
-
-const dartExtension = '.dart';
-
 class CodeVisitor extends TreeVisitor {
   final _codeBlocks = <Text>[];
 
@@ -379,11 +392,8 @@ class CodeVisitor extends TreeVisitor {
 
   @override
   void visitElement(Element node) {
-    if (node.localName == 'code') {
-      final textNode = node.nodes.single as Text;
-      if (textNode.text.startsWith('<source')) {
-        _codeBlocks.add(textNode);
-      }
+    if (node.localName == 'code' && node.classes.contains('language-dart')) {
+      _codeBlocks.add(node.nodes.single as Text);
     }
 
     super.visitElement(node);

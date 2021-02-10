@@ -14,19 +14,28 @@ class MetricDocumentation {
   /// The short message with formal statement about metric
   final String brief;
 
-  /// The message with detailed statement of what exactly a metric calculate
-  ///
-  /// (Markdown format supported)
-  final String details;
-
   /// Which type of entities will be measured by a metric
   final EntityType measuredType;
+
+  final Iterable<CodeExample> examples;
 
   const MetricDocumentation({
     @required this.name,
     @required this.shortName,
     @required this.brief,
-    @required this.details,
     @required this.measuredType,
+    @required this.examples,
+  });
+}
+
+@immutable
+class CodeExample {
+  final String examplePath;
+
+  final int startLine;
+
+  const CodeExample({
+    @required this.examplePath,
+    @required this.startLine,
   });
 }

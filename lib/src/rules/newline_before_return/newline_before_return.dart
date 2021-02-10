@@ -9,9 +9,15 @@ import '../../utils/issue_utils.dart';
 import '../../utils/node_utils.dart';
 import '../../utils/rule_utils.dart';
 import '../rule.dart';
+import '../rule_documentation.dart';
 import 'return_statement_visitor.dart';
 
 // Inspired by ESLint (https://eslint.org/docs/rules/newline-before-return)
+
+const _documentation = RuleDocumentation(
+  name: 'New Line Before Return',
+  brief: 'Enforces blank line between statements and return in a block',
+);
 
 class NewlineBeforeReturnRule extends Rule {
   static const String ruleId = 'newline-before-return';
@@ -21,6 +27,7 @@ class NewlineBeforeReturnRule extends Rule {
   NewlineBeforeReturnRule({Map<String, Object> config = const {}})
       : super(
           id: ruleId,
+          documentation: _documentation,
           severity: readSeverity(config, Severity.style),
         );
 

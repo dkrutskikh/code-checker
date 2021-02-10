@@ -2,8 +2,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:code_checker/rules.dart';
 import 'package:code_checker/src/models/context_message.dart';
 import 'package:code_checker/src/models/file_report.dart';
+import 'package:code_checker/src/models/issue.dart';
 import 'package:code_checker/src/models/metric_value.dart';
 import 'package:code_checker/src/models/metric_value_level.dart';
 import 'package:code_checker/src/models/report.dart';
@@ -73,6 +75,16 @@ final _function3Report = Report(
   ],
 );
 
+final _issueReport = Issue(
+  ruleId: 'id',
+  documentation: Uri.parse('https://documentation.com'),
+  location:
+      SourceSpan(SourceLocation(0), SourceLocation(20), 'simple function body'),
+  severity: Severity.warning,
+  message: 'simple message',
+  verboseMessage: 'verbose message',
+);
+
 final _testReport = [
   FileReport(
     path: _src1Path,
@@ -90,7 +102,7 @@ final _testReport = [
     relativePath: _src2Path,
     classes: const {},
     functions: {'function': _function3Report},
-    issues: const [],
+    issues: [_issueReport],
     antiPatternCases: const [],
   ),
 ];
@@ -115,6 +127,23 @@ void main() {
     final recordLast =
         (report['records'] as Iterable).last as Map<String, Object>;
     expect(recordLast, containsPair('path', _src2Path));
+    expect(
+      recordLast['issues'],
+      equals([
+        {
+          'ruleId': 'id',
+          'documentation': 'https://documentation.com',
+          'location': {
+            'start': {'offset': 0, 'line': 0, 'column': 0},
+            'end': {'offset': 20, 'line': 0, 'column': 20},
+            'text': 'simple function body',
+          },
+          'severity': 'warning',
+          'message': 'simple message',
+          'verboseMessage': 'verbose message',
+        },
+      ]),
+    );
 
     output.close();
   });

@@ -152,6 +152,7 @@ void main() {
             },
             'rule-id3',
           ],
+          'rules4': null,
         },
       });
 
@@ -182,6 +183,8 @@ void main() {
           containsPair('rule-id3', <String, Object>{}),
         ),
       );
+
+      expect(options.readMapOfMap(['code_checker', 'rules4']), isEmpty);
     });
   });
 }

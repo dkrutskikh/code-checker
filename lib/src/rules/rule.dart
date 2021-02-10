@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 
 import '../models/issue.dart';
 import '../models/severity.dart';
+import 'rule_documentation.dart';
 
 /// Interface that code checker uses to communicate with the rules
 ///
@@ -11,11 +12,15 @@ abstract class Rule {
   /// The id of the rule.
   final String id;
 
+  /// documentation associated with this rule
+  final RuleDocumentation documentation;
+
   /// The severity of issues emitted by this rule
   final Severity severity;
 
   const Rule({
     @required this.id,
+    @required this.documentation,
     @required this.severity,
   });
 

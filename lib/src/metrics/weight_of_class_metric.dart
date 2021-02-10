@@ -18,14 +18,8 @@ const _documentation = MetricDocumentation(
   shortName: 'WOC',
   brief:
       'The number of "functional" public methods divided by the total number of public members',
-  details: '''
-Number of **functional** public methods divided by the total number of public methods.
-
-This metric tries to quantify whether the measured class (mixin, or extension) interface reveals more data than behaviour. Low values indicate that the class reveals much more data than behaviour, which is a sign of poor encapsulation.
-
-Our definition of **functional** method excludes getters and setters.
-''',
   measuredType: EntityType.classEntity,
+  examples: [],
 );
 
 /// Weight Of a Class (WOC)

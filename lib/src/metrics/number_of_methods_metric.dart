@@ -16,10 +16,8 @@ const _documentation = MetricDocumentation(
   name: 'Number of Methods',
   shortName: 'NOM',
   brief: 'The number of methods of a class.',
-  details: '''
-The number of methods is the total number of methods in a class (mixin, or extension). Too many methods indicate a high complexity.
-''',
   measuredType: EntityType.classEntity,
+  examples: [],
 );
 
 /// Number of Methods (NOM)

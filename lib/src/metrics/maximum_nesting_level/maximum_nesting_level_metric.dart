@@ -17,18 +17,13 @@ const _documentation = MetricDocumentation(
   name: 'Maximum Nesting Level',
   shortName: 'MAXNESTING',
   brief: 'The maximum nesting level of control structures within an operation',
-  details: '''
-**Maximum Nesting Level** this is the maximum level of nesting blocks / control structures that are present in a method (function). Code with deep nesting level are often complex and tough to maintain.
-
-Generally the blocks with `if`, `else`, `else if`, `do`, `while`, `for`, `switch`, `catch`, etc statements are the part of nested loops.
-
-Example:
-
-```dart
-test/resources/maximum_nesting_level_documentation_example.dart
-```
-''',
   measuredType: EntityType.methodEntity,
+  examples: [
+    CodeExample(
+      examplePath: 'test/resources/maximum_nesting_level_example.dart',
+      startLine: 40,
+    ),
+  ],
 );
 
 /// Maximum Nesting Level (MAXNESTING)

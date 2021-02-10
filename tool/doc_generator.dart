@@ -6,7 +6,6 @@ import 'package:args/args.dart';
 import 'package:code_checker/metrics.dart' as checker;
 import 'package:html/dom.dart';
 import 'package:html/dom_parsing.dart';
-import 'package:html/parser.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:meta/meta.dart';
 
@@ -234,9 +233,6 @@ class MetricHtmlGenerator {
     final document = md.Document(encodeHtml: true);
 
     final nodes = document.parseLines(lines).sublist(1);
-
-    nodes.addAll(document
-        .parseInline('**${_metric.documentation.name}** for example is **5**'));
 
     final htmlNode = DocumentFragment.html(md.HtmlRenderer().render(nodes));
     _embedDartCode(htmlNode);

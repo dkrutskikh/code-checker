@@ -149,7 +149,7 @@ class MetricHtmlIndexGenerator {
             HeaderButton(
               titleStart: 'Using the',
               titleEnd: 'Checker',
-              href: '../index.html',
+              href: '../../index.html',
             ),
           ],
         ))
@@ -327,7 +327,7 @@ class RulesHtmlIndexGenerator {
             HeaderButton(
               titleStart: 'Using the',
               titleEnd: 'Checker',
-              href: '../index.html',
+              href: '../../index.html',
             ),
           ],
         ))

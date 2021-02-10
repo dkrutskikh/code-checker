@@ -2,7 +2,7 @@ import 'package:meta/meta.dart';
 
 import '../models/entity_type.dart';
 
-/// Represents all metric documentation
+/// Represents any metric documentation
 @immutable
 class MetricDocumentation {
   /// The name of a metric

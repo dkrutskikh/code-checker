@@ -4,6 +4,8 @@ import 'dart:math';
 
 import 'package:args/args.dart';
 import 'package:code_checker/metrics.dart' as checker;
+import 'package:code_checker/rules.dart' as checker;
+import 'package:code_checker/src/utils/string_extension.dart';
 import 'package:html/dom.dart';
 import 'package:html/dom_parsing.dart';
 import 'package:markdown/markdown.dart' as md;
@@ -39,6 +41,7 @@ void _showUsageAndExit(int exitCode) {
 
 void _generate(String directory) {
   metricsDocumentation(directory);
+  rulesDocumentation(directory);
 }
 
 // ----------------------------- Arguments  Parser -----------------------------
@@ -159,7 +162,7 @@ class MetricHtmlIndexGenerator {
         title: 'Code Checker Metrics',
         description: 'The list of supported metrics',
         pageUrl:
-            'https://dart-code-checker-project.github.io/code-checker/metrics/index.html',
+            'https://dart-code-checker-project.github.io/code-checker/content/metrics/index.html',
       ))
       ..append(body);
 
@@ -217,7 +220,7 @@ class MetricHtmlGenerator {
         title: _metric.documentation.name,
         description: _metric.documentation.brief,
         pageUrl:
-            'https://dart-code-checker-project.github.io/code-checker/metrics/${_metric.id}.html',
+            'https://dart-code-checker-project.github.io/code-checker/content/metrics/${_metric.id}.html',
       ))
       ..append(body);
 
@@ -263,6 +266,161 @@ const _entityTypeMapping = {
 
 String _measuredEntity(checker.EntityType type) =>
     _entityTypeMapping[type] ?? '';
+
+// ------------------------------ Rules Generator ------------------------------
+
+void rulesDocumentation(String root) {
+  final directory = '$root/rules';
+
+  Directory(directory).createSync(recursive: true);
+
+  RulesHtmlIndexGenerator(checker.allRules).generate(directory);
+
+  for (final rule in checker.allRules) {
+    RuleHtmlGenerator(rule).generate(directory);
+  }
+}
+
+class RulesHtmlIndexGenerator {
+  final Iterable<checker.Rule> _rules;
+
+  RulesHtmlIndexGenerator(this._rules);
+
+  void generate(String filePath) {
+    final outPath = '$filePath/index.html';
+    print('Writing to $outPath');
+    File(outPath).writeAsStringSync(_generate());
+  }
+
+  String _generate() {
+    final section = Element.tag('section')
+      ..append(Element.tag('h1')..text = 'Supported Rules')
+      ..append(Element.tag('p')
+        ..text = 'This list is auto-generated from our sources.');
+
+    for (final severity in checker.Severity.values) {
+      final rulesWithSeverity =
+          _rules.where((rule) => rule.severity == severity).toList();
+      if (rulesWithSeverity.isNotEmpty) {
+        section
+            .append(Element.tag('h2')..text = '$severity Rules'.capitalize());
+
+        for (final rule in rulesWithSeverity) {
+          section
+            ..append(Element.tag('strong')
+              ..append(Element.tag('a')
+                ..attributes['href'] = '${rule.id}.html'
+                ..text = rule.documentation.name))
+            ..append(Element.tag('br'))
+            ..append(Element.tag('p')..text = rule.documentation.brief);
+        }
+      }
+    }
+
+    final body = Element.tag('body')
+      ..append(Element.tag('div')
+        ..classes.add('wrapper')
+        ..append(headerElement(
+          header: 'Code Checker',
+          paragraphs: ['Rules'],
+          buttons: const [
+            HeaderButton(
+              titleStart: 'Using the',
+              titleEnd: 'Checker',
+              href: '../index.html',
+            ),
+          ],
+        ))
+        ..append(section))
+      ..append(footer());
+
+    final html = Element.tag('html')
+      ..attributes['lang'] = 'en'
+      ..append(headElement(
+        title: 'Code Checker Metrics',
+        description: 'The list of supported rules',
+        pageUrl:
+            'https://dart-code-checker-project.github.io/code-checker/content/rules/index.html',
+      ))
+      ..append(body);
+
+    return (Document()..append(DocumentType('html', null, null))..append(html))
+        .outerHtml
+        .replaceAll('&lt;', '<')
+        .replaceAll('&gt;', '>');
+  }
+}
+
+class RuleHtmlGenerator {
+  final checker.Rule _rule;
+
+  RuleHtmlGenerator(this._rule);
+
+  void generate(String filePath) {
+    final outPath = '$filePath/${_rule.id}.html';
+    print('Writing to $outPath');
+    File(outPath).writeAsStringSync(_generate());
+  }
+
+  String _generate() {
+    final section = Element.tag('section');
+    final mdFile = File('documentation/rules/${_rule.id}.md');
+    if (mdFile.existsSync()) {
+      section.append(_appendMarkDown(mdFile.readAsStringSync()));
+    } else {
+      section.append(_appendBrief(_rule.documentation.brief));
+    }
+
+    final body = Element.tag('body')
+      ..append(Element.tag('div')
+        ..classes.add('wrapper')
+        ..append(headerElement(
+          header: _rule.documentation.name,
+          paragraphs: [
+            'ID: ${_rule.id}',
+            'Severity: ${_rule.severity}',
+          ],
+          buttons: const [
+            HeaderButton(
+              titleStart: 'View all',
+              titleEnd: 'Rules',
+              href: 'index.html',
+            ),
+          ],
+        ))
+        ..append(section))
+      ..append(footer());
+
+    final html = Element.tag('html')
+      ..attributes['lang'] = 'en'
+      ..append(headElement(
+        title: _rule.documentation.name,
+        description: _rule.documentation.brief,
+        pageUrl:
+            'https://dart-code-checker-project.github.io/code-checker/content/rules/${_rule.id}.html',
+      ))
+      ..append(body);
+
+    return (Document()..append(DocumentType('html', null, null))..append(html))
+        .outerHtml
+        .replaceAll('&lt;', '<')
+        .replaceAll('&gt;', '>');
+  }
+
+  Node _appendMarkDown(String text) {
+    final lines = text.replaceAll('\r\n', '\n').split('\n');
+
+    final document = md.Document(encodeHtml: true);
+
+    final nodes = document.parseLines(lines).sublist(3);
+
+    final htmlNode = DocumentFragment.html(md.HtmlRenderer().render(nodes));
+
+    return htmlNode;
+  }
+
+  Node _appendBrief(String text) => Element.tag('p')..text = text;
+}
 
 // ------------------------------- Html Helpers --------------------------------
 

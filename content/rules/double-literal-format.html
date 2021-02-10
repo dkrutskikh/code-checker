@@ -1,0 +1,23 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta property="og:url" content="https://dart-code-checker-project.github.io/code-checker/content/rules/double-literal-format.html"><meta property="og:title" content="Double Literal Format"><meta property="og:description" content="Checks that double literals should begin with '0.' instead of just '.', and should not end with a trailing '0'"><meta property="og:locale" content="en_US"><meta property="og:site_name" content="Code Checker"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><title>Double Literal Format</title><meta name="description" content="Checks that double literals should begin with '0.' instead of just '.', and should not end with a trailing '0'"><link rel="canonical" href="https://dart-code-checker-project.github.io/code-checker/content/rules/double-literal-format.html"><link rel="stylesheet" href="/code-checker/assets/css/style.css?v=pGecaE6k4zWkeKJEyE3SMvJEfPNBvjtbTMpO2wZRY1wiQSbf"></head><body><div class="wrapper"><header><h1>Double Literal Format</h1><p>ID: double-literal-format</p><p>Severity: style</p><p class="view"><a href="index.html">View all Rules</a></p><ul><li><a href="index.html">View all <strong>Rules</strong></a></li></ul></header><section><h2>Description</h2>
+<p>Checks that double literals should begin with ‘0.’ instead of just ‘.’, and should not end with a trailing ‘0’. Helps keep a consistent style of numeric literals and decrease potential typos.</p>
+<h3>Redundant leading '0'</h3>
+<p>Bad:</p>
+<pre><code class="language-dart">  var a = 05.23, b = 03.6e+15, c = -012.2, d = -001.1e-15;
+</code></pre>
+<p>Good:</p>
+<pre><code class="language-dart">  var a = 5.23, b = 3.6e+15, c = -12.2, d = -1.1e-15;
+</code></pre>
+<h3>Literal begin with '.'</h3>
+<p>Bad:</p>
+<pre><code class="language-dart">  var a = .257, b = .16e+5, c = -.259, d = -.14e-5;
+</code></pre>
+<p>Good:</p>
+<pre><code class="language-dart">  var a = 0.257, b = 0.16e+5, c = -0.259, d = -0.14e-5;
+</code></pre>
+<h3>Redundant trailing '0'</h3>
+<p>Bad:</p>
+<pre><code class="language-dart">  var a = 0.210, b = 0.100e+5, c = -0.250, d = -0.400e-5;
+</code></pre>
+<p>Good:</p>
+<pre><code class="language-dart">  var a = 0.21, b = 0.1e+5, c = -0.25, d = -0.4e-5;
+</code></pre></section></div><footer><p>Project maintained by <a href="https://github.com/dart-code-checker-project">Dart Code Checker Project</a></p><p>Hosted on GitHub Pages — Theme by <a href="https://github.com/orderedlist">orderedlist</a></p></footer></body></html>

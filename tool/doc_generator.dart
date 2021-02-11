@@ -11,6 +11,9 @@ import 'package:html/dom_parsing.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:meta/meta.dart';
 
+import 'highlight.dart';
+
+final _highlight = Highlight();
 final _parser = argumentsParser();
 
 void main(List<String> args) {
@@ -246,9 +249,14 @@ class MetricHtmlGenerator {
 
     final iterator = _metric.documentation.examples.iterator..moveNext();
     for (final codeBlock in visitor.codeBlocks) {
-      codeBlock.text = LineSplitter.split(
+      final sourceBlock = LineSplitter.split(
         File(iterator.current.examplePath).readAsStringSync(),
       ).toList().sublist(iterator.current.startLine).join('\n');
+
+      codeBlock.parent
+          .append(DocumentFragment.html(_highlight.parse(sourceBlock)));
+
+      codeBlock.remove();
 
       iterator.moveNext();
     }
@@ -469,6 +477,7 @@ Node headElement({
       ..append(Element.tag('link')
         ..attributes['rel'] = 'canonical'
         ..attributes['href'] = pageUrl)
+      ..append(Element.tag('style')..text = draculaThemeCss)
       ..append(Element.tag('link')
         ..attributes['rel'] = 'stylesheet'
         ..attributes['href'] =

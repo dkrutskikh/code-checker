@@ -11,6 +11,9 @@ import 'package:html/dom_parsing.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:meta/meta.dart';
 
+import 'highlight.dart';
+
+final _highlight = Highlight();
 final _parser = argumentsParser();
 
 void main(List<String> args) {
@@ -167,9 +170,7 @@ class MetricHtmlIndexGenerator {
       ..append(body);
 
     return (Document()..append(DocumentType('html', null, null))..append(html))
-        .outerHtml
-        .replaceAll('&lt;', '<')
-        .replaceAll('&gt;', '>');
+        .outerHtml;
   }
 }
 
@@ -225,9 +226,7 @@ class MetricHtmlGenerator {
       ..append(body);
 
     return (Document()..append(DocumentType('html', null, null))..append(html))
-        .outerHtml
-        .replaceAll('&lt;', '<')
-        .replaceAll('&gt;', '>');
+        .outerHtml;
   }
 
   Node _appendMarkDown(String text) {
@@ -250,9 +249,14 @@ class MetricHtmlGenerator {
 
     final iterator = _metric.documentation.examples.iterator..moveNext();
     for (final codeBlock in visitor.codeBlocks) {
-      codeBlock.text = LineSplitter.split(
+      final sourceBlock = LineSplitter.split(
         File(iterator.current.examplePath).readAsStringSync(),
       ).toList().sublist(iterator.current.startLine).join('\n');
+
+      codeBlock.parent
+          .append(DocumentFragment.html(_highlight.parse(sourceBlock)));
+
+      codeBlock.remove();
 
       iterator.moveNext();
     }
@@ -345,9 +349,7 @@ class RulesHtmlIndexGenerator {
       ..append(body);
 
     return (Document()..append(DocumentType('html', null, null))..append(html))
-        .outerHtml
-        .replaceAll('&lt;', '<')
-        .replaceAll('&gt;', '>');
+        .outerHtml;
   }
 }
 
@@ -402,9 +404,7 @@ class RuleHtmlGenerator {
       ..append(body);
 
     return (Document()..append(DocumentType('html', null, null))..append(html))
-        .outerHtml
-        .replaceAll('&lt;', '<')
-        .replaceAll('&gt;', '>');
+        .outerHtml;
   }
 
   Node _appendMarkDown(String text) {
@@ -477,6 +477,7 @@ Node headElement({
       ..append(Element.tag('link')
         ..attributes['rel'] = 'canonical'
         ..attributes['href'] = pageUrl)
+      ..append(Element.tag('style')..text = draculaThemeCss)
       ..append(Element.tag('link')
         ..attributes['rel'] = 'stylesheet'
         ..attributes['href'] =
@@ -521,8 +522,8 @@ Node headerElement({
       desktopButtons.append(Element.tag('li')
         ..append(Element.tag('a')
           ..attributes['href'] = button.href.trim()
-          ..text =
-              '${button.titleStart.trim()} <strong>${button.titleEnd.trim()}</strong>'));
+          ..append(Text(button.titleStart.trim()))
+          ..append(Element.tag('strong')..text = button.titleEnd.trim())));
     }
 
     node.append(desktopButtons);
@@ -533,11 +534,15 @@ Node headerElement({
 
 Node footer() => Element.tag('footer')
   ..append(Element.tag('p')
-    ..text =
-        'Project maintained by <a href="https://github.com/dart-code-checker-project">Dart Code Checker Project</a>')
+    ..append(Text('Project maintained by '))
+    ..append(Element.tag('a')
+      ..attributes['href'] = 'https://github.com/dart-code-checker-project'
+      ..text = 'Dart Code Checker Project'))
   ..append(Element.tag('p')
-    ..text =
-        'Hosted on GitHub Pages — Theme by <a href="https://github.com/orderedlist">orderedlist</a>');
+    ..append(Text('Hosted on GitHub Pages — Theme by '))
+    ..append(Element.tag('a')
+      ..attributes['href'] = 'https://github.com/orderedlist'
+      ..text = 'orderedlist'));
 
 class CodeVisitor extends TreeVisitor {
   final _codeBlocks = <Text>[];

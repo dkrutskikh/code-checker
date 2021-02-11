@@ -167,9 +167,7 @@ class MetricHtmlIndexGenerator {
       ..append(body);
 
     return (Document()..append(DocumentType('html', null, null))..append(html))
-        .outerHtml
-        .replaceAll('&lt;', '<')
-        .replaceAll('&gt;', '>');
+        .outerHtml;
   }
 }
 
@@ -225,9 +223,7 @@ class MetricHtmlGenerator {
       ..append(body);
 
     return (Document()..append(DocumentType('html', null, null))..append(html))
-        .outerHtml
-        .replaceAll('&lt;', '<')
-        .replaceAll('&gt;', '>');
+        .outerHtml;
   }
 
   Node _appendMarkDown(String text) {
@@ -345,9 +341,7 @@ class RulesHtmlIndexGenerator {
       ..append(body);
 
     return (Document()..append(DocumentType('html', null, null))..append(html))
-        .outerHtml
-        .replaceAll('&lt;', '<')
-        .replaceAll('&gt;', '>');
+        .outerHtml;
   }
 }
 
@@ -402,9 +396,7 @@ class RuleHtmlGenerator {
       ..append(body);
 
     return (Document()..append(DocumentType('html', null, null))..append(html))
-        .outerHtml
-        .replaceAll('&lt;', '<')
-        .replaceAll('&gt;', '>');
+        .outerHtml;
   }
 
   Node _appendMarkDown(String text) {
@@ -521,8 +513,8 @@ Node headerElement({
       desktopButtons.append(Element.tag('li')
         ..append(Element.tag('a')
           ..attributes['href'] = button.href.trim()
-          ..text =
-              '${button.titleStart.trim()} <strong>${button.titleEnd.trim()}</strong>'));
+          ..append(Text(button.titleStart.trim()))
+          ..append(Element.tag('strong')..text = button.titleEnd.trim())));
     }
 
     node.append(desktopButtons);
@@ -533,11 +525,15 @@ Node headerElement({
 
 Node footer() => Element.tag('footer')
   ..append(Element.tag('p')
-    ..text =
-        'Project maintained by <a href="https://github.com/dart-code-checker-project">Dart Code Checker Project</a>')
+    ..append(Text('Project maintained by '))
+    ..append(Element.tag('a')
+      ..attributes['href'] = 'https://github.com/dart-code-checker-project'
+      ..text = 'Dart Code Checker Project'))
   ..append(Element.tag('p')
-    ..text =
-        'Hosted on GitHub Pages — Theme by <a href="https://github.com/orderedlist">orderedlist</a>');
+    ..append(Text('Hosted on GitHub Pages — Theme by '))
+    ..append(Element.tag('a')
+      ..attributes['href'] = 'https://github.com/orderedlist'
+      ..text = 'orderedlist'));
 
 class CodeVisitor extends TreeVisitor {
   final _codeBlocks = <Text>[];

@@ -26,11 +26,11 @@ class MetricValue<T> {
   final Iterable<ContextMessage> context;
 
   const MetricValue({
-    @required this.metricsId,
-    @required this.value,
-    @required this.level,
-    @required this.comment,
-    this.recommendation,
+    required this.metricsId,
+    required this.value,
+    required this.level,
+    required this.comment,
+    this.recommendation = '',
     this.context = const [],
   });
 }

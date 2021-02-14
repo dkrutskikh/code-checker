@@ -10,5 +10,5 @@ class ContextMessage {
   /// The source location associated with or referenced by the message
   final SourceSpan location;
 
-  const ContextMessage({@required this.message, @required this.location});
+  const ContextMessage({required this.message, required this.location});
 }

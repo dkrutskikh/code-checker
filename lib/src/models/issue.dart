@@ -26,15 +26,15 @@ class Issue {
   final String verboseMessage;
 
   /// The suggested relevant change
-  final Replacement suggestion;
+  final Replacement? suggestion;
 
   const Issue({
-    @required this.ruleId,
-    @required this.documentation,
-    @required this.location,
-    @required this.severity,
-    @required this.message,
-    this.verboseMessage,
+    required this.ruleId,
+    required this.documentation,
+    required this.location,
+    required this.severity,
+    required this.message,
+    this.verboseMessage = '',
     this.suggestion,
   });
 }

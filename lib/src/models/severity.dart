@@ -36,12 +36,10 @@ class Severity {
   const Severity(this._value);
 
   /// Converts the human readable [severity] string into a [Severity] value
-  static Severity fromString(String severity) => severity != null
-      ? values.firstWhere(
-          (value) => value._value == severity.toLowerCase(),
-          orElse: () => Severity.none,
-        )
-      : null;
+  static Severity fromString(String severity) => values.firstWhere(
+        (value) => value._value == severity.toLowerCase(),
+        orElse: () => Severity.none,
+      );
 
   @override
   String toString() => _value;

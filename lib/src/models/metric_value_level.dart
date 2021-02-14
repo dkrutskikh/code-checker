@@ -30,12 +30,10 @@ class MetricValueLevel implements Comparable<MetricValueLevel> {
   final String _name;
 
   /// Converts the human readable [level] string into a [MetricValueLevel] value
-  static MetricValueLevel fromString(String level) => level != null
-      ? values.firstWhere(
-          (val) => val._name == level.toLowerCase(),
-          orElse: () => MetricValueLevel.none,
-        )
-      : null;
+  static MetricValueLevel fromString(String level) => values.firstWhere(
+        (val) => val._name == level.toLowerCase(),
+        orElse: () => MetricValueLevel.none,
+      );
 
   const MetricValueLevel._(this._name);
 

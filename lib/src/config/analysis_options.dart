@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import 'dart:io';
 import 'dart:isolate';
 

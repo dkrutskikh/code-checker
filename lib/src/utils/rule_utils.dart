@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import '../models/severity.dart';
 
 /// Returns a [Severity] from [Map] based [config] otherwise [defaultValue]

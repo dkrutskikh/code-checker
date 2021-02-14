@@ -1,3 +1,5 @@
+// @dart=2.8
+
 export 'package:code_checker/src/checker.dart';
 export 'package:code_checker/src/config/analysis_options.dart';
 export 'package:code_checker/src/config/config.dart';

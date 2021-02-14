@@ -1,3 +1,5 @@
+// @dart=2.8
+
 final _camelRegExp = RegExp('(?=[A-Z])');
 
 extension StringExtensions on String {

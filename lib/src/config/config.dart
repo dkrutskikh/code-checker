@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import 'package:meta/meta.dart';
 
 import '../utils/analysis_options_utils.dart';

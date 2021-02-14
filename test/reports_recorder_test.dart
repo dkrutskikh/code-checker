@@ -1,3 +1,5 @@
+// @dart=2.8
+
 @TestOn('vm')
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:code_checker/src/models/class_type.dart';

@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import 'package:args/args.dart';
 
 import 'arguments_validation_exceptions.dart';

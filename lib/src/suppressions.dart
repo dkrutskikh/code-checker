@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import 'package:analyzer/source/line_info.dart';
 
 /// Represents information about rule suppression

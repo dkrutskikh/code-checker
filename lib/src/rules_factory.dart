@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import 'rules/double_literal_format/double_literal_format.dart';
 import 'rules/newline_before_return/newline_before_return.dart';
 import 'rules/rule.dart';

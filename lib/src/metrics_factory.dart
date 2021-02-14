@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import 'package:meta/meta.dart';
 
 import 'metrics/maximum_nesting_level/maximum_nesting_level_metric.dart';

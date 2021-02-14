@@ -1,3 +1,5 @@
+// @dart=2.8
+
 @TestOn('vm')
 import 'package:code_checker/src/rules/double_literal_format/double_literal_format.dart';
 import 'package:code_checker/src/rules/newline_before_return/newline_before_return.dart';

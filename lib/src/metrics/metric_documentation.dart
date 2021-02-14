@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import 'package:meta/meta.dart';
 
 import '../models/entity_type.dart';

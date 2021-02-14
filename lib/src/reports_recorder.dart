@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import 'package:path/path.dart' as p;
 
 import 'models/file_report.dart';

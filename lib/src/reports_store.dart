@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import 'models/file_report.dart';
 import 'reports_builder.dart';
 import 'reports_recorder.dart';

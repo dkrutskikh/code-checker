@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import 'package:glob/glob.dart';
 import 'package:meta/meta.dart';
 

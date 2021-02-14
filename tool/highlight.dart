@@ -1,3 +1,5 @@
+// @dart=2.8
+
 class Highlight {
   final _languageMode = dart;
 

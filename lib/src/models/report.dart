@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 

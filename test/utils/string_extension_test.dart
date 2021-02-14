@@ -1,3 +1,5 @@
+// @dart=2.8
+
 @TestOn('vm')
 import 'package:code_checker/src/utils/string_extension.dart';
 import 'package:test/test.dart';

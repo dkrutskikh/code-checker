@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import 'dart:isolate';
 
 import 'package:analyzer/file_system/physical_file_system.dart';

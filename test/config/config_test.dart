@@ -1,3 +1,5 @@
+// @dart=2.8
+
 @TestOn('vm')
 import 'package:code_checker/src/config/analysis_options.dart';
 import 'package:code_checker/src/config/config.dart';

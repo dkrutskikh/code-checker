@@ -1,3 +1,5 @@
+// @dart=2.8
+
 @TestOn('vm')
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:code_checker/src/metrics/maximum_nesting_level/nesting_level_visitor.dart';

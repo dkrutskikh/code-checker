@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import 'package:analyzer/dart/analysis/results.dart';
 
 // ignore: implementation_imports

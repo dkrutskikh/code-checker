@@ -1,3 +1,5 @@
+// @dart=2.8
+
 @TestOn('vm')
 import 'package:code_checker/src/cli/arguments_parser.dart';
 import 'package:test/test.dart';

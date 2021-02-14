@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import 'models/issue.dart';
 import 'models/report.dart';
 import 'models/scoped_class_declaration.dart';

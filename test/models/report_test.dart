@@ -1,3 +1,5 @@
+// @dart=2.8
+
 @TestOn('vm')
 import 'package:code_checker/src/metrics/number_of_methods_metric.dart';
 import 'package:code_checker/src/metrics/weight_of_class_metric.dart';

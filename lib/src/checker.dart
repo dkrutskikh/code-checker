@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import 'dart:io';
 
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';

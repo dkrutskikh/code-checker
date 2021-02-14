@@ -1,3 +1,5 @@
+// @dart=2.8
+
 @TestOn('vm')
 import 'package:code_checker/src/models/replacement.dart';
 import 'package:code_checker/src/models/severity.dart';

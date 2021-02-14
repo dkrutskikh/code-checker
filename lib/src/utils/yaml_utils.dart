@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import 'package:yaml/yaml.dart';
 
 List<Object> yamlListToDartList(YamlList map) =>

@@ -1,3 +1,5 @@
+// @dart=2.8
+
 import '../models/metric_value_level.dart';
 
 /// Returns the url of a page containing documentation associated with [metricId]

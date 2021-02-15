@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 
-import '../models/code_example.dart';
-import '../models/entity_type.dart';
+import 'code_example.dart';
+import 'entity_type.dart';
 
 /// Represents any metric documentation
 @immutable

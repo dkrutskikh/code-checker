@@ -3,6 +3,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../models/context_message.dart';
 import '../models/entity_type.dart';
+import '../models/metric_documentation.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import '../utils/metric_utils.dart';
@@ -10,7 +11,6 @@ import '../utils/node_utils.dart';
 import '../utils/scope_utils.dart';
 import 'class_metric.dart';
 import 'metric_computation_result.dart';
-import 'metric_documentation.dart';
 
 const _documentation = MetricDocumentation(
   name: 'Number of Methods',

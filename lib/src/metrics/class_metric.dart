@@ -1,11 +1,11 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:meta/meta.dart';
 
+import '../models/metric_documentation.dart';
 import '../models/metric_value_level.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import 'metric.dart';
-import 'metric_documentation.dart';
 
 abstract class ClassMetric<T extends num> extends Metric<T> {
   const ClassMetric({

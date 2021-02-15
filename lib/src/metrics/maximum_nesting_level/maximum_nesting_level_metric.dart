@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 
+import '../../models/code_example.dart';
 import '../../models/context_message.dart';
 import '../../models/entity_type.dart';
 import '../../models/scoped_class_declaration.dart';

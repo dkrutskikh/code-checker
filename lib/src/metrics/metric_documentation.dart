@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 
+import '../models/code_example.dart';
 import '../models/entity_type.dart';
 
 /// Represents any metric documentation
@@ -25,17 +26,5 @@ class MetricDocumentation {
     @required this.brief,
     @required this.measuredType,
     @required this.examples,
-  });
-}
-
-@immutable
-class CodeExample {
-  final String examplePath;
-
-  final int startLine;
-
-  const CodeExample({
-    @required this.examplePath,
-    @required this.startLine,
   });
 }

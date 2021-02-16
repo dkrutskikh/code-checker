@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 
 import 'context_message.dart';
+import 'metric_documentation.dart';
 import 'metric_value_level.dart';
 
 /// Represents a value computed by the metric
@@ -8,6 +9,9 @@ import 'metric_value_level.dart';
 class MetricValue<T> {
   /// The id of the metric whose compute this value
   final String metricsId;
+
+  /// Documentation associated with the metrics whose compute this value
+  final MetricDocumentation documentation;
 
   final T value;
 
@@ -27,6 +31,7 @@ class MetricValue<T> {
 
   const MetricValue({
     @required this.metricsId,
+    @required this.documentation,
     @required this.value,
     @required this.level,
     @required this.comment,

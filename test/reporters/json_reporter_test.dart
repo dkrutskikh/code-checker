@@ -4,8 +4,10 @@ import 'dart:io';
 
 import 'package:code_checker/rules.dart';
 import 'package:code_checker/src/models/context_message.dart';
+import 'package:code_checker/src/models/entity_type.dart';
 import 'package:code_checker/src/models/file_report.dart';
 import 'package:code_checker/src/models/issue.dart';
+import 'package:code_checker/src/models/metric_documentation.dart';
 import 'package:code_checker/src/models/metric_value.dart';
 import 'package:code_checker/src/models/metric_value_level.dart';
 import 'package:code_checker/src/models/report.dart';
@@ -24,6 +26,13 @@ final _class1Report = Report(
   metrics: const [
     MetricValue<int>(
       metricsId: 'id',
+      documentation: MetricDocumentation(
+        name: 'metric1',
+        shortName: 'MTR1',
+        brief: '',
+        measuredType: EntityType.classEntity,
+        examples: [],
+      ),
       value: 0,
       level: MetricValueLevel.none,
       comment: 'metric comment',
@@ -37,6 +46,13 @@ final _function1Report = Report(
   metrics: const [
     MetricValue<int>(
       metricsId: 'id',
+      documentation: MetricDocumentation(
+        name: 'metric2',
+        shortName: 'MTR2',
+        brief: '',
+        measuredType: EntityType.methodEntity,
+        examples: [],
+      ),
       value: 10,
       level: MetricValueLevel.alarm,
       comment: 'metric comment',
@@ -49,6 +65,13 @@ final _function2Report = Report(
   metrics: [
     MetricValue<int>(
       metricsId: 'id2',
+      documentation: const MetricDocumentation(
+        name: 'metric3',
+        shortName: 'MTR3',
+        brief: '',
+        measuredType: EntityType.methodEntity,
+        examples: [],
+      ),
       value: 1,
       level: MetricValueLevel.none,
       comment: 'metric comment',
@@ -68,6 +91,13 @@ final _function3Report = Report(
   metrics: const [
     MetricValue<int>(
       metricsId: 'id',
+      documentation: MetricDocumentation(
+        name: 'metric4',
+        shortName: 'MTR4',
+        brief: '',
+        measuredType: EntityType.methodEntity,
+        examples: [],
+      ),
       value: 5,
       level: MetricValueLevel.warning,
       comment: 'metric comment',

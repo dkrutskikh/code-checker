@@ -48,6 +48,7 @@ abstract class Metric<T extends num> {
 
     return MetricValue<T>(
       metricsId: id,
+      documentation: documentation,
       value: result.value,
       level: _levelComputer(result.value, threshold),
       comment: commentMessage(type, result.value, threshold),

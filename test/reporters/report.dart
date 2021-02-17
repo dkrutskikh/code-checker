@@ -107,7 +107,7 @@ final _issueReport = Issue(
   verboseMessage: 'verbose message',
 );
 
-final testReport = [
+final Iterable<FileReport> testReport = [
   FileReport(
     path: src1Path,
     relativePath: src1Path,

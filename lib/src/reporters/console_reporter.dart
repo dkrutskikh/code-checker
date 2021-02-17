@@ -80,7 +80,7 @@ class ConsoleReporter implements Reporter {
           ];
 
           return [
-            '${_colorPens[reportLevel](reportLevel.toString().toUpperCase()?.padRight(8))}$source - ${violations.join(', ')}',
+            '${_colorPens[reportLevel](reportLevel.toString().capitalize()?.padRight(8))}$source - ${violations.join(', ')}',
           ];
         }
 

@@ -46,7 +46,8 @@ Future<void> _runAnalysis(ArgResults arguments) async {
   final runner = Runner(checker, store, arguments.rest, rootFolder);
   await runner.run();
 
-  JsonReporter(stdout).report(runner.results());
+  reporter(name: arguments[reporterName] as String, output: stdout)
+      ?.report(runner.results());
 }
 
 Config _configFromArgs(ArgResults arguments) => Config(

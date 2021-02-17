@@ -2,12 +2,12 @@ import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:meta/meta.dart';
 
+import '../models/metric_documentation.dart';
 import '../models/metric_value.dart';
 import '../models/metric_value_level.dart';
 import '../models/scoped_class_declaration.dart';
 import '../models/scoped_function_declaration.dart';
 import 'metric_computation_result.dart';
-import 'metric_documentation.dart';
 
 /// Interface that code checker uses to communicate with the metrics
 ///
@@ -48,6 +48,7 @@ abstract class Metric<T extends num> {
 
     return MetricValue<T>(
       metricsId: id,
+      documentation: documentation,
       value: result.value,
       level: _levelComputer(result.value, threshold),
       comment: commentMessage(type, result.value, threshold),

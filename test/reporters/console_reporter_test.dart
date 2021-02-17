@@ -31,16 +31,17 @@ void main() {
       final report = verify(output.writeln(captureAny)).captured.cast<String>();
 
       expect(
-          report,
-          equals([
-            'lib/src/model/source1.dart:',
-            '\x1B[38;5;9mAlarm   \x1B[0mclass.constructor - MTR2: \x1B[38;5;9m10\x1B[0m',
-            '',
-            'lib/src/service/source1.dart:',
-            '\x1B[38;5;11mWarning \x1B[0msimple message : 0:0 : id',
-            '\x1B[38;5;11mWarning \x1B[0mfunction - MTR4: \x1B[38;5;11m5\x1B[0m',
-            '',
-          ]));
+        report,
+        equals([
+          'lib/src/model/source1.dart:',
+          '\x1B[38;5;9mAlarm   \x1B[0mclass.constructor - MTR2: \x1B[38;5;9m10\x1B[0m',
+          '',
+          'lib/src/service/source1.dart:',
+          '\x1B[38;5;11mWarning \x1B[0msimple message : 0:0 : id',
+          '\x1B[38;5;11mWarning \x1B[0mfunction - MTR4: \x1B[38;5;11m5\x1B[0m',
+          '',
+        ]),
+      );
 
       output.close();
     });

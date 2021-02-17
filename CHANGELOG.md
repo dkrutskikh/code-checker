@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.0 - 2021-02-17
+
+- Add Console reporter
+
 ## 0.7.0 - 2021-02-04
 
 - Add `double-literal-format` rule

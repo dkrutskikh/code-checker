@@ -51,6 +51,10 @@ Usage: checker [arguments] <directories>
 -h, --help                                        Print this usage information.
 
 
+-r, --reporter=<console>                          The format of the output of the analysis
+                                                  [console (default), json]
+
+
     --maximum-nesting-level=<5>                   Maximum Nesting Level threshold
     --number-of-methods=<10>                      Number of Methods threshold
     --weight-of-class=<0.33>                      Weight Of a Class threshold

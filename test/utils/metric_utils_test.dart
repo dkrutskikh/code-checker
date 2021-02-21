@@ -12,7 +12,7 @@ void main() {
       expect(
         documentation(metricId1).toString(),
         equals(
-          'https://dart-code-checker-project.github.io/code-checker/metrics/$metricId1.html',
+          'https://dart-code-checker.github.io/code-checker/metrics/$metricId1.html',
         ),
       );
       expect(

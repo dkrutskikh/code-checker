@@ -7,6 +7,6 @@ Severity readSeverity(Map<String, Object> config, Severity defaultValue) =>
 /// Returns the url of a page containing documentation associated with [ruleId]
 Uri documentation(String ruleId) => Uri(
       scheme: 'https',
-      host: 'dart-code-checker-project.github.io',
+      host: 'dart-code-checker.github.io',
       pathSegments: ['code-checker', 'rules', '$ruleId.html'],
     );

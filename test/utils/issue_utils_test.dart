@@ -13,7 +13,7 @@ void main() {
   test('createIssue returns information issue based on passed information', () {
     const id = 'rule-id';
     final documentationUrl = Uri.parse(
-      'https://dart-code-checker-project.github.io/code-checker/metrics/rule-id.html',
+      'https://dart-code-checker.github.io/code-checker/metrics/rule-id.html',
     );
     const severity = Severity.none;
 

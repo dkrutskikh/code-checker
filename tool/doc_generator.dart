@@ -165,7 +165,7 @@ class MetricHtmlIndexGenerator {
         title: 'Code Checker Metrics',
         description: 'The list of supported metrics',
         pageUrl:
-            'https://dart-code-checker-project.github.io/code-checker/content/metrics/index.html',
+            'https://dart-code-checker.github.io/code-checker/content/metrics/index.html',
       ))
       ..append(body);
 
@@ -221,7 +221,7 @@ class MetricHtmlGenerator {
         title: _metric.documentation.name,
         description: _metric.documentation.brief,
         pageUrl:
-            'https://dart-code-checker-project.github.io/code-checker/content/metrics/${_metric.id}.html',
+            'https://dart-code-checker.github.io/code-checker/content/metrics/${_metric.id}.html',
       ))
       ..append(body);
 
@@ -344,7 +344,7 @@ class RulesHtmlIndexGenerator {
         title: 'Code Checker Metrics',
         description: 'The list of supported rules',
         pageUrl:
-            'https://dart-code-checker-project.github.io/code-checker/content/rules/index.html',
+            'https://dart-code-checker.github.io/code-checker/content/rules/index.html',
       ))
       ..append(body);
 
@@ -399,7 +399,7 @@ class RuleHtmlGenerator {
         title: _rule.documentation.name,
         description: _rule.documentation.brief,
         pageUrl:
-            'https://dart-code-checker-project.github.io/code-checker/content/rules/${_rule.id}.html',
+            'https://dart-code-checker.github.io/code-checker/content/rules/${_rule.id}.html',
       ))
       ..append(body);
 
@@ -482,7 +482,7 @@ Node headElement({
         ..attributes['rel'] = 'stylesheet'
         ..attributes['href'] =
             '/code-checker/assets/css/style.css?v=${getRandomString(48)}');
-//            'https://dart-code-checker-project.github.io/code-checker/assets/css/style.css?v=${getRandomString(48)}');
+//            'https://dart-code-checker.github.io/code-checker/assets/css/style.css?v=${getRandomString(48)}');
 
 @immutable
 class HeaderButton {
@@ -536,7 +536,7 @@ Node footer() => Element.tag('footer')
   ..append(Element.tag('p')
     ..append(Text('Project maintained by '))
     ..append(Element.tag('a')
-      ..attributes['href'] = 'https://github.com/dart-code-checker-project'
+      ..attributes['href'] = 'https://github.com/dart-code-checker'
       ..text = 'Dart Code Checker Project'))
   ..append(Element.tag('p')
     ..append(Text('Hosted on GitHub Pages — Theme by '))

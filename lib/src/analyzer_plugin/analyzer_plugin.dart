@@ -26,7 +26,7 @@ class CheckerAnalyzerPlugin extends ServerPlugin {
 
   @override
   String get contactInfo =>
-      'https://github.com/dart-code-checker-project/code-checker/issues';
+      'https://github.com/dart-code-checker/code-checker/issues';
 
   @override
   List<String> get fileGlobsToAnalyze => const ['*.dart'];

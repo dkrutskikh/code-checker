@@ -484,8 +484,8 @@ Node headElement({
       ..append(Element.tag('link')
         ..attributes['rel'] = 'stylesheet'
         ..attributes['href'] =
-//            '/code-checker/assets/css/style.css?v=${getRandomString(48)}');
-            'https://dart-code-checker.github.io/code-checker/assets/css/style.css?v=${getRandomString(48)}');
+            '/code-checker/assets/css/style.css?v=${getRandomString(48)}');
+//            'https://dart-code-checker.github.io/code-checker/assets/css/style.css?v=${getRandomString(48)}');
 
 @immutable
 class HeaderButton {

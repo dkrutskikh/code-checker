@@ -46,7 +46,7 @@ Future<void> main() async {
 
       expect(
         nestingLevelVisitor.deepestNestingNodesChain.map((node) => node.offset),
-        equals([1430, 1217, 1136]),
+        equals([1442, 1229, 1148]),
       );
     });
   });

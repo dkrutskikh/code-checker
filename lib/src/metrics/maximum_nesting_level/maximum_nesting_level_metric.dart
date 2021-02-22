@@ -21,9 +21,9 @@ const _documentation = MetricDocumentation(
   measuredType: EntityType.methodEntity,
   examples: [
     CodeExample(
-      examplePath: 'test/resources/maximum_nesting_level_example.dart',
-      startLine: 41,
-      endLine: 61,
+      examplePath: 'test/resources/maximum_nesting_level_metric_example.dart',
+      startLine: 55,
+      endLine: 75,
     ),
   ],
 );

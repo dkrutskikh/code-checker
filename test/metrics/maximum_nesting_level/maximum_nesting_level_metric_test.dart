@@ -6,7 +6,7 @@ import 'package:code_checker/src/scope_visitor.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
-const examplePath = 'test/resources/maximum_nesting_level_example.dart';
+const examplePath = 'test/resources/maximum_nesting_level_metric_example.dart';
 
 Future<void> main() async {
   final metric = MaximumNestingLevelMetric(
@@ -111,7 +111,7 @@ Future<void> main() async {
       expect(
         metricValue.comment,
         equals(
-          'This function has a nesting level of 3, which exceeds the maximum of 2 allowed.',
+          'This method has a nesting level of 3, which exceeds the maximum of 2 allowed.',
         ),
       );
       expect(metricValue.recommendation, isNull);

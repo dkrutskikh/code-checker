@@ -5,7 +5,7 @@ import 'package:code_checker/src/scope_visitor.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
-const examplePath = 'test/resources/maximum_nesting_level_example.dart';
+const examplePath = 'test/resources/maximum_nesting_level_metric_example.dart';
 
 Future<void> main() async {
   final result = await resolveFile(path: p.normalize(p.absolute(examplePath)));
@@ -22,7 +22,7 @@ Future<void> main() async {
 
       expect(
         nestingLevelVisitor.deepestNestingNodesChain.map((node) => node.offset),
-        equals([159, 137, 33]),
+        equals([288, 266, 162]),
       );
     });
 
@@ -34,7 +34,7 @@ Future<void> main() async {
 
       expect(
         nestingLevelVisitor.deepestNestingNodesChain.map((node) => node.offset),
-        equals([353, 303]),
+        equals([482, 432]),
       );
     });
 
@@ -46,7 +46,7 @@ Future<void> main() async {
 
       expect(
         nestingLevelVisitor.deepestNestingNodesChain.map((node) => node.offset),
-        equals([1008, 803, 728]),
+        equals([1430, 1217, 1136]),
       );
     });
   });

@@ -21,11 +21,11 @@ void main() {
 
     expect(
       issues.map((issue) => issue.location.start.offset),
-      equals([25, 38, 57, 72, 104, 117, 135, 150, 181, 195, 214, 230]),
+      equals([89, 102, 121, 136, 168, 181, 199, 214, 245, 259, 278, 294]),
     );
     expect(
       issues.map((issue) => issue.location.start.line),
-      equals([2, 2, 2, 2, 4, 4, 4, 4, 6, 6, 6, 6]),
+      equals([4, 4, 4, 4, 6, 6, 6, 6, 8, 8, 8, 8]),
     );
     expect(
       issues.map((issue) => issue.location.start.column),
@@ -34,11 +34,11 @@ void main() {
 
     expect(
       issues.map((issue) => issue.location.end.offset),
-      equals([30, 46, 62, 80, 108, 123, 139, 156, 187, 203, 220, 238]),
+      equals([94, 110, 126, 144, 172, 187, 203, 220, 251, 267, 284, 302]),
     );
     expect(
       issues.map((issue) => issue.location.end.line),
-      equals([2, 2, 2, 2, 4, 4, 4, 4, 6, 6, 6, 6]),
+      equals([4, 4, 4, 4, 6, 6, 6, 6, 8, 8, 8, 8]),
     );
     expect(
       issues.map((issue) => issue.location.end.column),

@@ -17,20 +17,22 @@ import 'nesting_level_visitor.dart';
 const _documentation = MetricDocumentation(
   name: 'Maximum Nesting Level',
   shortName: 'MAXNESTING',
-  brief: 'The maximum nesting level of control structures within an operation',
+  brief: 'The maximum nesting level of control structures within a method',
   measuredType: EntityType.methodEntity,
   examples: [
     CodeExample(
-      examplePath: 'test/resources/maximum_nesting_level_example.dart',
-      startLine: 40,
+      examplePath: 'test/resources/maximum_nesting_level_metric_example.dart',
+      startLine: 55,
+      endLine: 75,
     ),
   ],
 );
 
 /// Maximum Nesting Level (MAXNESTING)
 ///
-/// This is the maximum level of nesting blocks that are present in a method.
-/// Code with deep nesting level are often complex and tough to maintain.
+/// This is the maximum level of nesting blocks / control structures that are
+/// present in a method (function). Code with deep nesting level are often
+/// complex and tough to maintain.
 class MaximumNestingLevelMetric extends FunctionMetric<int> {
   static const String metricId = 'maximum-nesting-level';
 

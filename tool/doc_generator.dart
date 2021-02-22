@@ -251,7 +251,10 @@ class MetricHtmlGenerator {
     for (final codeBlock in visitor.codeBlocks) {
       final sourceBlock = LineSplitter.split(
         File(iterator.current.examplePath).readAsStringSync(),
-      ).toList().sublist(iterator.current.startLine).join('\n');
+      )
+          .toList()
+          .sublist(iterator.current.startLine - 1, iterator.current.endLine)
+          .join('\n');
 
       codeBlock.parent
           .append(DocumentFragment.html(_highlight.parse(sourceBlock)));

@@ -22,7 +22,8 @@ const _documentation = MetricDocumentation(
   examples: [
     CodeExample(
       examplePath: 'test/resources/maximum_nesting_level_example.dart',
-      startLine: 40,
+      startLine: 41,
+      endLine: 61,
     ),
   ],
 );

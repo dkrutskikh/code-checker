@@ -1,12 +1,12 @@
 import 'rules/double_literal_format/double_literal_format.dart';
-import 'rules/newline_before_return/newline_before_return.dart';
+import 'rules/prefer_newline_before_return/prefer_newline_before_return.dart';
 import 'rules/rule.dart';
 
 final _implementedRules = <String, Rule Function(Map<String, Object>)>{
   DoubleLiteralFormatRule.ruleId: (config) =>
       DoubleLiteralFormatRule(config: config),
-  NewlineBeforeReturnRule.ruleId: (config) =>
-      NewlineBeforeReturnRule(config: config),
+  PreferNewlineBeforeReturnRule.ruleId: (config) =>
+      PreferNewlineBeforeReturnRule(config: config),
 };
 
 Iterable<Rule> get allRules =>

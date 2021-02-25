@@ -1,8 +1,4 @@
-# Double Literal Format
-
-## Rule id
-
-double-literal-format
+# Double Literal Format (double-literal-format)
 
 ## Description
 

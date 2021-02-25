@@ -171,7 +171,7 @@ void main() {
             'number-of-methods': '10',
             'weight-of-class': '0.33',
           },
-          rules: {'newline-before-return': {}},
+          rules: {'prefer_newline_before_return': {}},
         ),
         ['.dart_tool/**', 'packages/**'],
         '/home/user/project',
@@ -187,7 +187,7 @@ void main() {
       );
       expect(
         config.codeRules.map((rule) => rule.id),
-        equals(['newline-before-return']),
+        equals(['prefer_newline_before_return']),
       );
       expect(
         config.classesMetrics.map((metric) => metric.id),

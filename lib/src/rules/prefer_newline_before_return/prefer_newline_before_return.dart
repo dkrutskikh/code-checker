@@ -15,16 +15,16 @@ import 'return_statement_visitor.dart';
 // Inspired by ESLint (https://eslint.org/docs/rules/newline-before-return)
 
 const _documentation = RuleDocumentation(
-  name: 'New Line Before Return',
+  name: 'Prefer New Line Before Return',
   brief: 'Enforces blank line between statements and return in a block',
 );
 
-class NewlineBeforeReturnRule extends Rule {
-  static const String ruleId = 'newline-before-return';
+class PreferNewlineBeforeReturnRule extends Rule {
+  static const String ruleId = 'prefer_newline_before_return';
 
   static const _failure = 'Missing blank line before return';
 
-  NewlineBeforeReturnRule({Map<String, Object> config = const {}})
+  PreferNewlineBeforeReturnRule({Map<String, Object> config = const {}})
       : super(
           id: ruleId,
           documentation: _documentation,

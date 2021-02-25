@@ -1,8 +1,4 @@
-# New Line Before Return
-
-## Rule id
-
-newline-before-return
+# Prefer New Line Before Return (prefer_newline_before_return)
 
 ## Description
 

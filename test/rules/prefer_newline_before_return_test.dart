@@ -1,27 +1,27 @@
 @TestOn('vm')
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:code_checker/src/models/severity.dart';
-import 'package:code_checker/src/rules/newline_before_return/newline_before_return.dart';
+import 'package:code_checker/src/rules/prefer_newline_before_return/prefer_newline_before_return.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
-const examplePath = 'test/resources/newline_before_return_example.dart';
+const examplePath = 'test/resources/prefer_newline_before_return_example.dart';
 
 void main() {
-  test('NewlineBeforeReturnRule reports about found issues', () async {
-    final issues = NewlineBeforeReturnRule()
+  test('PreferNewlineBeforeReturnRule reports about found issues', () async {
+    final issues = PreferNewlineBeforeReturnRule()
         .check(await resolveFile(path: p.normalize(p.absolute(examplePath))));
 
     expect(issues, hasLength(3));
 
     expect(
       issues.map((issue) => issue.ruleId).toSet().single,
-      equals('newline-before-return'),
+      equals('prefer_newline_before_return'),
     );
 
     expect(
       issues.map((issue) => issue.location.start.offset),
-      equals([234, 955, 1117]),
+      equals([264, 985, 1147]),
     );
     expect(
       issues.map((issue) => issue.location.start.line),
@@ -34,7 +34,7 @@ void main() {
 
     expect(
       issues.map((issue) => issue.location.end.offset),
-      equals([247, 968, 1130]),
+      equals([277, 998, 1160]),
     );
     expect(
       issues.map((issue) => issue.location.end.line),

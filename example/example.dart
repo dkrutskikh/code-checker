@@ -20,7 +20,7 @@ Future<void> main() async {
     },
     rules: {
       'double-literal-format': {},
-      'newline-before-return': {'severity': 'info'},
+      'prefer_newline_before_return': {'severity': 'info'},
     },
   );
 

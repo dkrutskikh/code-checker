@@ -38,7 +38,7 @@ The plugin for the Dart `analyzer` provide information collected by metrics.
        - test/**
      rules:
        - double-literal-format
-       - newline-before-return
+       - prefer_newline_before_return
     ```
 
 ### Command line tool

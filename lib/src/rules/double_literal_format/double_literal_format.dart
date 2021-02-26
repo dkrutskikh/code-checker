@@ -19,7 +19,7 @@ const _documentation = RuleDocumentation(
 );
 
 class DoubleLiteralFormatRule extends Rule {
-  static const String ruleId = 'double-literal-format';
+  static const String ruleId = 'double_literal_format';
 
   static const _failureLeadingZero =
       "Double literal shouldn't have redundant leading '0'.";

@@ -19,7 +19,7 @@ Future<void> main() async {
       'number-of-methods': '10',
     },
     rules: {
-      'double-literal-format': {},
+      'double_literal_format': {},
       'prefer_newline_before_return': {'severity': 'info'},
     },
   );

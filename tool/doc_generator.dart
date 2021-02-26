@@ -415,7 +415,7 @@ class RuleHtmlGenerator {
 
     final document = md.Document(encodeHtml: true);
 
-    final nodes = document.parseLines(lines).sublist(3);
+    final nodes = document.parseLines(lines).sublist(1);
 
     final htmlNode = DocumentFragment.html(md.HtmlRenderer().render(nodes));
 

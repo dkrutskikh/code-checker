@@ -37,7 +37,7 @@ The plugin for the Dart `analyzer` provide information collected by metrics.
      metrics-exclude:
        - test/**
      rules:
-       - double-literal-format
+       - double_literal_format
        - prefer_newline_before_return
     ```
 

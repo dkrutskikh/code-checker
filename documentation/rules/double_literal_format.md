@@ -1,4 +1,4 @@
-# Double Literal Format (double-literal-format)
+# Double Literal Format (double_literal_format)
 
 ## Description
 

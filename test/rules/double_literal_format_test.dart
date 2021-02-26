@@ -16,7 +16,7 @@ void main() {
 
     expect(
       issues.map((issue) => issue.ruleId).toSet().single,
-      equals('double-literal-format'),
+      equals('double_literal_format'),
     );
 
     expect(

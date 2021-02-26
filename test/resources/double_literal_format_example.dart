@@ -1,4 +1,4 @@
-// ignore_for_file: double-literal-format, prefer_final_locals, unused_local_variable
+// ignore_for_file: double_literal_format, prefer_final_locals, unused_local_variable
 
 void main() {
   var a = [05.23, 5.23, 003.6e+5, 3.6e+5, -012.2, -12.2, -001.1e-1, -1.1e-1];

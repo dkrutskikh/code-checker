@@ -19,6 +19,7 @@ code_checker:
   rules:
     - double_literal_format
     - prefer_newline_before_return
+    - prefer_trailing_comma
 
 linter:
   rules:

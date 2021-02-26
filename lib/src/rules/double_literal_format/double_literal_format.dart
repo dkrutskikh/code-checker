@@ -18,20 +18,18 @@ const _documentation = RuleDocumentation(
       "Checks that double literals should begin with '0.' instead of just '.', and should not end with a trailing '0'",
 );
 
+const _failureLeadingZero =
+    "Double literal shouldn't have redundant leading '0'.";
+const _correctionCommentLeadingZero = "Remove redundant leading '0'";
+
+const _failureLeadingDecimal = "Double literal shouldn't begin with '.'.";
+const _correctionCommentLeadingDecimal = "Add missing leading '0'";
+
+const _failureTrailingZero = "Double literal shouldn't have a trailing '0'.";
+const _correctionCommentTrailingZero = "Remove redundant trailing '0'";
+
 class DoubleLiteralFormatRule extends Rule {
   static const String ruleId = 'double_literal_format';
-
-  static const _failureLeadingZero =
-      "Double literal shouldn't have redundant leading '0'.";
-  static const _correctionCommentLeadingZero = "Remove redundant leading '0'";
-
-  static const _failureLeadingDecimal =
-      "Double literal shouldn't begin with '.'.";
-  static const _correctionCommentLeadingDecimal = "Add missing leading '0'";
-
-  static const _failureTrailingZero =
-      "Double literal shouldn't have a trailing '0'.";
-  static const _correctionCommentTrailingZero = "Remove redundant trailing '0'";
 
   DoubleLiteralFormatRule({Map<String, Object> config = const {}})
       : super(

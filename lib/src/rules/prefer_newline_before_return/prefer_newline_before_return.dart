@@ -19,10 +19,10 @@ const _documentation = RuleDocumentation(
   brief: 'Enforces blank line between statements and return in a block',
 );
 
+const _failure = 'Missing blank line before return';
+
 class PreferNewlineBeforeReturnRule extends Rule {
   static const String ruleId = 'prefer_newline_before_return';
-
-  static const _failure = 'Missing blank line before return';
 
   PreferNewlineBeforeReturnRule({Map<String, Object> config = const {}})
       : super(
@@ -58,11 +58,7 @@ class PreferNewlineBeforeReturnRule extends Rule {
         })
         .map((statement) => createIssue(
               rule: this,
-              location: nodeLocation(
-                node: statement,
-                source: source,
-                withCommentOrMetadata: true,
-              ),
+              location: nodeLocation(node: statement, source: source),
               message: _failure,
             ))
         .toList(growable: false);

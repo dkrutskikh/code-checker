@@ -9,6 +9,7 @@ class ReturnStatementVisitor extends RecursiveAstVisitor<void> {
   @override
   void visitReturnStatement(ReturnStatement node) {
     super.visitReturnStatement(node);
+
     _statements.add(node);
   }
 }

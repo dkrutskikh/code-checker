@@ -250,7 +250,7 @@ class MetricHtmlGenerator {
     for (final codeBlock in visitor.codeBlocks) {
       codeBlock.parentNode.parentNode.append(await _highlight.parse(
         sourcePath: iterator.current.examplePath,
-        withLineIdices: true,
+        withLineIdices: false,
         startLine: iterator.current.startLine - 1,
         endLine: iterator.current.endLine,
       ));
@@ -313,7 +313,7 @@ class RulesHtmlIndexGenerator {
             ..append(Element.tag('strong')
               ..append(Element.tag('a')
                 ..attributes['href'] = '${rule.id}.html'
-                ..text = rule.documentation.name))
+                ..text = rule.id))
             ..append(Element.tag('br'))
             ..append(Element.tag('p')..text = rule.documentation.brief);
         }

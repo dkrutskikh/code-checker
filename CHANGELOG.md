@@ -1,8 +1,13 @@
 # Changelog
 
+## 0.9.0 - 2021-03-01
+
+- Add `prefer_trailing_comma` rule
+- Add `Lines of Code` metric
+
 ## 0.8.0 - 2021-02-17
 
-- Add Console reporter
+- Add `Console` reporter
 
 ## 0.7.0 - 2021-02-04
 
@@ -14,19 +19,19 @@
 
 ## 0.5.0 - 2021-02-01
 
-- Add Json reporter
+- Add `Json` reporter
 
 ## 0.4.0 - 2021-01-25
 
-- Add Maximum Nesting Level metric
+- Add `Maximum Nesting Level` metric
 
 ## 0.3.0 - 2021-01-14
 
-- Add Weight of Class metric
+- Add `Weight of Class` metric
 
 ## 0.2.0 - 2021-01-04
 
-- Add Number of Methods metric
+- Add `Number of Methods` metric
 
 ## 0.1.0 - 2021-01-02
 

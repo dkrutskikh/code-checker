@@ -167,6 +167,7 @@ void main() {
           excludePatterns: ['test/resources/**'],
           excludeForMetricsPatterns: ['test/**'],
           metrics: {
+            'lines-of-code': '100',
             'maximum-nesting-level': '5',
             'number-of-methods': '10',
             'weight-of-class': '0.33',
@@ -195,7 +196,7 @@ void main() {
       );
       expect(
         config.methodsMetrics.map((metric) => metric.id),
-        equals(['maximum-nesting-level']),
+        equals(['lines-of-code', 'maximum-nesting-level']),
       );
       expect(
         config.metricsExclude.map((exclude) => exclude.pattern),

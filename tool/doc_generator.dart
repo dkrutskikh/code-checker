@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -16,7 +15,7 @@ import 'highlight.dart';
 final _highlight = Highlight();
 final _parser = argumentsParser();
 
-void main(List<String> args) {
+Future<void> main(List<String> args) async {
   try {
     final arguments = _parser.parse(args);
 
@@ -26,7 +25,7 @@ void main(List<String> args) {
 
     validateArguments(arguments);
 
-    _generate(arguments[outputDirectoryName] as String);
+    await _generate(arguments[outputDirectoryName] as String);
   } on FormatException catch (e) {
     print('${e.message}\n');
     _showUsageAndExit(1);
@@ -42,8 +41,8 @@ void _showUsageAndExit(int exitCode) {
   exit(exitCode);
 }
 
-void _generate(String directory) {
-  metricsDocumentation(directory);
+Future<void> _generate(String directory) async {
+  await metricsDocumentation(directory);
   rulesDocumentation(directory);
 }
 
@@ -102,7 +101,7 @@ class InvalidArgumentException implements Exception {
 
 // ----------------------------- Metrics Generator -----------------------------
 
-void metricsDocumentation(String root) {
+Future<void> metricsDocumentation(String root) async {
   final directory = '$root/metrics';
 
   Directory(directory).createSync(recursive: true);
@@ -111,7 +110,7 @@ void metricsDocumentation(String root) {
   MetricHtmlIndexGenerator(metrics).generate(directory);
 
   for (final metric in metrics) {
-    MetricHtmlGenerator(metric).generate(directory);
+    await MetricHtmlGenerator(metric).generate(directory);
   }
 }
 
@@ -179,17 +178,17 @@ class MetricHtmlGenerator {
 
   MetricHtmlGenerator(this._metric);
 
-  void generate(String filePath) {
+  Future<void> generate(String filePath) async {
     final outPath = '$filePath/${_metric.id}.html';
     print('Writing to $outPath');
-    File(outPath).writeAsStringSync(_generate());
+    File(outPath).writeAsStringSync(await _generate());
   }
 
-  String _generate() {
+  Future<String> _generate() async {
     final section = Element.tag('section');
     final mdFile = File('documentation/metrics/${_metric.id}.md');
     if (mdFile.existsSync()) {
-      section.append(_appendMarkDown(mdFile.readAsStringSync()));
+      section.append(await _appendMarkDown(mdFile.readAsStringSync()));
     } else {
       section.append(_appendBrief(_metric.documentation.brief));
     }
@@ -229,7 +228,7 @@ class MetricHtmlGenerator {
         .outerHtml;
   }
 
-  Node _appendMarkDown(String text) {
+  Future<Node> _appendMarkDown(String text) async {
     final lines = text.replaceAll('\r\n', '\n').split('\n');
 
     final document = md.Document(encodeHtml: true);
@@ -237,29 +236,26 @@ class MetricHtmlGenerator {
     final nodes = document.parseLines(lines).sublist(1);
 
     final htmlNode = DocumentFragment.html(md.HtmlRenderer().render(nodes));
-    _embedDartCode(htmlNode);
+    await _embedDartCode(htmlNode);
 
     return htmlNode;
   }
 
   Node _appendBrief(String text) => Element.tag('p')..text = text;
 
-  void _embedDartCode(Node node) {
+  Future<void> _embedDartCode(Node node) async {
     final visitor = CodeVisitor()..visit(node);
 
     final iterator = _metric.documentation.examples.iterator..moveNext();
     for (final codeBlock in visitor.codeBlocks) {
-      final sourceBlock = LineSplitter.split(
-        File(iterator.current.examplePath).readAsStringSync(),
-      )
-          .toList()
-          .sublist(iterator.current.startLine - 1, iterator.current.endLine)
-          .join('\n');
+      codeBlock.parentNode.parentNode.append(await _highlight.parse(
+        sourcePath: iterator.current.examplePath,
+        withLineIdices: true,
+        startLine: iterator.current.startLine - 1,
+        endLine: iterator.current.endLine,
+      ));
 
-      codeBlock.parent
-          .append(DocumentFragment.html(_highlight.parse(sourceBlock)));
-
-      codeBlock.remove();
+      codeBlock.parentNode.remove();
 
       iterator.moveNext();
     }
@@ -480,7 +476,7 @@ Node headElement({
       ..append(Element.tag('link')
         ..attributes['rel'] = 'canonical'
         ..attributes['href'] = pageUrl)
-      ..append(Element.tag('style')..text = draculaThemeCss)
+      ..append(Element.tag('style')..text = cssTheme)
       ..append(Element.tag('link')
         ..attributes['rel'] = 'stylesheet'
         ..attributes['href'] =

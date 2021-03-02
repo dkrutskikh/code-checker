@@ -7,7 +7,7 @@
 ![Dart SDK Version](https://badgen.net/pub/sdk-version/code_checker)
 ![Dart Platform](https://badgen.net/pub/dart-platform/code_checker)
 
-Static source code analytics tool that helps analyse and improve quality, inspired by Wrike [Dart code metrics](https://github.com/wrike/dart-code-metrics).
+Static source code analytics tool that helps analyse and improve quality, inspired by Wrike [Dart code metrics](https://github.com/wrike/dart-code-metrics). It provides [additional rules](https://dart-code-checker.github.io/code-checker/content/rules/) for dart analyzer and collects [code metrics](https://dart-code-checker.github.io/code-checker/content/metrics/).
 
 ## Usage
 
@@ -29,17 +29,18 @@ The plugin for the Dart `analyzer` provide information collected by metrics.
       plugins:
         - code_checker
    
-   code_checker:
-     metrics:
-       maximum-nesting-level: 5
-       number-of-methods: 10
-       weight-of-class: 0.33
-     metrics-exclude:
-       - test/**
-     rules:
-       - double_literal_format
-       - prefer_newline_before_return
-       - prefer_trailing_comma
+    code_checker:
+      metrics:
+        lines-of-code: 100
+        maximum-nesting-level: 5
+        number-of-methods: 10
+        weight-of-class: 0.33
+      metrics-exclude:
+        - test/**
+      rules:
+        - double_literal_format
+        - prefer_newline_before_return
+        - prefer_trailing_comma
     ```
 
 ### Command line tool

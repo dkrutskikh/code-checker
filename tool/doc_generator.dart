@@ -45,6 +45,8 @@ void _showUsageAndExit(int exitCode) {
 
 Future<void> _generate(String directory) async {
   copyResources(directory);
+
+  await title(directory);
   await metricsDocumentation(directory);
   rulesDocumentation(directory);
 }
@@ -120,10 +122,96 @@ void copyResources(String destination) {
   }
 }
 
+// ------------------------------ Title Generator ------------------------------
+
+Future<void> title(String destination) async {
+  Directory(destination).createSync(recursive: true);
+
+  await TitleHtmlIndexGenerator().generate(destination);
+}
+
+class TitleHtmlIndexGenerator {
+  Future<void> generate(String destination) async {
+    final outPath = '$destination/index.html';
+    print('Writing to $outPath');
+    File(outPath).writeAsStringSync(await _generate());
+  }
+
+  Future<String> _generate() async {
+    final section = Element.tag('section')
+      ..append(Element.tag('h1')..text = 'Code Checker')
+      ..append(Element.tag('p')
+        ..append(_appendMarkDown(
+          'Static source code analytics tool that helps analyse and improve code quality. It provides [additional rules](./rules/index.html) for dart analyzer and collects [code metrics](./metrics/index.html).',
+        )))
+      ..append(Element.tag('h2')..text = 'Features and bugs')
+      ..append(Element.tag('p')
+        ..append(_appendMarkDown(
+          'Please file feature requests and bugs on the [issue tracker](https://github.com/dart-code-checker/code-checker/issues).',
+        )));
+
+    final body = Element.tag('body')
+      ..append(Element.tag('div')
+        ..classes.add('wrapper')
+        ..append(headerElement(
+          header: 'Code Checker',
+          paragraphs: [await _getVersion()],
+          buttons: const [
+            HeaderButton(
+              titleStart: 'View on',
+              titleEnd: 'GitHub',
+              href: 'https://github.com/dart-code-checker/code-checker',
+            ),
+          ],
+        ))
+        ..append(section))
+      ..append(footer());
+
+    final html = Element.tag('html')
+      ..attributes['lang'] = 'en'
+      ..append(headElement(
+        title: 'Code Checker',
+        description:
+            'Static source code analytics tool that helps analyse and improve code quality',
+        pageUrl: '/docs/index.html',
+      ))
+      ..append(body);
+
+    return (Document()..append(DocumentType('html', null, null))..append(html))
+        .outerHtml;
+  }
+
+  static const _versionPattern = 'version:';
+
+  Future<String> _getVersion() async {
+    final packagePath =
+        await Isolate.resolvePackageUri(Uri.parse('package:code_checker/'));
+
+    final pubspecPath =
+        p.join(p.dirname(packagePath.toFilePath()), 'pubspec.yaml');
+
+    final packageVerion = File(pubspecPath)
+        .readAsStringSync()
+        .split('\n')
+        .firstWhere(
+          (lineContent) => lineContent.startsWith(_versionPattern),
+          orElse: () => '',
+        )
+        .replaceAll(_versionPattern, '')
+        .trim();
+
+    return packageVerion.isNotEmpty ? 'v $packageVerion' : '';
+  }
+
+  Node _appendMarkDown(String text) => DocumentFragment.html(md.HtmlRenderer()
+      .render(md.Document(encodeHtml: true)
+          .parseInline(text.replaceAll('\r\n', '\n'))));
+}
+
 // ----------------------------- Metrics Generator -----------------------------
 
-Future<void> metricsDocumentation(String root) async {
-  final directory = '$root/metrics';
+Future<void> metricsDocumentation(String destination) async {
+  final directory = '$destination/metrics';
 
   Directory(directory).createSync(recursive: true);
 
@@ -172,7 +260,7 @@ class MetricHtmlIndexGenerator {
             HeaderButton(
               titleStart: 'Using the',
               titleEnd: 'Checker',
-              href: '../../index.html',
+              href: '../index.html',
             ),
           ],
         ))
@@ -291,8 +379,8 @@ String _measuredEntity(checker.EntityType type) =>
 
 // ------------------------------ Rules Generator ------------------------------
 
-void rulesDocumentation(String root) {
-  final directory = '$root/rules';
+void rulesDocumentation(String destination) {
+  final directory = '$destination/rules';
 
   Directory(directory).createSync(recursive: true);
 
@@ -349,7 +437,7 @@ class RulesHtmlIndexGenerator {
             HeaderButton(
               titleStart: 'Using the',
               titleEnd: 'Checker',
-              href: '../../index.html',
+              href: '../index.html',
             ),
           ],
         ))

@@ -24,9 +24,9 @@ const _documentation = MetricDocumentation(
   ],
 );
 
-/// Number of Arguments (NOA)
+/// Number of Parameters (NOP)
 ///
-/// Simply counts the number of arguments received by a method.
+/// Simply counts the number of parameters received by a method.
 class NumberOfParametersMetric extends FunctionMetric<int> {
   static const String metricId = 'number-of-parameters';
 

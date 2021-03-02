@@ -33,6 +33,7 @@ The plugin for the Dart `analyzer` provide information collected by metrics.
       metrics:
         lines-of-code: 100
         maximum-nesting-level: 5
+        number-of-arguments: 4
         number-of-methods: 10
         weight-of-class: 0.33
       metrics-exclude:
@@ -58,7 +59,7 @@ Usage: checker [arguments] <directories>
 
 
     --maximum-nesting-level=<5>                   Maximum Nesting Level threshold
-    --number-of-methods=<10>                      Number of Methods threshold
+    --number-of-arguments=<4>                     Number of Arguments threshold --number-of-methods=<10>                      Number of Methods threshold
     --weight-of-class=<0.33>                      Weight Of a Class threshold
 
 

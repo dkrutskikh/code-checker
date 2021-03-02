@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 import 'metrics/lines_of_code_metric.dart';
 import 'metrics/maximum_nesting_level/maximum_nesting_level_metric.dart';
 import 'metrics/metric.dart';
+import 'metrics/number_of_arguments_metric.dart';
 import 'metrics/number_of_methods_metric.dart';
 import 'metrics/weight_of_class_metric.dart';
 import 'models/entity_type.dart';
@@ -11,6 +12,8 @@ final _implementedMetrics = <String, Metric Function(Map<String, Object>)>{
   LinesOfCodeMetric.metricId: (config) => LinesOfCodeMetric(config: config),
   MaximumNestingLevelMetric.metricId: (config) =>
       MaximumNestingLevelMetric(config: config),
+  NumberOfArgumentsMetric.metricId: (config) =>
+      NumberOfArgumentsMetric(config: config),
   NumberOfMethodsMetric.metricId: (config) =>
       NumberOfMethodsMetric(config: config),
   WeightOfClassMetric.metricId: (config) => WeightOfClassMetric(config: config),

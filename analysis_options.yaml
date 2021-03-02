@@ -13,6 +13,7 @@ code_checker:
   metrics:
     lines-of-code: 100
     maximum-nesting-level: 5
+    number-of-arguments: 4
     number-of-methods: 10
     weight-of-class: 0.33
   metrics-exclude:

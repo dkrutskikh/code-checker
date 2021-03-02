@@ -196,7 +196,11 @@ void main() {
       );
       expect(
         config.methodsMetrics.map((metric) => metric.id),
-        equals(['lines-of-code', 'maximum-nesting-level']),
+        equals([
+          'lines-of-code',
+          'maximum-nesting-level',
+          'number-of-arguments',
+        ]),
       );
       expect(
         config.metricsExclude.map((exclude) => exclude.pattern),

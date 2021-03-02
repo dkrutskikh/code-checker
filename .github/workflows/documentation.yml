@@ -35,4 +35,4 @@ jobs:
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: gh_pages # The folder the action should deploy.
-          target-folder: content
+          target-folder: docs

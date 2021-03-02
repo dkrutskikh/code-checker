@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:isolate';
 import 'dart:math';
 
 import 'package:args/args.dart';
@@ -9,6 +10,7 @@ import 'package:html/dom.dart';
 import 'package:html/dom_parsing.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:meta/meta.dart';
+import 'package:path/path.dart' as p;
 
 import 'highlight.dart';
 
@@ -42,6 +44,7 @@ void _showUsageAndExit(int exitCode) {
 }
 
 Future<void> _generate(String directory) async {
+  copyResources(directory);
   await metricsDocumentation(directory);
   rulesDocumentation(directory);
 }
@@ -97,6 +100,24 @@ class InvalidArgumentException implements Exception {
   final String message;
 
   const InvalidArgumentException(this.message);
+}
+
+// ----------------------------- Copy Resources -----------------------------
+
+void copyResources(String destination) {
+  const resources = [
+    'package:code_checker/src/resources/dart-dark-theme.css',
+  ];
+
+  for (final resource in resources) {
+    Isolate.resolvePackageUri(Uri.parse(resource)).then((resolvedUri) {
+      if (resolvedUri != null) {
+        final fileWithExtension = p.split(resolvedUri.toString()).last;
+        File.fromUri(resolvedUri)
+            .copySync(p.join(destination, fileWithExtension));
+      }
+    });
+  }
 }
 
 // ----------------------------- Metrics Generator -----------------------------
@@ -163,8 +184,7 @@ class MetricHtmlIndexGenerator {
       ..append(headElement(
         title: 'Code Checker Metrics',
         description: 'The list of supported metrics',
-        pageUrl:
-            'https://dart-code-checker.github.io/code-checker/content/metrics/index.html',
+        pageUrl: '/docs/metrics/index.html',
       ))
       ..append(body);
 
@@ -219,8 +239,7 @@ class MetricHtmlGenerator {
       ..append(headElement(
         title: _metric.documentation.name,
         description: _metric.documentation.brief,
-        pageUrl:
-            'https://dart-code-checker.github.io/code-checker/content/metrics/${_metric.id}.html',
+        pageUrl: '/docs/metrics/${_metric.id}.html',
       ))
       ..append(body);
 
@@ -342,8 +361,7 @@ class RulesHtmlIndexGenerator {
       ..append(headElement(
         title: 'Code Checker Metrics',
         description: 'The list of supported rules',
-        pageUrl:
-            'https://dart-code-checker.github.io/code-checker/content/rules/index.html',
+        pageUrl: '/docs/rules/index.html',
       ))
       ..append(body);
 
@@ -397,8 +415,7 @@ class RuleHtmlGenerator {
       ..append(headElement(
         title: _rule.documentation.name,
         description: _rule.documentation.brief,
-        pageUrl:
-            'https://dart-code-checker.github.io/code-checker/content/rules/${_rule.id}.html',
+        pageUrl: '/docs/rules/${_rule.id}.html',
       ))
       ..append(body);
 
@@ -438,50 +455,57 @@ Node headElement({
   @required String title,
   @required String description,
   @required String pageUrl,
-}) =>
-    Element.tag('head')
-      ..append(Element.tag('meta')..attributes['charset'] = 'utf-8')
-      ..append(Element.tag('meta')
-        ..attributes['property'] = 'og:url'
-        ..attributes['content'] = pageUrl)
-      ..append(Element.tag('meta')
-        ..attributes['property'] = 'og:title'
-        ..attributes['content'] = title)
-      ..append(Element.tag('meta')
-        ..attributes['property'] = 'og:description'
-        ..attributes['content'] = description)
-      ..append(Element.tag('meta')
-        ..attributes['property'] = 'og:locale'
-        ..attributes['content'] = 'en_US')
-      ..append(Element.tag('meta')
-        ..attributes['property'] = 'og:site_name'
-        ..attributes['content'] = 'Code Checker')
+}) {
+  final fullUrl = 'https://dart-code-checker.github.io/code-checker$pageUrl';
+  final cssPath =
+      p.relative('/docs/dart-dark-theme.css', from: p.dirname(pageUrl));
+
+  return Element.tag('head')
+    ..append(Element.tag('meta')..attributes['charset'] = 'utf-8')
+    ..append(Element.tag('meta')
+      ..attributes['property'] = 'og:url'
+      ..attributes['content'] = fullUrl)
+    ..append(Element.tag('meta')
+      ..attributes['property'] = 'og:title'
+      ..attributes['content'] = title)
+    ..append(Element.tag('meta')
+      ..attributes['property'] = 'og:description'
+      ..attributes['content'] = description)
+    ..append(Element.tag('meta')
+      ..attributes['property'] = 'og:locale'
+      ..attributes['content'] = 'en_US')
+    ..append(Element.tag('meta')
+      ..attributes['property'] = 'og:site_name'
+      ..attributes['content'] = 'Code Checker')
 //    ..append(Element.tag('link')
 //      ..attributes['rel'] = 'shortcut icon'
 //      ..attributes['href'] = 'path-to-icon.png')
-      ..append(Element.tag('meta')
-        ..attributes['name'] = 'viewport'
-        ..attributes['content'] =
-            'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
-      ..append(Element.tag('meta')
-        ..attributes['name'] = 'mobile-web-app-capable'
-        ..attributes['content'] = 'yes')
-      ..append(Element.tag('meta')
-        ..attributes['name'] = 'apple-mobile-web-app-capable'
-        ..attributes['content'] = 'yes')
-      ..append(Element.tag('title')..text = title)
-      ..append(Element.tag('meta')
-        ..attributes['name'] = 'description'
-        ..attributes['content'] = description)
-      ..append(Element.tag('link')
-        ..attributes['rel'] = 'canonical'
-        ..attributes['href'] = pageUrl)
-      ..append(Element.tag('style')..text = cssTheme)
-      ..append(Element.tag('link')
-        ..attributes['rel'] = 'stylesheet'
-        ..attributes['href'] =
-            '/code-checker/assets/css/style.css?v=${getRandomString(48)}');
-//            'https://dart-code-checker.github.io/code-checker/assets/css/style.css?v=${getRandomString(48)}');
+    ..append(Element.tag('meta')
+      ..attributes['name'] = 'viewport'
+      ..attributes['content'] =
+          'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
+    ..append(Element.tag('meta')
+      ..attributes['name'] = 'mobile-web-app-capable'
+      ..attributes['content'] = 'yes')
+    ..append(Element.tag('meta')
+      ..attributes['name'] = 'apple-mobile-web-app-capable'
+      ..attributes['content'] = 'yes')
+    ..append(Element.tag('title')..text = title)
+    ..append(Element.tag('meta')
+      ..attributes['name'] = 'description'
+      ..attributes['content'] = description)
+    ..append(Element.tag('link')
+      ..attributes['rel'] = 'canonical'
+      ..attributes['href'] = fullUrl)
+    ..append(Element.tag('link')
+      ..attributes['rel'] = 'stylesheet'
+      ..attributes['href'] = cssPath)
+    ..append(Element.tag('link')
+      ..attributes['rel'] = 'stylesheet'
+      ..attributes['href'] =
+          '/code-checker/assets/css/style.css?v=${getRandomString(48)}');
+//          'https://dart-code-checker.github.io/code-checker/assets/css/style.css?v=${getRandomString(48)}');
+}
 
 @immutable
 class HeaderButton {

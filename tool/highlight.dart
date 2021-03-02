@@ -89,54 +89,6 @@ const _comments = {TokenType.MULTI_LINE_COMMENT, TokenType.SINGLE_LINE_COMMENT};
 
 const _number = {TokenType.DOUBLE, TokenType.HEXADECIMAL, TokenType.INT};
 
-const String cssTheme = '''
-.dart {
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-}
-
-.dart-number {
-  color: #627978;
-}
-
-.dart-comment {
-  color: #9198B4;
-}
-
-.dart-keyword {
-  color: #51C686;
-}
-
-.dart-atom {
-  color: #EE8666;
-}
-
-.dart-builtins {
-  color: #C0C2C5;
-}
-
-.dart-operator {
-  color: #C0C2C5;
-}
-
-.dart-variable {
-  color: #16ADCA;
-}
-
-.dart-variable2 {
-  color: #EE8666;
-}
-
-.dart-meta {
-  color: #627978;
-}
-
-.dart-string {
-  color: #E55074;
-}
-''';
-
 @immutable
 class HighlightRange {
   final int offset;

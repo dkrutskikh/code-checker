@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add `Number of Parameters` metric
+
 ## 0.9.0 - 2021-03-01
 
 - Add `prefer_trailing_comma` rule

@@ -5,7 +5,6 @@ The lines of code is the total number of lines is a method (_function_). The com
 Example:
 
 ```dart
-  @override
   MetricComputationResult<int> computeImplementation(
     Declaration node,
     Iterable<ScopedClassDeclaration> classDeclarations,

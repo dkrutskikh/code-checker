@@ -11,13 +11,13 @@ import 'function_metric.dart';
 import 'metric_computation_result.dart';
 
 const _documentation = MetricDocumentation(
-  name: 'Number of Arguments',
-  shortName: 'NOA',
-  brief: 'Number of arguments used in a method',
+  name: 'Number of Parameters',
+  shortName: 'NOP',
+  brief: 'Number of parameters received by a method',
   measuredType: EntityType.methodEntity,
   examples: [
     CodeExample(
-      examplePath: 'test/resources/number_of_arguments_metric_example.dart',
+      examplePath: 'test/resources/number_of_parameters_metric_example.dart',
       startLine: 28,
       endLine: 42,
     ),
@@ -27,10 +27,10 @@ const _documentation = MetricDocumentation(
 /// Number of Arguments (NOA)
 ///
 /// Simply counts the number of arguments received by a method.
-class NumberOfArgumentsMetric extends FunctionMetric<int> {
-  static const String metricId = 'number-of-arguments';
+class NumberOfParametersMetric extends FunctionMetric<int> {
+  static const String metricId = 'number-of-parameters';
 
-  NumberOfArgumentsMetric({Map<String, Object> config = const {}})
+  NumberOfParametersMetric({Map<String, Object> config = const {}})
       : super(
           id: metricId,
           documentation: _documentation,
@@ -45,22 +45,22 @@ class NumberOfArgumentsMetric extends FunctionMetric<int> {
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
     ResolvedUnitResult source,
   ) {
-    int argumentsCount;
+    int parametersCount;
     if (node is FunctionDeclaration) {
-      argumentsCount = node.functionExpression?.parameters?.parameters?.length;
+      parametersCount = node.functionExpression?.parameters?.parameters?.length;
     } else if (node is MethodDeclaration) {
-      argumentsCount = node?.parameters?.parameters?.length;
+      parametersCount = node?.parameters?.parameters?.length;
     }
 
-    return MetricComputationResult(value: argumentsCount ?? 0);
+    return MetricComputationResult(value: parametersCount ?? 0);
   }
 
   @override
   String commentMessage(String nodeType, int value, int threshold) {
     final exceeds =
         value > threshold ? ', exceeds the maximum of $threshold allowed' : '';
-    final arguments = '$value ${value == 1 ? 'argument' : 'arguments'}';
+    final parameters = '$value ${value == 1 ? 'parameter' : 'parameters'}';
 
-    return 'This $nodeType has $arguments$exceeds.';
+    return 'This $nodeType has $parameters$exceeds.';
   }
 }

@@ -1,16 +1,16 @@
 @TestOn('vm')
 import 'package:analyzer/dart/analysis/utilities.dart';
-import 'package:code_checker/src/metrics/number_of_arguments_metric.dart';
+import 'package:code_checker/src/metrics/number_of_parameters_metric.dart';
 import 'package:code_checker/src/models/metric_value_level.dart';
 import 'package:code_checker/src/scope_visitor.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
-const examplePath = 'test/resources/number_of_arguments_metric_example.dart';
+const examplePath = 'test/resources/number_of_parameters_metric_example.dart';
 
 Future<void> main() async {
-  final metric = NumberOfArgumentsMetric(
-    config: {NumberOfArgumentsMetric.metricId: '3'},
+  final metric = NumberOfParametersMetric(
+    config: {NumberOfParametersMetric.metricId: '3'},
   );
 
   final scopeVisitor = ScopeVisitor();
@@ -18,7 +18,7 @@ Future<void> main() async {
   final example = await resolveFile(path: p.normalize(p.absolute(examplePath)));
   example.unit.visitChildren(scopeVisitor);
 
-  group('NumberOfArgumentsMetric computes arguments count of the', () {
+  group('NumberOfParametersMetric computes parameters received by the', () {
     test('simple function', () {
       final metricValue = metric.compute(
         scopeVisitor.functions.first.declaration,
@@ -32,7 +32,7 @@ Future<void> main() async {
       expect(metricValue.level, equals(MetricValueLevel.none));
       expect(
         metricValue.comment,
-        equals('This function has 0 arguments.'),
+        equals('This function has 0 parameters.'),
       );
       expect(metricValue.recommendation, isNull);
       expect(metricValue.context, isEmpty);
@@ -51,7 +51,7 @@ Future<void> main() async {
       expect(metricValue.level, equals(MetricValueLevel.none));
       expect(
         metricValue.comment,
-        equals('This function has 2 arguments.'),
+        equals('This function has 2 parameters.'),
       );
       expect(metricValue.recommendation, isNull);
       expect(metricValue.context, isEmpty);
@@ -70,7 +70,7 @@ Future<void> main() async {
       expect(metricValue.level, equals(MetricValueLevel.none));
       expect(
         metricValue.comment,
-        equals('This function has 1 argument.'),
+        equals('This function has 1 parameter.'),
       );
       expect(metricValue.recommendation, isNull);
       expect(metricValue.context, isEmpty);
@@ -89,7 +89,7 @@ Future<void> main() async {
       expect(metricValue.level, equals(MetricValueLevel.none));
       expect(
         metricValue.comment,
-        equals('This function has 0 arguments.'),
+        equals('This function has 0 parameters.'),
       );
       expect(metricValue.recommendation, isNull);
       expect(metricValue.context, isEmpty);
@@ -108,7 +108,7 @@ Future<void> main() async {
       expect(metricValue.level, equals(MetricValueLevel.noted));
       expect(
         metricValue.comment,
-        equals('This method has 3 arguments.'),
+        equals('This method has 3 parameters.'),
       );
       expect(metricValue.recommendation, isNull);
       expect(metricValue.context, isEmpty);
@@ -128,7 +128,7 @@ Future<void> main() async {
       expect(
         metricValue.comment,
         equals(
-          'This method has 4 arguments, exceeds the maximum of 3 allowed.',
+          'This method has 4 parameters, exceeds the maximum of 3 allowed.',
         ),
       );
       expect(metricValue.recommendation, isNull);

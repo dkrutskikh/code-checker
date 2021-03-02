@@ -20,7 +20,7 @@ set simpleSetter(num value) {}
 
 String get simpleGetter => '';
 
-class NumberOfArgumentsMetric extends FunctionMetric<int> {
+class NumberOfParametersMetric extends FunctionMetric<int> {
   @override
   String commentMessage(String nodeType, int value, int threshold) => '';
 

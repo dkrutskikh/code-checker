@@ -199,7 +199,7 @@ void main() {
         equals([
           'lines-of-code',
           'maximum-nesting-level',
-          'number-of-arguments',
+          'number-of-parameters',
         ]),
       );
       expect(

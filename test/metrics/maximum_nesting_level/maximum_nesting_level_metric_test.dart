@@ -13,12 +13,12 @@ Future<void> main() async {
     config: {MaximumNestingLevelMetric.metricId: '2'},
   );
 
-  final scopeVisitor = ScopeVisitor();
-
   final example = await resolveFile(path: p.normalize(p.absolute(examplePath)));
-  example.unit.visitChildren(scopeVisitor);
 
   group('MaximumNestingLevelMetric computes maximum nesting level of the', () {
+    final scopeVisitor = ScopeVisitor();
+    example.unit.visitChildren(scopeVisitor);
+
     test('simple function', () {
       final metricValue = metric.compute(
         scopeVisitor.functions.first.declaration,

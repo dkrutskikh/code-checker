@@ -17,9 +17,13 @@ import '../metrics_factory.dart';
 import '../models/entity_type.dart';
 import '../models/issue.dart';
 import '../models/metric_value_level.dart';
+import '../models/report.dart';
 import '../models/severity.dart';
 import '../rules_factory.dart';
+import '../scope_visitor.dart';
 import '../suppressions.dart';
+import '../utils/metric_utils.dart';
+import '../utils/node_utils.dart';
 import '../utils/yaml_utils.dart';
 import 'plugin_config.dart';
 
@@ -38,6 +42,64 @@ Iterable<p.AnalysisErrorFixes> checkOnCodeIssues(
                   ))
               .map((issue) => fixesFromIssue(issue, source)),
         );
+
+Iterable<p.AnalysisErrorFixes> collectMetrics(
+  ResolvedUnitResult source,
+  Suppressions ignores,
+  Uri sourceUri,
+  PluginConfig config,
+) {
+  if (isExcluded(source: source, excludes: config.metricsExclude)) {
+    return [];
+  }
+
+  final visitor = ScopeVisitor();
+  source.unit.visitChildren(visitor);
+
+  final analysisErrorFixes = <p.AnalysisErrorFixes>[];
+
+  for (final classDeclaration in visitor.classes) {
+    final report = Report(
+      location: nodeLocation(
+        node: classDeclaration.declaration,
+        source: source,
+      ),
+      metrics: [
+        for (final metric in config.classesMetrics)
+          metric.compute(
+            classDeclaration.declaration,
+            visitor.classes,
+            visitor.functions,
+            source,
+          ),
+      ],
+    );
+
+    analysisErrorFixes.addAll(fixesFromMetricReport(report));
+  }
+
+  for (final functionDeclaration in visitor.functions) {
+    final report = Report(
+      location: nodeLocation(
+        node: functionDeclaration.declaration,
+        source: source,
+      ),
+      metrics: [
+        for (final metric in config.methodsMetrics)
+          metric.compute(
+            functionDeclaration.declaration,
+            visitor.classes,
+            visitor.functions,
+            source,
+          ),
+      ],
+    );
+
+    analysisErrorFixes.addAll(fixesFromMetricReport(report));
+  }
+
+  return analysisErrorFixes;
+}
 
 p.AnalysisErrorFixes fixesFromIssue(Issue issue, ResolvedUnitResult source) =>
     p.AnalysisErrorFixes(
@@ -77,6 +139,46 @@ p.AnalysisErrorFixes fixesFromIssue(Issue issue, ResolvedUnitResult source) =>
           ),
       ],
     );
+
+Iterable<p.AnalysisErrorFixes> fixesFromMetricReport(Report report) =>
+    report.metrics.expand((value) {
+      if (value.level >= MetricValueLevel.warning) {
+        return [
+          p.AnalysisErrorFixes(
+            p.AnalysisError(
+              severityFromMetricValueLevel(value.level),
+              p.AnalysisErrorType.HINT,
+              p.Location(
+                report.location.sourceUrl.path,
+                report.location.start.offset,
+                report.location.length,
+                report.location.start.line,
+                report.location.start.column,
+              ),
+              value.comment,
+              value.metricsId,
+              correction: value.recommendation,
+              url: documentation(value.metricsId).toString(),
+              contextMessages: value.context
+                  .map((message) => p.DiagnosticMessage(
+                        message.message,
+                        p.Location(
+                          message.location.sourceUrl.path,
+                          message.location.start.offset,
+                          message.location.length,
+                          message.location.start.line,
+                          message.location.start.column,
+                        ),
+                      ))
+                  .toList(growable: false),
+              hasFix: false,
+            ),
+          ),
+        ];
+      }
+
+      return [];
+    });
 
 bool isExcluded({
   @required AnalysisResult source,

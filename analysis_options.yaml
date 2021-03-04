@@ -11,6 +11,7 @@ analyzer:
 
 code_checker:
   metrics:
+    cyclomatic-complexity: 20
     lines-of-code: 100
     maximum-nesting-level: 5
     number-of-methods: 10

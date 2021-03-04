@@ -5,22 +5,43 @@ import 'package:code_checker/src/metrics/cyclomatic_complexity/cyclomatic_comple
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
-void main() {
-  test(
-    'CyclomaticComplexityFlowVisitor collects cyclomatic complexity per function',
-    () async {
+const examplePath = 'test/resources/cyclomatic_complexity_metric_example.dart';
+
+Future<void> main() async {
+  final result = await resolveFile(path: p.normalize(p.absolute(examplePath)));
+
+  group(
+    'CyclomaticComplexityFlowVisitor collect information about cyclomatic complexity in',
+    () {
       final scopeVisitor = ScopeVisitor();
+      result.unit.visitChildren(scopeVisitor);
 
-      final result = (await resolveFile(
-        path: p.normalize(p.absolute('./test/resources/complex_function.dart')),
-      ))
-        ..unit.visitChildren(scopeVisitor);
+      test('very complex function', () {
+        final declaration = scopeVisitor.functions.first.declaration;
 
-      final visitor = CyclomaticComplexityFlowVisitor(result);
+        final visitor = CyclomaticComplexityFlowVisitor();
+        declaration.visitChildren(visitor);
 
-      scopeVisitor.functions.single.declaration.visitChildren(visitor);
+        expect(visitor.complexityEntities, hasLength(14));
+      });
 
-      expect(visitor.complexityElements, hasLength(14));
+      test('common function', () {
+        final declaration = scopeVisitor.functions.toList()[1].declaration;
+
+        final visitor = CyclomaticComplexityFlowVisitor();
+        declaration.visitChildren(visitor);
+
+        expect(visitor.complexityEntities, hasLength(2));
+      });
+
+      test('empty function', () {
+        final declaration = scopeVisitor.functions.last.declaration;
+
+        final visitor = CyclomaticComplexityFlowVisitor();
+        declaration.visitChildren(visitor);
+
+        expect(visitor.complexityEntities, isEmpty);
+      });
     },
   );
 }

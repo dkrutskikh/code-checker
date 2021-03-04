@@ -31,6 +31,7 @@ The plugin for the Dart `analyzer` provide information collected by metrics.
    
     code_checker:
       metrics:
+        cyclomatic-complexity: 20
         lines-of-code: 100
         maximum-nesting-level: 5
         number-of-methods: 10
@@ -58,6 +59,7 @@ Usage: checker [arguments] <directories>
                                                   [console (default), json]
 
 
+    --cyclomatic-complexity=<20>                  Cyclomatic Complexity threshold
     --maximum-nesting-level=<5>                   Maximum Nesting Level threshold
     --number-of-methods=<10>                      Number of Methods threshold
     --number-of-parameters=<4>                    Number of Parameters threshold

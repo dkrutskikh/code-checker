@@ -45,6 +45,7 @@ void _showUsageAndExit(int exitCode) {
 
 Future<void> _generate(String directory) async {
   copyResources(directory);
+  generateConfig(directory);
 
   await title(directory);
   await metricsDocumentation(directory);
@@ -120,6 +121,10 @@ void copyResources(String destination) {
       }
     });
   }
+}
+
+void generateConfig(String destination) {
+  File('_config.yml').writeAsString('theme: jekyll-theme-modernist\n');
 }
 
 // ------------------------------ Title Generator ------------------------------

@@ -8,9 +8,12 @@ import 'package:analyzer/src/generated/source.dart' as analyzer_internal;
 import 'package:analyzer_plugin/protocol/protocol_common.dart';
 import 'package:code_checker/src/analyzer_plugin/plugin_utils.dart';
 import 'package:code_checker/src/config/config.dart';
+import 'package:code_checker/src/models/context_message.dart';
 import 'package:code_checker/src/models/issue.dart';
+import 'package:code_checker/src/models/metric_value.dart';
 import 'package:code_checker/src/models/metric_value_level.dart';
 import 'package:code_checker/src/models/replacement.dart';
+import 'package:code_checker/src/models/report.dart';
 import 'package:code_checker/src/models/severity.dart';
 import 'package:glob/glob.dart';
 import 'package:mockito/mockito.dart';
@@ -118,6 +121,117 @@ void main() {
         equals(suggestionReplacement),
       );
     });
+
+    test(
+      'fixesFromMetricReport converts metrics report to AnalysisErrorFixes',
+      () {
+        const sourcePath = 'source_file.dart';
+        const sampleCode = 'sample code';
+        const offset = 5;
+        const length = sampleCode.length;
+        const end = offset + length;
+        const line = 2;
+        const column = 1;
+
+        const firstMetricId = 'metric-id-1';
+        const firstMetricValue = 5;
+        const firstMetricComment = 'First metric comment';
+        const firstMetricRecommendation = 'First metric recommendation';
+
+        const secondMetricId = 'metric-id-2';
+        const secondMetricValue = 1.0;
+        const secondMetricComment = 'Second metric comment';
+
+        const firstContextMessage = 'First context';
+        const secondContextMessage = 'Second context';
+
+        final startLocation = SourceLocation(
+          offset,
+          sourceUrl: Uri.parse(sourcePath),
+          line: line,
+          column: column,
+        );
+
+        final endLocation =
+            SourceLocation(end, sourceUrl: Uri.parse(sourcePath));
+
+        final report = Report(
+          location: SourceSpan(startLocation, endLocation, sampleCode),
+          metrics: [
+            MetricValue<int>(
+              metricsId: firstMetricId,
+              documentation: null,
+              value: firstMetricValue,
+              level: MetricValueLevel.alarm,
+              comment: firstMetricComment,
+              recommendation: firstMetricRecommendation,
+              context: [
+                ContextMessage(
+                  message: firstContextMessage,
+                  location: SourceSpan(startLocation, endLocation, sampleCode),
+                ),
+                ContextMessage(
+                  message: secondContextMessage,
+                  location: SourceSpan(startLocation, endLocation, sampleCode),
+                ),
+              ],
+            ),
+            const MetricValue<double>(
+              metricsId: secondMetricId,
+              documentation: null,
+              value: secondMetricValue,
+              level: MetricValueLevel.noted,
+              comment: secondMetricComment,
+            ),
+          ],
+        );
+
+        final libraryElementSource = SourceMock();
+        when(libraryElementSource.fullName).thenReturn(sourcePath);
+        when(libraryElementSource.modificationStamp).thenReturn(1);
+
+        final libraryElement = LibraryElementMock();
+        when(libraryElement.source).thenReturn(libraryElementSource);
+
+        final source = ResolvedUnitResultMock();
+        when(source.libraryElement).thenReturn(libraryElement);
+
+        final fixes = fixesFromMetricReport(report);
+        expect(
+          fixes.single.error.severity,
+          equals(AnalysisErrorSeverity.WARNING),
+        );
+        expect(fixes.single.error.type, equals(AnalysisErrorType.HINT));
+        expect(fixes.single.error.location.file, equals(sourcePath));
+        expect(fixes.single.error.location.offset, equals(offset));
+        expect(fixes.single.error.location.length, equals(length));
+        expect(fixes.single.error.location.startLine, equals(line));
+        expect(fixes.single.error.location.startColumn, equals(column));
+        expect(fixes.single.error.message, equals(firstMetricComment));
+        expect(fixes.single.error.code, equals(firstMetricId));
+        expect(
+          fixes.single.error.correction,
+          equals(firstMetricRecommendation),
+        );
+        expect(
+          fixes.single.error.url,
+          equals(
+            'https://dart-code-checker.github.io/code-checker/metrics/metric-id-1.html',
+          ),
+        );
+        expect(fixes.single.error.contextMessages, hasLength(2));
+        expect(
+          fixes.single.error.contextMessages.first.message,
+          equals(firstContextMessage),
+        );
+        expect(
+          fixes.single.error.contextMessages.last.message,
+          equals(secondContextMessage),
+        );
+        expect(fixes.first.error.hasFix, isFalse);
+        expect(fixes.first.fixes, isEmpty);
+      },
+    );
 
     test('isExcluded checks exclude or not analysis result', () {
       final analysisResultMock = AnalysisResultMock();

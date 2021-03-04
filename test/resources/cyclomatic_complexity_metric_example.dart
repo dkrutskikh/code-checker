@@ -1,7 +1,10 @@
 // ignore_for_file: dead_code, unused_local_variable
 
+import 'package:analyzer/dart/ast/syntactic_entity.dart';
+import 'package:analyzer/dart/ast/token.dart';
+
 // BlockFunctionBody
-Stream<String> mapLogErrors() async* {
+Stream<String> veryComplexFunction() async* {
   // AssertStatement
   assert(false, '');
 
@@ -10,6 +13,8 @@ Stream<String> mapLogErrors() async* {
     const a = 1;
   } on Exception catch (_, __) {
     const b = 1;
+  } finally {
+    const c = 1;
   }
 
   // ConditionalExpression
@@ -26,6 +31,8 @@ Stream<String> mapLogErrors() async* {
   // IfStatement
   if (c.isNotEmpty) {
     const cc = '$c$c';
+  } else {
+    const bb = '';
   }
 
   // SwitchDefault
@@ -59,3 +66,24 @@ Stream<String> mapLogErrors() async* {
   Object h;
   h ??= Object();
 }
+
+void visitBlock(Token firstToken, Token lastToken) {
+  const tokenTypes = [
+    TokenType.AMPERSAND_AMPERSAND,
+    TokenType.BAR_BAR,
+    TokenType.QUESTION_PERIOD,
+    TokenType.QUESTION_QUESTION,
+    TokenType.QUESTION_QUESTION_EQ,
+  ];
+
+  var token = firstToken;
+  while (token != lastToken) {
+    if (token.matchesAny(tokenTypes)) {
+      _increaseComplexity(token);
+    }
+
+    token = token.next;
+  }
+}
+
+void _increaseComplexity(SyntacticEntity entity) {}

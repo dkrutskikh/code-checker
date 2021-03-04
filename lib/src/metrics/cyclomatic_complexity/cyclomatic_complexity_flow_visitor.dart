@@ -1,20 +1,12 @@
-import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/syntactic_entity.dart';
 import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
-import 'package:source_span/source_span.dart';
-
-import '../../utils/node_utils.dart';
 
 class CyclomaticComplexityFlowVisitor extends RecursiveAstVisitor<void> {
-  final ResolvedUnitResult _source;
+  final _complexityEntities = <SyntacticEntity>[];
 
-  final _complexityElements = <SourceSpan>[];
-
-  CyclomaticComplexityFlowVisitor(this._source);
-
-  Iterable<SourceSpan> get complexityElements => _complexityElements;
+  Iterable<SyntacticEntity> get complexityEntities => _complexityEntities;
 
   @override
   void visitAssertStatement(AssertStatement node) {
@@ -25,7 +17,7 @@ class CyclomaticComplexityFlowVisitor extends RecursiveAstVisitor<void> {
 
   @override
   void visitBlockFunctionBody(BlockFunctionBody node) {
-    _collectFunctionBodyData(
+    _visitBlock(
       node.block.leftBracket.next,
       node.block.rightBracket,
     );
@@ -49,7 +41,7 @@ class CyclomaticComplexityFlowVisitor extends RecursiveAstVisitor<void> {
 
   @override
   void visitExpressionFunctionBody(ExpressionFunctionBody node) {
-    _collectFunctionBodyData(
+    _visitBlock(
       node.expression.beginToken.previous,
       node.expression.endToken.next,
     );
@@ -99,7 +91,7 @@ class CyclomaticComplexityFlowVisitor extends RecursiveAstVisitor<void> {
     super.visitYieldStatement(node);
   }
 
-  void _collectFunctionBodyData(Token firstToken, Token lastToken) {
+  void _visitBlock(Token firstToken, Token lastToken) {
     const tokenTypes = [
       TokenType.AMPERSAND_AMPERSAND,
       TokenType.BAR_BAR,
@@ -118,7 +110,7 @@ class CyclomaticComplexityFlowVisitor extends RecursiveAstVisitor<void> {
     }
   }
 
-  void _increaseComplexity(SyntacticEntity node) {
-    _complexityElements.add(nodeLocation(node: node, source: _source));
+  void _increaseComplexity(SyntacticEntity entity) {
+    _complexityEntities.add(entity);
   }
 }

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add `Cyclomatic Complexity` metric
 - Add `Number of Parameters` metric
 
 ## 0.9.0 - 2021-03-01

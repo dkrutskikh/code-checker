@@ -311,6 +311,7 @@ void main() {
       expect(
         config.methodsMetrics.map((metric) => metric.id),
         equals([
+          'cyclomatic-complexity',
           'lines-of-code',
           'maximum-nesting-level',
           'number-of-parameters',

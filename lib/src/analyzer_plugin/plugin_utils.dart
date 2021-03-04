@@ -78,6 +78,43 @@ p.AnalysisErrorFixes fixesFromIssue(Issue issue, ResolvedUnitResult source) =>
       ],
     );
 
+Iterable<p.AnalysisErrorFixes> fixesFromMetricReport(Report report) =>
+    report.metrics.expand((value) {
+      if (value.level >= MetricValueLevel.warning) {
+        return [
+          p.AnalysisErrorFixes(p.AnalysisError(
+            severityFromMetricValueLevel(value.level),
+            p.AnalysisErrorType.HINT,
+            p.Location(
+              report.location.sourceUrl.path,
+              report.location.start.offset,
+              report.location.length,
+              report.location.start.line,
+              report.location.start.column,
+            ),
+            value.comment,
+            value.metricsId,
+            correction: value.recommendation,
+            url: documentation(value.metricsId).toString(),
+            contextMessages: value.context
+                .map((message) => p.DiagnosticMessage(
+                      message.message,
+                      p.Location(
+                        message.location.sourceUrl.path,
+                        message.location.start.offset,
+                        message.location.length,
+                        message.location.start.line,
+                        message.location.start.column,
+                      ),
+                    ))
+                .toList(growable: false),
+          )),
+        ];
+      }
+
+      return [];
+    });
+
 bool isExcluded({
   @required AnalysisResult source,
   @required Iterable<Glob> excludes,

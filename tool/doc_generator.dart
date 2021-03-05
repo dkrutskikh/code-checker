@@ -45,6 +45,7 @@ void _showUsageAndExit(int exitCode) {
 
 Future<void> _generate(String directory) async {
   copyResources(directory);
+  generateConfig(directory);
 
   await title(directory);
   await metricsDocumentation(directory);
@@ -120,6 +121,10 @@ void copyResources(String destination) {
       }
     });
   }
+}
+
+void generateConfig(String destination) {
+  File('_config.yml').writeAsString('theme: jekyll-theme-modernist\n');
 }
 
 // ------------------------------ Title Generator ------------------------------
@@ -357,7 +362,7 @@ class MetricHtmlGenerator {
     for (final codeBlock in visitor.codeBlocks) {
       codeBlock.parentNode.parentNode.append(await _highlight.parse(
         sourcePath: iterator.current.examplePath,
-        withLineIdices: false,
+        withLineIndices: false,
         startLine: iterator.current.startLine - 1,
         endLine: iterator.current.endLine,
       ));

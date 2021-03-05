@@ -105,39 +105,38 @@ class HighlightRange {
 class Highlight {
   Future<Node> parse({
     @required String sourcePath,
-    bool withLineIdices = false,
+    bool withLineIndices = false,
     int startLine,
     int endLine,
   }) async {
-    final headBlock = Element.tag('tr');
-    if (withLineIdices) {
-      headBlock.append(Element.tag('th'));
-    }
-    headBlock.append(Element.tag('th'));
+    var sourceLines =
+        await codeHighligh(sourcePath, startLine, endLine - startLine);
 
-    final contentBlock = Element.tag('tr');
-    if (withLineIdices) {
-      contentBlock.append(lineIndices(1, endLine - startLine));
+    if (withLineIndices) {
+      sourceLines = appendLineIndices(1, sourceLines);
     }
 
-    contentBlock
-        .append(await codeHighligh(sourcePath, startLine, endLine - startLine));
-
-    return Element.tag('table')
-      ..classes.add('highlight')
-      ..append(Element.tag('tbody')..append(headBlock)..append(contentBlock));
+    return Element.tag('code')
+      ..append(DocumentFragment.html(sourceLines.join('\n')));
   }
 
-  Element lineIndices(int startIndex, int count) {
-    final linesIndices = Element.tag('code');
-    for (var i = startIndex; i < (startIndex + count); ++i) {
-      linesIndices.append(Element.tag('span')..text = '$i\n');
-    }
+  Iterable<String> appendLineIndices(
+    int startIndex,
+    Iterable<String> sourceLines,
+  ) {
+    final linesColumnWidth = '${sourceLines.length}'.length;
+    var lineIndex = startIndex;
 
-    return Element.tag('td')..append(linesIndices);
+    return sourceLines.map((line) {
+      final lineIndexString = lineIndex.toString().padLeft(linesColumnWidth);
+      final lineIndexTag = '<span class="line-index">$lineIndexString</span>';
+      lineIndex++;
+
+      return '$lineIndexTag $line';
+    });
   }
 
-  Future<Element> codeHighligh(
+  Future<Iterable<String>> codeHighligh(
     String sourcePath,
     int startLine,
     int count,
@@ -178,13 +177,9 @@ class Highlight {
       );
     }
 
-    final sourceLines = LineSplitter.split(highlightedContent)
+    return LineSplitter.split(highlightedContent)
         .toList()
-        .sublist(startLine, startLine + count)
-        .join('\n');
-
-    return Element.tag('td')
-      ..append(Element.tag('code')..append(DocumentFragment.html(sourceLines)));
+        .sublist(startLine, startLine + count);
   }
 
   HighlightRange _tokenColor(Token token) {

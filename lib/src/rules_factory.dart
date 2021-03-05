@@ -1,4 +1,5 @@
 import 'rules/double_literal_format/double_literal_format.dart';
+import 'rules/member_ordering/member_ordering.dart';
 import 'rules/prefer_newline_before_return/prefer_newline_before_return.dart';
 import 'rules/prefer_trailing_comma/prefer_trailing_comma.dart';
 import 'rules/rule.dart';
@@ -6,6 +7,7 @@ import 'rules/rule.dart';
 final _implementedRules = <String, Rule Function(Map<String, Object>)>{
   DoubleLiteralFormatRule.ruleId: (config) =>
       DoubleLiteralFormatRule(config: config),
+  MemberOrderingRule.ruleId: (config) => MemberOrderingRule(config: config),
   PreferNewlineBeforeReturnRule.ruleId: (config) =>
       PreferNewlineBeforeReturnRule(config: config),
   PreferTrailingComma.ruleId: (config) => PreferTrailingComma(config: config),

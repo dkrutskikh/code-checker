@@ -41,6 +41,7 @@ The plugin for the Dart `analyzer` provide information collected by metrics.
         - test/**
       rules:
         - double_literal_format
+        - member-ordering
         - prefer_newline_before_return
         - prefer_trailing_comma
     ```

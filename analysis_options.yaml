@@ -21,6 +21,7 @@ code_checker:
     - test/**
   rules:
     - double_literal_format
+    - member-ordering
     - prefer_newline_before_return
     - prefer_trailing_comma
 

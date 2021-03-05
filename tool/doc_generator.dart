@@ -124,7 +124,8 @@ void copyResources(String destination) {
 }
 
 void generateConfig(String destination) {
-  File('_config.yml').writeAsString('theme: jekyll-theme-modernist\n');
+  File('$destination/_config.yml')
+      .writeAsString('theme: jekyll-theme-modernist\n');
 }
 
 // ------------------------------ Title Generator ------------------------------

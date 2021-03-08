@@ -40,3 +40,5 @@ class Spacecraft {
     }
   }
 }
+
+abstract class EmptyAbstractClass {}

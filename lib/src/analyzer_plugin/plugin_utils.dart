@@ -66,12 +66,18 @@ Iterable<p.AnalysisErrorFixes> collectMetrics(
       ),
       metrics: [
         for (final metric in config.classesMetrics)
-          metric.compute(
+          if (metric.supports(
             classDeclaration.declaration,
             visitor.classes,
             visitor.functions,
             source,
-          ),
+          ))
+            metric.compute(
+              classDeclaration.declaration,
+              visitor.classes,
+              visitor.functions,
+              source,
+            ),
       ],
     );
 
@@ -86,12 +92,18 @@ Iterable<p.AnalysisErrorFixes> collectMetrics(
       ),
       metrics: [
         for (final metric in config.methodsMetrics)
-          metric.compute(
+          if (metric.supports(
             functionDeclaration.declaration,
             visitor.classes,
             visitor.functions,
             source,
-          ),
+          ))
+            metric.compute(
+              functionDeclaration.declaration,
+              visitor.classes,
+              visitor.functions,
+              source,
+            ),
       ],
     );
 

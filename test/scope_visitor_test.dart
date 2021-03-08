@@ -146,7 +146,7 @@ void main() {
           .unit
           .visitChildren(visitor);
 
-      expect(visitor.classes, hasLength(2));
+      expect(visitor.classes, hasLength(3));
 
       expect(
         visitor.classes.first.declaration,
@@ -156,11 +156,18 @@ void main() {
       expect(visitor.classes.first.name, equals('SimpleClass'));
 
       expect(
+        visitor.classes.toList()[1].declaration,
+        const TypeMatcher<ClassDeclaration>(),
+      );
+      expect(visitor.classes.toList()[1].type, equals(ClassType.generic));
+      expect(visitor.classes.toList()[1].name, equals('Spacecraft'));
+
+      expect(
         visitor.classes.last.declaration,
         const TypeMatcher<ClassDeclaration>(),
       );
       expect(visitor.classes.last.type, equals(ClassType.generic));
-      expect(visitor.classes.last.name, equals('Spacecraft'));
+      expect(visitor.classes.last.name, equals('EmptyAbstractClass'));
 
       final functions = visitor.functions.toList(growable: false);
       expect(functions, hasLength(6));

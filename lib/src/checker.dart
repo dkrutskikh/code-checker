@@ -93,7 +93,7 @@ class Checker {
   void _computeClassMetrics(
     ScopeVisitor visitor,
     ReportsBuilder builder,
-    ResolvedUnitResult result,
+    ResolvedUnitResult source,
   ) {
     for (final classDeclaration in visitor.classes) {
       builder.recordClass(
@@ -101,16 +101,22 @@ class Checker {
         Report(
           location: nodeLocation(
             node: classDeclaration.declaration,
-            source: result,
+            source: source,
           ),
           metrics: [
             for (final metric in _classesMetrics)
-              metric.compute(
+              if (metric.supports(
                 classDeclaration.declaration,
                 visitor.classes,
                 visitor.functions,
-                result,
-              ),
+                source,
+              ))
+                metric.compute(
+                  classDeclaration.declaration,
+                  visitor.classes,
+                  visitor.functions,
+                  source,
+                ),
           ],
         ),
       );
@@ -120,7 +126,7 @@ class Checker {
   void _computeMethodMetrics(
     ScopeVisitor visitor,
     ReportsBuilder builder,
-    ResolvedUnitResult result,
+    ResolvedUnitResult source,
   ) {
     for (final functionDeclaration in visitor.functions) {
       builder.recordFunction(
@@ -128,16 +134,22 @@ class Checker {
         Report(
           location: nodeLocation(
             node: functionDeclaration.declaration,
-            source: result,
+            source: source,
           ),
           metrics: [
             for (final metric in _methodsMetrics)
-              metric.compute(
+              if (metric.supports(
                 functionDeclaration.declaration,
                 visitor.classes,
                 visitor.functions,
-                result,
-              ),
+                source,
+              ))
+                metric.compute(
+                  functionDeclaration.declaration,
+                  visitor.classes,
+                  visitor.functions,
+                  source,
+                ),
           ],
         ),
       );

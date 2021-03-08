@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:path/path.dart' as p;
 import 'package:meta/meta.dart';
 import 'package:yaml/yaml.dart';
 
@@ -101,8 +102,9 @@ Future<Map<String, Object>> _loadConfigFromYamlFile(File options) async {
 
     final includeNode = optionsNode['include'];
     if (includeNode is String) {
-      final resolvedUri =
-          await Isolate.resolvePackageUri(Uri.parse(includeNode));
+      final resolvedUri = includeNode.startsWith('package:')
+          ? await Isolate.resolvePackageUri(Uri.parse(includeNode))
+          : Uri.file(p.absolute(p.dirname(options.path), includeNode));
       if (resolvedUri != null) {
         final resolvedYamlMap =
             await _loadConfigFromYamlFile(File.fromUri(resolvedUri));

@@ -9,7 +9,7 @@ import 'package:analyzer_plugin/protocol/protocol_common.dart' as p;
 import 'package:analyzer_plugin/protocol/protocol_generated.dart' as p;
 import 'package:glob/glob.dart';
 import 'package:meta/meta.dart';
-import 'package:path/path.dart' as path;
+import 'package:path/path.dart' as p;
 
 import '../config/analysis_options.dart';
 import '../config/config.dart';
@@ -257,4 +257,4 @@ p.AnalysisErrorSeverity severityFromMetricValueLevel(MetricValueLevel level) =>
         : p.AnalysisErrorSeverity.INFO;
 
 Iterable<Glob> _prepareExcludes(Iterable<String> patterns, String root) =>
-    patterns?.map((exclude) => Glob(path.join(root, exclude)))?.toList() ?? [];
+    patterns?.map((exclude) => Glob(p.join(root, exclude)))?.toList() ?? [];

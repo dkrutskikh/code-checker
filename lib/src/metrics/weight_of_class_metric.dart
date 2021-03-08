@@ -37,6 +37,17 @@ class WeightOfClassMetric extends ClassMetric<double> {
         );
 
   @override
+  bool supports(
+    Declaration node,
+    Iterable<ScopedClassDeclaration> classDeclarations,
+    Iterable<ScopedFunctionDeclaration> functionDeclarations,
+    ResolvedUnitResult source,
+  ) =>
+      classMethods(node, functionDeclarations)
+          .where(_isPublicMethod)
+          .isNotEmpty;
+
+  @override
   MetricComputationResult<double> computeImplementation(
     Declaration node,
     Iterable<ScopedClassDeclaration> classDeclarations,

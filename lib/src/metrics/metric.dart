@@ -30,6 +30,15 @@ abstract class Metric<T extends num> {
     @required MetricValueLevel Function(num, num) levelComputer,
   }) : _levelComputer = levelComputer;
 
+  /// Returns true if the metric can be computed on this [node]
+  bool supports(
+    Declaration node,
+    Iterable<ScopedClassDeclaration> classDeclarations,
+    Iterable<ScopedFunctionDeclaration> functionDeclarations,
+    ResolvedUnitResult source,
+  ) =>
+      true;
+
   /// Returns computed [MetricValue]
   MetricValue<T> compute(
     Declaration node,

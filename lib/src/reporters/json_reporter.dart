@@ -31,13 +31,17 @@ class JsonReporter implements Reporter {
     _output.write(encodedReport);
   }
 
-  Map<String, Object> _analysisRecordToJson(FileReport report) => {
-        'path': report.relativePath,
-        'classes': _reportReports(report.classes),
-        'functions': _reportReports(report.functions),
-        'issues': _reportIssues(report.issues),
-        'antiPatternCases': _reportIssues(report.antiPatternCases),
-      };
+  Map<String, Object> _analysisRecordToJson(FileReport report) {
+    final sourceContent = File(report.path).readAsStringSync();
+
+    return {
+      'path': report.relativePath,
+      'classes': _reportReports(report.classes),
+      'functions': _reportReports(report.functions),
+      'issues': _reportIssues(report.issues, sourceContent),
+      'antiPatternCases': _reportIssues(report.antiPatternCases, sourceContent),
+    };
+  }
 
   Map<String, Map<String, Object>> _reportReports(
     Map<String, Report> classes,
@@ -47,19 +51,27 @@ class JsonReporter implements Reporter {
             'metrics': _reportMetrics(value.metrics),
           }));
 
-  List<Map<String, Object>> _reportIssues(Iterable<Issue> issues) => issues
-      .map((issue) => {
-            'ruleId': issue.ruleId,
-            'documentation': issue.documentation.toString(),
-            'location': _reportLocation(issue.location),
-            'severity': issue.severity.toString(),
-            'message': issue.message,
-            if (issue.verboseMessage?.isNotEmpty ?? false)
-              'verboseMessage': issue.verboseMessage,
-            if (issue.suggestion != null)
-              'suggestion': _reportReplacement(issue.suggestion),
-          })
-      .toList();
+  List<Map<String, Object>> _reportIssues(
+    Iterable<Issue> issues,
+    String source,
+  ) =>
+      issues
+          .map((issue) => {
+                'ruleId': issue.ruleId,
+                'documentation': issue.documentation.toString(),
+                'location': _reportLocation(issue.location),
+                'severity': issue.severity.toString(),
+                'problemCode': source.substring(
+                  issue.location.start.offset,
+                  issue.location.end.offset,
+                ),
+                'message': issue.message,
+                if (issue.verboseMessage?.isNotEmpty ?? false)
+                  'verboseMessage': issue.verboseMessage,
+                if (issue.suggestion != null)
+                  'suggestion': _reportReplacement(issue.suggestion),
+              })
+          .toList();
 
   Map<String, Object> _reportLocation(SourceSpan location) => {
         'start': _reportSourceLocation(location.start),

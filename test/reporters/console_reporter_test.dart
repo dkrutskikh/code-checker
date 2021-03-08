@@ -33,10 +33,10 @@ void main() {
       expect(
         report,
         equals([
-          'lib/src/model/source1.dart:',
+          'test/resources/abstract_class.dart:',
           '\x1B[38;5;9mAlarm   \x1B[0mclass.constructor - MTR2: \x1B[38;5;9m10\x1B[0m',
           '',
-          'lib/src/service/source1.dart:',
+          'test/resources/class_with_factory_constructors.dart:',
           '\x1B[38;5;11mWarning \x1B[0msimple message : 0:0 : id',
           '\x1B[38;5;11mWarning \x1B[0mfunction - MTR4: \x1B[38;5;11m5\x1B[0m',
           '',

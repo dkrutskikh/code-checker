@@ -9,8 +9,8 @@ import 'package:code_checker/src/models/report.dart';
 import 'package:code_checker/src/models/severity.dart';
 import 'package:source_span/source_span.dart';
 
-const src1Path = 'lib/src/model/source1.dart';
-const src2Path = 'lib/src/service/source1.dart';
+const src1Path = 'test/resources/abstract_class.dart';
+const src2Path = 'test/resources/class_with_factory_constructors.dart';
 
 final _class1Report = Report(
   location: SourceSpan(SourceLocation(0), SourceLocation(10), 'class body'),

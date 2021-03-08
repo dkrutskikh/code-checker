@@ -53,6 +53,8 @@ void main() {
               'text': 'simple function body',
             },
             'severity': 'warning',
+            'problemCode': 'class Logger {\n'
+                '  fin',
             'message': 'simple message',
             'verboseMessage': 'verbose message',
           },

@@ -43,6 +43,7 @@ class WeightOfClassMetric extends ClassMetric<double> {
     Iterable<ScopedFunctionDeclaration> functionDeclarations,
     ResolvedUnitResult source,
   ) =>
+      super.supports(node, classDeclarations, functionDeclarations, source) &&
       classMethods(node, functionDeclarations)
           .where(_isPublicMethod)
           .isNotEmpty;

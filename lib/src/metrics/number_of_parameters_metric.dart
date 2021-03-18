@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:code_checker/src/models/code_example.dart';
 
+import '../models/code_example.dart';
 import '../models/entity_type.dart';
 import '../models/metric_documentation.dart';
 import '../models/scoped_class_declaration.dart';

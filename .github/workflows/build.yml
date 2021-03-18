@@ -40,7 +40,7 @@ jobs:
         dart run tool/uncovered_coverage.dart
         dart test test/fake_test.dart --coverage=coverage
         dart pub run coverage:format_coverage --packages=.packages -i coverage -o coverage/coverage.lcov --lcov --report-on=lib
-        bash <(curl -s https://codecov.io/bash) -f coverage/uncovered.lcov
+        bash <(curl -s https://codecov.io/bash) -f coverage/coverage.lcov
 
   build-dart-2-8:
 

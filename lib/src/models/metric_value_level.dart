@@ -1,25 +1,28 @@
-/// Enum class for value level. Used when reporting computed metric value
+/// Enum class for value level.
+///
+/// Used when reporting computed metric value.
 class MetricValueLevel implements Comparable<MetricValueLevel> {
-  /// Value in "green" zone
+  /// The value in the "green" zone.
   ///
-  /// Default value
-  static const MetricValueLevel none = MetricValueLevel._('none');
+  /// Default value.
+  static const none = MetricValueLevel._('none');
 
-  /// Value in "blue" zone
+  /// The value in the "blue" zone.
   ///
-  /// Value in range 80% - 100% of the threshold
-  static const MetricValueLevel noted = MetricValueLevel._('noted');
+  /// The value in the 80% - 100% range of the threshold.
+  static const noted = MetricValueLevel._('noted');
 
-  /// Value in "yellow" zone
+  /// The value in the "yellow" zone.
   ///
-  /// Value in range 100% - 200% of the threshold
-  static const MetricValueLevel warning = MetricValueLevel._('warning');
+  /// The value in the 100% - 200% range of the threshold.
+  static const warning = MetricValueLevel._('warning');
 
-  /// Value in "red" zone
+  /// The value in the "red" zone.
   ///
-  /// Value greater than 200% of the threshold
-  static const MetricValueLevel alarm = MetricValueLevel._('alarm');
+  /// The value is greater than the 200% of the threshold.
+  static const alarm = MetricValueLevel._('alarm');
 
+  /// A list containing all of the enum values that are defined.
   static const values = [
     MetricValueLevel.none,
     MetricValueLevel.noted,
@@ -29,7 +32,7 @@ class MetricValueLevel implements Comparable<MetricValueLevel> {
 
   final String _name;
 
-  /// Converts the human readable [level] string into a [MetricValueLevel] value
+  /// Converts the human readable [level] string into a [MetricValueLevel] value.
   static MetricValueLevel fromString(String level) => level != null
       ? values.firstWhere(
           (val) => val._name == level.toLowerCase(),
@@ -46,15 +49,15 @@ class MetricValueLevel implements Comparable<MetricValueLevel> {
   int compareTo(MetricValueLevel other) =>
       values.indexOf(this).compareTo(values.indexOf(other));
 
-  /// Relational less than operator
+  /// Relational less than operator.
   bool operator <(MetricValueLevel other) => compareTo(other) < 0;
 
-  /// Relational less than or equal operator
+  /// Relational less than or equal operator.
   bool operator <=(MetricValueLevel other) => compareTo(other) <= 0;
 
-  /// Relational greater than operator
+  /// Relational greater than operator.
   bool operator >(MetricValueLevel other) => compareTo(other) > 0;
 
-  /// Relational greater than or equal operator
+  /// Relational greater than or equal operator.
   bool operator >=(MetricValueLevel other) => compareTo(other) >= 0;
 }

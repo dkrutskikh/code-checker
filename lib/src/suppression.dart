@@ -1,7 +1,7 @@
 import 'package:analyzer/source/line_info.dart';
 
-/// Represents information about rule suppression
-class Suppressions {
+/// Represents an information about rule suppression.
+class Suppression {
   static final _ignoreMatchers = RegExp('//[ ]*ignore:(.*)', multiLine: true);
 
   static final _ignoreForFileMatcher =
@@ -10,15 +10,16 @@ class Suppressions {
   final _ignoreMap = <int, List<String>>{};
   final _ignoreForFileSet = <String>{};
 
-  /// Checks [id] globally suppressed
+  /// Checks that the [id] is globally suppressed.
   bool isSuppressed(String id) => _ignoreForFileSet.contains(_canonicalize(id));
 
-  /// Checks [id] suppressed for [lineIndex]
+  /// Checks that the [id] is suppressed for the [lineIndex].
   bool isSuppressedAt(String id, int lineIndex) =>
       isSuppressed(id) ||
       (_ignoreMap[lineIndex]?.contains(_canonicalize(id)) ?? false);
 
-  Suppressions(String content, LineInfo info) {
+  /// Initialize a newly created [Suppression] with the given [content] and [info].
+  Suppression(String content, LineInfo info) {
     for (final match in _ignoreMatchers.allMatches(content)) {
       final ids = match.group(1).split(',').map(_canonicalize);
       final location = info.getLocation(match.start);

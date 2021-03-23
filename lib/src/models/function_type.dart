@@ -1,12 +1,21 @@
-/// Enum class for type of a function
+/// Enum class for type of a function entity.
 ///
-/// Used when reporting
+/// Used when reporting.
 class FunctionType {
-  static const FunctionType constructor = FunctionType._('constructor');
-  static const FunctionType method = FunctionType._('method');
-  static const FunctionType function = FunctionType._('function');
-  static const FunctionType getter = FunctionType._('getter');
-  static const FunctionType setter = FunctionType._('setter');
+  /// The function entity representing a class constructor.
+  static const constructor = FunctionType._('constructor');
+
+  /// The function entity representing a class method.
+  static const method = FunctionType._('method');
+
+  /// The function entity representing a generic function.
+  static const function = FunctionType._('function');
+
+  /// The function entity representing a getter.
+  static const getter = FunctionType._('getter');
+
+  /// The function entity representing a setter.
+  static const setter = FunctionType._('setter');
 
   final String _value;
 

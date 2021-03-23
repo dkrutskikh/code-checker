@@ -6,15 +6,17 @@ import 'models/function_type.dart';
 import 'models/scoped_class_declaration.dart';
 import 'models/scoped_function_declaration.dart';
 
-/// Visitor to collect declarations of classes and functions
+/// A visitor to collect declarations of classes and functions.
 class ScopeVisitor extends RecursiveAstVisitor<void> {
   final _classes = <ScopedClassDeclaration>[];
   final _functions = <ScopedFunctionDeclaration>[];
 
   ScopedClassDeclaration _enclosingDeclaration;
 
+  /// Returns the declarations of the found classes.
   Iterable<ScopedClassDeclaration> get classes => _classes;
 
+  /// Returns the declarations of the found functions.
   Iterable<ScopedFunctionDeclaration> get functions => _functions;
 
   @override

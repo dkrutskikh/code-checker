@@ -1,9 +1,12 @@
 import 'dart:io';
 
 void publishToPub() {
-  Directory('~/.pub-cache').create(recursive: true);
-  File('~/.pub-cache/credentials.json')
-      .writeAsStringSync(Platform.environment['PUB_CREDENTIALS'], flush: true);
+  Directory('~/.pub-cache').createSync(recursive: true);
+  File('~/.pub-cache/credentials.json').writeAsStringSync(
+    Platform.environment['PUB_CREDENTIALS'],
+    mode: FileMode.writeOnly,
+    flush: true,
+  );
 
   final pubCommands = [
     ['pub', '--force'],

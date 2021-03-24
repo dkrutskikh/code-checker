@@ -9,7 +9,7 @@ void publishToPub() {
   );
 
   final pubCommands = [
-    ['pub', '--force'],
+    ['pub', 'publish', '--force'],
   ];
 
   for (final command in pubCommands) {

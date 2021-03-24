@@ -1,5 +1,9 @@
 # Changelog
 
+## MINOR
+
+* Added auto publish dev versions
+
 ## 0.10.0 - 2021-03-08
 
 * Add `Cyclomatic Complexity` metric

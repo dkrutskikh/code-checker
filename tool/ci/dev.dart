@@ -66,17 +66,22 @@ int getDevChangesCount(Iterable<String> changelog) {
 
 ChangesImportance getDevChangesImportance(Iterable<String> changelog) {
   const _importanceMap = {
-    '## MAJOR': ChangesImportance.major,
-    '## MINOR': ChangesImportance.minor,
-    '## PATCH': ChangesImportance.patch,
+    '## major': ChangesImportance.major,
+    '## minor': ChangesImportance.minor,
+    '## patch': ChangesImportance.patch,
   };
 
   if (changelog.length < 3) {
     return ChangesImportance.unknown;
   }
 
-  final potentialSeverityLine =
-      (changelog.iterator..moveNext()..moveNext()..moveNext()).current.trim();
+  final potentialSeverityLine = (changelog.iterator
+        ..moveNext()
+        ..moveNext()
+        ..moveNext())
+      .current
+      .trim()
+      .toLowerCase();
 
   return _importanceMap.containsKey(potentialSeverityLine)
       ? _importanceMap[potentialSeverityLine]

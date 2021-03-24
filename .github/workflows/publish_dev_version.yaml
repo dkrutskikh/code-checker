@@ -24,4 +24,8 @@ jobs:
         run: dart run tool/ci.dart bump-dev-version
 
       - name: Deploy 🚀
-        run: dart run tool/ci.dart push-new-version
+        env:
+          PUB_CREDENTIALS: ${{ secrets.PUB_CREDENTIALS }}
+        run: |
+          dart run tool/ci.dart push-new-version
+          dart run tool/ci.dart publish

@@ -1,13 +1,17 @@
+import 'dart:io';
+
 import 'package:args/command_runner.dart';
 
 import 'ci/dev.dart';
 import 'ci/git.dart';
+import 'ci/pub.dart';
 
 void main(List<String> args) {
   CommandRunner<void>('tools/ci', 'tools for automate some ci/cd cases')
     ..addCommand(CheckBranch())
     ..addCommand(BumpDevVersion())
     ..addCommand(PushNewVersion())
+    ..addCommand(PublishToPub())
     ..run(args);
 }
 
@@ -78,5 +82,18 @@ class PushNewVersion extends Command<void> {
     final version = getPackageVersion(readPubspec());
 
     pushNewVersion(version);
+  }
+}
+
+class PublishToPub extends Command<void> {
+  @override
+  String get name => 'publish';
+
+  @override
+  String get description => 'Publish to pub.dev.';
+
+  @override
+  void run() {
+    publishToPub();
   }
 }

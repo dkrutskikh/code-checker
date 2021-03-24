@@ -1,8 +1,8 @@
 # Changelog
 
-## PATCH
+## 0.10.0-dev.2 - 2021-03-24
 
-* Add git tags on release commit
+* Add git tags on release commit (PATCH)
 
 ## 0.10.0-dev.1 - 2021-03-24
 

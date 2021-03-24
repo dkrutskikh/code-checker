@@ -1,5 +1,9 @@
 # Changelog
 
+## PATCH
+
+* Add git tags on release commit
+
 ## 0.10.0-dev.1 - 2021-03-24
 
 * Added auto publish dev versions (MINOR)

@@ -1,11 +1,13 @@
 import 'package:args/command_runner.dart';
 
 import 'ci/dev.dart';
+import 'ci/git.dart';
 
 void main(List<String> args) {
   CommandRunner<void>('tools/ci', 'tools for automate some ci/cd cases')
     ..addCommand(CheckBranch())
     ..addCommand(BumpDevVersion())
+    ..addCommand(PushNewVersion())
     ..run(args);
 }
 
@@ -16,10 +18,6 @@ class CheckBranch extends Command<void> {
   @override
   String get description =>
       'Validate developer branch for compliance with our conventions.';
-
-  CheckBranch() {
-    argParser.addFlag('all', abbr: 'a');
-  }
 
   @override
   void run() {
@@ -41,10 +39,6 @@ class BumpDevVersion extends Command<void> {
 
   @override
   String get description => 'Bump package version.';
-
-  BumpDevVersion() {
-    argParser.addFlag('all', abbr: 'a');
-  }
 
   @override
   void run() {
@@ -69,5 +63,20 @@ class BumpDevVersion extends Command<void> {
         DateTime.now(),
       ),
     );
+  }
+}
+
+class PushNewVersion extends Command<void> {
+  @override
+  String get name => 'push-new-version';
+
+  @override
+  String get description => 'Push new version.';
+
+  @override
+  void run() {
+    final version = getPackageVersion(readPubspec());
+
+    pushNewVersion(version);
   }
 }

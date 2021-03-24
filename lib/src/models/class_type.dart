@@ -1,8 +1,15 @@
-/// Enum class for type of a class. Used when reporting
+/// Enum class for type of a class entity.
+///
+/// Used when reporting.
 class ClassType {
-  static const ClassType generic = ClassType._('class');
-  static const ClassType mixin = ClassType._('mixin');
-  static const ClassType extension = ClassType._('extension');
+  /// The class entity representing a generic class.
+  static const generic = ClassType._('class');
+
+  /// The class entity representing a mixin.
+  static const mixin = ClassType._('mixin');
+
+  /// The class entity representing a extension.
+  static const extension = ClassType._('extension');
 
   final String _value;
 

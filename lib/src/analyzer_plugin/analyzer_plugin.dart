@@ -16,7 +16,7 @@ import 'package:analyzer_plugin/protocol/protocol_generated.dart' as plugin;
 
 import '../analyzer_plugin/plugin_utils.dart';
 import '../config/config.dart';
-import '../suppressions.dart';
+import '../suppression.dart';
 import 'plugin_config.dart';
 
 class CheckerAnalyzerPlugin extends ServerPlugin {
@@ -171,7 +171,7 @@ class CheckerAnalyzerPlugin extends ServerPlugin {
     if (isSupported(source) &&
         config != null &&
         !isExcluded(source: source, excludes: config.globalExclude)) {
-      final ignores = Suppressions(source.content, source.lineInfo);
+      final ignores = Suppression(source.content, source.lineInfo);
 
       final sourceUri =
           resourceProvider.getFile(source.path)?.toUri() ?? source.uri;

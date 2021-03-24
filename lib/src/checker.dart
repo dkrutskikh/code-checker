@@ -17,7 +17,7 @@ import 'reports_store.dart';
 import 'rules/rule.dart';
 import 'rules_factory.dart';
 import 'scope_visitor.dart';
-import 'suppressions.dart';
+import 'suppression.dart';
 import 'utils/node_utils.dart';
 
 /// Performs code quality analysis on specific files
@@ -84,7 +84,7 @@ class Checker {
           _computeMethodMetrics(visitor, builder, result);
         }
 
-        final ignores = Suppressions(result.content, lineInfo);
+        final ignores = Suppression(result.content, lineInfo);
         builder.recordIssues(_checkOnCodeIssues(ignores, result));
       });
     }
@@ -157,7 +157,7 @@ class Checker {
   }
 
   Iterable<Issue> _checkOnCodeIssues(
-    Suppressions ignores,
+    Suppression ignores,
     ResolvedUnitResult source,
   ) =>
       _codeRules.where((rule) => !ignores.isSuppressed(rule.id)).expand(

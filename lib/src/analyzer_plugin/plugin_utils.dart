@@ -21,7 +21,7 @@ import '../models/report.dart';
 import '../models/severity.dart';
 import '../rules_factory.dart';
 import '../scope_visitor.dart';
-import '../suppressions.dart';
+import '../suppression.dart';
 import '../utils/metric_utils.dart';
 import '../utils/node_utils.dart';
 import '../utils/yaml_utils.dart';
@@ -29,7 +29,7 @@ import 'plugin_config.dart';
 
 Iterable<p.AnalysisErrorFixes> checkOnCodeIssues(
   ResolvedUnitResult source,
-  Suppressions ignores,
+  Suppression ignores,
   Uri sourceUri,
   PluginConfig config,
 ) =>
@@ -45,7 +45,7 @@ Iterable<p.AnalysisErrorFixes> checkOnCodeIssues(
 
 Iterable<p.AnalysisErrorFixes> collectMetrics(
   ResolvedUnitResult source,
-  Suppressions ignores,
+  Suppression ignores,
   Uri sourceUri,
   PluginConfig config,
 ) {

@@ -7,6 +7,14 @@ import 'package:code_checker/src/scope_visitor.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
+const abstractClassExample = './test/resources/abstract_class.dart';
+const classWithFactoryConstructorsExample =
+    './test/resources/class_with_factory_constructors.dart';
+const extensionWithMethodExample = './test/resources/extension.dart';
+const functionsExample = './test/resources/functions.dart';
+const mixinExample = './test/resources/mixin.dart';
+const severalClassesExample = './test/resources/weight_of_class_example.dart';
+
 void main() {
   group('ScopeVisitor collects scope from file with', () {
     ScopeVisitor visitor;
@@ -16,17 +24,12 @@ void main() {
     });
 
     test('abstract class', () async {
-      (await resolveFile(
-        path: p.normalize(p.absolute('./test/resources/abstract_class.dart')),
-      ))
+      (await resolveFile(path: p.normalize(p.absolute(abstractClassExample))))
           .unit
           .visitChildren(visitor);
 
       final classDeclaration = visitor.classes.single;
-      expect(
-        classDeclaration.declaration,
-        const TypeMatcher<ClassDeclaration>(),
-      );
+      expect(classDeclaration.declaration, isA<ClassDeclaration>());
       expect(classDeclaration.type, equals(ClassType.generic));
       expect(classDeclaration.name, equals('Doer'));
 
@@ -38,17 +41,13 @@ void main() {
 
     test('class with factory constructors', () async {
       (await resolveFile(
-        path: p.normalize(p
-            .absolute('./test/resources/class_with_factory_constructors.dart')),
+        path: p.normalize(p.absolute(classWithFactoryConstructorsExample)),
       ))
           .unit
           .visitChildren(visitor);
 
       final classDeclaration = visitor.classes.single;
-      expect(
-        classDeclaration.declaration,
-        const TypeMatcher<ClassDeclaration>(),
-      );
+      expect(classDeclaration.declaration, isA<ClassDeclaration>());
       expect(classDeclaration.type, equals(ClassType.generic));
       expect(classDeclaration.name, equals('Logger'));
 
@@ -77,16 +76,13 @@ void main() {
 
     test('extension with method', () async {
       (await resolveFile(
-        path: p.normalize(p.absolute('./test/resources/extension.dart')),
+        path: p.normalize(p.absolute(extensionWithMethodExample)),
       ))
           .unit
           .visitChildren(visitor);
 
       final classDeclaration = visitor.classes.single;
-      expect(
-        classDeclaration.declaration,
-        const TypeMatcher<ExtensionDeclaration>(),
-      );
+      expect(classDeclaration.declaration, isA<ExtensionDeclaration>());
       expect(classDeclaration.type, equals(ClassType.extension));
       expect(classDeclaration.name, equals('NumberParsing'));
 
@@ -97,17 +93,12 @@ void main() {
     });
 
     test('mixin', () async {
-      (await resolveFile(
-        path: p.normalize(p.absolute('./test/resources/mixin.dart')),
-      ))
+      (await resolveFile(path: p.normalize(p.absolute(mixinExample))))
           .unit
           .visitChildren(visitor);
 
       final classDeclaration = visitor.classes.single;
-      expect(
-        classDeclaration.declaration,
-        const TypeMatcher<MixinDeclaration>(),
-      );
+      expect(classDeclaration.declaration, isA<MixinDeclaration>());
       expect(classDeclaration.type, equals(ClassType.mixin));
       expect(classDeclaration.name, equals('Musical'));
 
@@ -118,14 +109,11 @@ void main() {
     });
 
     test('functions', () async {
-      (await resolveFile(
-        path: p.normalize(p.absolute('./test/resources/functions.dart')),
-      ))
+      (await resolveFile(path: p.normalize(p.absolute(functionsExample))))
           .unit
           .visitChildren(visitor);
 
       expect(visitor.classes, isEmpty);
-
       expect(visitor.functions, hasLength(2));
 
       expect(visitor.functions.first.type, equals(FunctionType.function));
@@ -137,35 +125,22 @@ void main() {
       expect(visitor.functions.last.fullName, equals('main'));
     });
 
-    test('two classes', () async {
-      (await resolveFile(
-        path: p.normalize(
-          p.absolute('./test/resources/weight_of_class_example.dart'),
-        ),
-      ))
+    test('several classes', () async {
+      (await resolveFile(path: p.normalize(p.absolute(severalClassesExample))))
           .unit
           .visitChildren(visitor);
 
       expect(visitor.classes, hasLength(3));
 
-      expect(
-        visitor.classes.first.declaration,
-        const TypeMatcher<ClassDeclaration>(),
-      );
+      expect(visitor.classes.first.declaration, isA<ClassDeclaration>());
       expect(visitor.classes.first.type, equals(ClassType.generic));
       expect(visitor.classes.first.name, equals('SimpleClass'));
 
-      expect(
-        visitor.classes.toList()[1].declaration,
-        const TypeMatcher<ClassDeclaration>(),
-      );
+      expect(visitor.classes.toList()[1].declaration, isA<ClassDeclaration>());
       expect(visitor.classes.toList()[1].type, equals(ClassType.generic));
       expect(visitor.classes.toList()[1].name, equals('Spacecraft'));
 
-      expect(
-        visitor.classes.last.declaration,
-        const TypeMatcher<ClassDeclaration>(),
-      );
+      expect(visitor.classes.last.declaration, isA<ClassDeclaration>());
       expect(visitor.classes.last.type, equals(ClassType.generic));
       expect(visitor.classes.last.name, equals('EmptyAbstractClass'));
 
@@ -189,8 +164,8 @@ void main() {
 
       final unLaunched = functions[3];
       expect(unLaunched.type, equals(FunctionType.constructor));
-      expect(unLaunched.name, equals('unlaunched'));
-      expect(unLaunched.fullName, equals('Spacecraft.unlaunched'));
+      expect(unLaunched.name, equals('unLaunched'));
+      expect(unLaunched.fullName, equals('Spacecraft.unLaunched'));
 
       final launchYear = functions[4];
       expect(launchYear.type, equals(FunctionType.getter));

@@ -1,5 +1,9 @@
 # Changelog
 
+## patch
+
+* Fix publish
+
 ## 0.10.0-dev.3 - 2021-03-24
 
 * Add publish to pub (PATCH)

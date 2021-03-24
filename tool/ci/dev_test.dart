@@ -105,58 +105,61 @@ void main() {
     });
 
     test(
-        'getDevChangesCount returns count of developer changes introduced in his branch',
-        () {
-      expect(getDevChangesCount([]), isZero);
-      expect(
-        getDevChangesCount([
-          '# Changelog',
-          '',
-          '## MINOR',
-          '',
-          '## 0.10.0 - 2021-03-08',
-          '',
-          '* Add `Cyclomatic Complexity` metric',
-          '* Add `Number of Parameters` metric',
-        ]),
-        isZero,
-      );
-      expect(
-        getDevChangesCount([
-          '# Changelog',
-          '',
-          '## MINOR',
-          '',
-          '* changes',
-          '',
-          '## 0.10.0 - 2021-03-08',
-          '',
-          '* Add `Cyclomatic Complexity` metric',
-          '* Add `Number of Parameters` metric',
-        ]),
-        equals(1),
-      );
-    });
+      'getDevChangesCount returns count of developer changes introduced in his branch',
+      () {
+        expect(getDevChangesCount([]), isZero);
+        expect(
+          getDevChangesCount([
+            '# Changelog',
+            '',
+            '## MINOR',
+            '',
+            '## 0.10.0 - 2021-03-08',
+            '',
+            '* Add `Cyclomatic Complexity` metric',
+            '* Add `Number of Parameters` metric',
+          ]),
+          isZero,
+        );
+        expect(
+          getDevChangesCount([
+            '# Changelog',
+            '',
+            '## MINOR',
+            '',
+            '* changes',
+            '',
+            '## 0.10.0 - 2021-03-08',
+            '',
+            '* Add `Cyclomatic Complexity` metric',
+            '* Add `Number of Parameters` metric',
+          ]),
+          equals(1),
+        );
+      },
+    );
 
-    test('getReleaseLineIndices returns lines indices with release paragraphs',
-        () {
-      expect(getReleaseLineIndices([]), isEmpty);
-      expect(
-        getReleaseLineIndices([
-          '# Changelog',
-          '',
-          '## MINOR',
-          '',
-          '* changes',
-          '',
-          '## 0.10.0 - 2021-03-08',
-          '',
-          '* Add `Cyclomatic Complexity` metric',
-          '* Add `Number of Parameters` metric',
-        ]),
-        equals([2, 6]),
-      );
-    });
+    test(
+      'getReleaseLineIndices returns lines indices with release paragraphs',
+      () {
+        expect(getReleaseLineIndices([]), isEmpty);
+        expect(
+          getReleaseLineIndices([
+            '# Changelog',
+            '',
+            '## MINOR',
+            '',
+            '* changes',
+            '',
+            '## 0.10.0 - 2021-03-08',
+            '',
+            '* Add `Cyclomatic Complexity` metric',
+            '* Add `Number of Parameters` metric',
+          ]),
+          equals([2, 6]),
+        );
+      },
+    );
 
     test('patchPubspec returns patched content', () {
       expect(patchPubspec([], 'newVersion'), equals(<String>[]));

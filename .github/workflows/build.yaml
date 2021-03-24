@@ -1,0 +1,108 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-dart-latest:
+    name: Build on latest stable dart version.
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: google/dart:latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Install dependencies ⚙️
+        run: dart pub get
+
+      - name: Check our conventions 🔍
+        run: dart run tool/ci.dart check-branch
+
+      - name: Run dependency validator 🔍
+        run: |
+          dart pub global activate dependency_validator
+          dart pub global run dependency_validator:dependency_validator
+
+      - name: Run analyzer 🔍
+        run: dart analyze --fatal-warnings --fatal-infos .
+
+      - name: Run formatter 🔍
+        run: dart format --set-exit-if-changed .
+
+      - name: Run tests 🔍
+        env:
+          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+        if: success()
+        run: |
+          dart test --coverage=coverage
+          dart pub run coverage:format_coverage --packages=.packages -i coverage -o coverage/coverage.lcov --lcov --report-on=lib
+          dart run tool/uncovered_coverage.dart
+          dart test test/fake_test.dart --coverage=coverage
+          dart pub run coverage:format_coverage --packages=.packages -i coverage -o coverage/coverage.lcov --lcov --report-on=lib
+          bash <(curl -s https://codecov.io/bash) -f coverage/coverage.lcov
+
+  build-dart-2-8:
+    name: Build on minimal supported dart version.
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: google/dart:2.8.4
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Install dependencies ⚙️
+        run: pub downgrade
+
+      - name: Run dartanalyzer 🔍
+        run: dartanalyzer --fatal-warnings --fatal-infos --fatal-lints lib/ test/
+
+      - name: Run tests 🔍
+        run: pub run test
+
+  build-dart-dev:
+    name: Build on latest dev dart version.
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: google/dart:dev
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Install dependencies ⚙️
+        run: dart pub get
+
+      - name: Run analyzer 🔍
+        run: dart analyze --fatal-warnings --fatal-infos .
+
+      - name: Run tests 🔍
+        run: dart test
+
+  package-analysis:
+    name: Compute the package score on pub.dev site.
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Run package analyzer 🔍
+        uses: axel-op/dart-package-analyzer@v3
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}

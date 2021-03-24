@@ -5,7 +5,7 @@ void pushNewVersion(String version) {
     ['config', 'user.name', 'github-actions'],
     ['config', 'user.email', 'github-actions@github.com'],
     ['add', '.'],
-    ['commit', '-m', '"🔖 Update version to $version"'],
+    ['commit', '-m', '🔖 Update version to $version'],
     ['tag', '-a', version, '-m', '"🔖 Release version $version"'],
     ['push'],
     ['push', 'origin', version],

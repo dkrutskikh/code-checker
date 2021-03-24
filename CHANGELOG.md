@@ -1,8 +1,8 @@
 # Changelog
 
-## MINOR
+## 0.10.0-dev.1 - 2021-03-24
 
-* Added auto publish dev versions
+* Added auto publish dev versions (MINOR)
 
 ## 0.10.0 - 2021-03-08
 

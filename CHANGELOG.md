@@ -1,8 +1,8 @@
 # Changelog
 
-## patch
+## 0.10.0-dev.4 - 2021-03-24
 
-* Fix publish
+* Fix publish (PATCH)
 
 ## 0.10.0-dev.3 - 2021-03-24
 

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-void publishToPub(String version) {
+void publishToPub() {
   Directory('~/.pub-cache').create(recursive: true);
   File('~/.pub-cache/credentials.json')
       .writeAsStringSync(Platform.environment['PUB_CREDENTIALS'], flush: true);

@@ -94,8 +94,6 @@ class PublishToPub extends Command<void> {
 
   @override
   void run() {
-    final version = getPackageVersion(readPubspec());
-
-    publishToPub(version);
+    publishToPub();
   }
 }

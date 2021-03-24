@@ -1,5 +1,9 @@
 # Changelog
 
+## PATCH
+
+* Add publish to pub
+
 ## 0.10.0-dev.2 - 2021-03-24
 
 * Add git tags on release commit (PATCH)

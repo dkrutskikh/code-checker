@@ -1,8 +1,9 @@
 import 'dart:io';
 
 void publishToPub() {
-  Directory('~/.pub-cache').createSync(recursive: true);
-  File('~/.pub-cache/credentials.json').writeAsStringSync(
+  final pubCachePath = getPubCachePath();
+  Directory(pubCachePath).createSync(recursive: true);
+  File('$pubCachePath/credentials.json').writeAsStringSync(
     Platform.environment['PUB_CREDENTIALS'],
     mode: FileMode.writeOnly,
     flush: true,
@@ -19,5 +20,15 @@ void publishToPub() {
     if (result.exitCode != 0) {
       exit(exitCode);
     }
+  }
+}
+
+String getPubCachePath() {
+  if (Platform.environment.containsKey('PUB_CACHE')) {
+    return Platform.environment['PUB_CACHE'];
+  } else if (Platform.operatingSystem == 'windows') {
+    return '${Platform.environment['APPDATA']}/Pub/Cache';
+  } else {
+    return '${Platform.environment['HOME']}/.pub-cache';
   }
 }
